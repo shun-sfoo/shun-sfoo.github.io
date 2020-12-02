@@ -2,8 +2,10 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://shun-sfoo.github.io/posts/</loc><lastmod>2020-12-02T23:08:16&#43;08:00</lastmod></url><url>
+            <loc>https://shun-sfoo.github.io/</loc><lastmod>2020-12-02T23:08:16&#43;08:00</lastmod></url><url>
+            <loc>https://shun-sfoo.github.io/posts/vim/practical-vim/</loc><lastmod>2020-12-02T23:08:16&#43;08:00</lastmod></url><url>
+            <loc>https://shun-sfoo.github.io/posts/zsh/zsh-01/</loc><lastmod>2020-12-02T22:55:46&#43;08:00</lastmod></url><url>
             <loc>https://shun-sfoo.github.io/posts/first_post/</loc><lastmod>2020-12-02T17:02:45&#43;08:00</lastmod></url><url>
-            <loc>https://shun-sfoo.github.io/posts/</loc><lastmod>2020-12-02T17:02:45&#43;08:00</lastmod></url><url>
-            <loc>https://shun-sfoo.github.io/</loc><lastmod>2020-12-02T17:02:45&#43;08:00</lastmod></url><url>
             <loc>https://shun-sfoo.github.io/categories/</loc></url><url>
             <loc>https://shun-sfoo.github.io/tags/</loc></url></urlset>
