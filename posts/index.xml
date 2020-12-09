@@ -3,7 +3,14 @@
         <title>所有文章 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/posts/</link>
         <description>所有文章 | shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 02 Dec 2020 23:08:16 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 08 Dec 2020 16:09:05 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>jvm-1 虚拟机介绍</title>
+    <link>https://shun-sfoo.github.io/posts/jvm/jvm%E5%9F%BA%E7%A1%80%E4%B8%80/</link>
+    <pubDate>Tue, 08 Dec 2020 16:09:05 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/jvm/jvm%E5%9F%BA%E7%A1%80%E4%B8%80/</guid>
+    <description><![CDATA[JVM 虚拟机介绍 Sun HotSpot VM 优点: 热点探测技术.通过执行计数器找出最具优化价值的代码, 然后通知 jit 编辑器以方法为单位进行深度优化编译. 虚拟机 Java 代码经过编]]></description>
+</item><item>
     <title>vim 实用技巧</title>
     <link>https://shun-sfoo.github.io/posts/vim/practical-vim/</link>
     <pubDate>Wed, 02 Dec 2020 23:08:16 &#43;0800</pubDate>
@@ -17,12 +24,5 @@
     <author>作者</author>
     <guid>https://shun-sfoo.github.io/posts/zsh/zsh-01/</guid>
     <description><![CDATA[变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号]]></description>
-</item><item>
-    <title>First_post</title>
-    <link>https://shun-sfoo.github.io/posts/first_post/</link>
-    <pubDate>Wed, 02 Dec 2020 17:02:45 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/first_post/</guid>
-    <description><![CDATA[]]></description>
 </item></channel>
 </rss>
