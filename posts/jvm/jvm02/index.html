@@ -5,29 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>vim 实用技巧 - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="vim 实用技巧" />
-<meta property="og:description" content="vim 实用技巧笔记 dot 复合命令: 复合命令 等效的长命令 C c$ s cl S ^C I ^i A $a o A O ko normal mode vim 的语法只有一条额外规则, 即当一个操作符命令被连续调用两次时," />
+        <title>JVM-2 字节码 - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="JVM-2 字节码" />
+<meta property="og:description" content="Java 虚拟机规范 《Java 虚拟机规范》规定了 Java 虚拟机结构、Class 类文件结构、字节码指令等内容。 字节码文件结构是一组以 8 位字节为基础的二进制流" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://shun-sfoo.github.io/posts/vim/practical-vim/" />
-<meta property="article:published_time" content="2020-12-02T23:08:16+08:00" />
-<meta property="article:modified_time" content="2020-12-02T23:08:16+08:00" />
+<meta property="og:url" content="https://shun-sfoo.github.io/posts/jvm/jvm02/" />
+<meta property="article:published_time" content="2020-12-09T16:31:13+08:00" />
+<meta property="article:modified_time" content="2020-12-09T16:31:13+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="vim 实用技巧"/>
-<meta name="twitter:description" content="vim 实用技巧笔记 dot 复合命令: 复合命令 等效的长命令 C c$ s cl S ^C I ^i A $a o A O ko normal mode vim 的语法只有一条额外规则, 即当一个操作符命令被连续调用两次时,"/>
+<meta name="twitter:title" content="JVM-2 字节码"/>
+<meta name="twitter:description" content="Java 虚拟机规范 《Java 虚拟机规范》规定了 Java 虚拟机结构、Class 类文件结构、字节码指令等内容。 字节码文件结构是一组以 8 位字节为基础的二进制流"/>
 <meta name="application-name" content="shun-sfoo&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="shun-sfoo&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/vim/practical-vim/" /><link rel="prev" href="https://shun-sfoo.github.io/posts/zsh/zsh-01/" /><link rel="next" href="https://shun-sfoo.github.io/posts/jvm/jvm01/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/jvm/jvm02/" /><link rel="prev" href="https://shun-sfoo.github.io/posts/jvm/jvm01/" /><link rel="next" href="https://shun-sfoo.github.io/posts/data-struct/array/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "vim 实用技巧",
+        "headline": "JVM-2 字节码",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/shun-sfoo.github.io\/posts\/vim\/practical-vim\/"
-        },"genre": "posts","keywords": "vim","wordcount":  209 ,
-        "url": "https:\/\/shun-sfoo.github.io\/posts\/vim\/practical-vim\/","datePublished": "2020-12-02T23:08:16+08:00","dateModified": "2020-12-02T23:08:16+08:00","publisher": {
+            "@id": "https:\/\/shun-sfoo.github.io\/posts\/jvm\/jvm02\/"
+        },"genre": "posts","keywords": "JVM","wordcount":  383 ,
+        "url": "https:\/\/shun-sfoo.github.io\/posts\/jvm\/jvm02\/","datePublished": "2020-12-09T16:31:13+08:00","dateModified": "2020-12-09T16:31:13+08:00","publisher": {
             "@type": "Organization",
             "name": "shun-sfoo"},"author": {
                 "@type": "Person",
@@ -74,131 +74,43 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">vim 实用技巧</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/shell/"><i class="far fa-folder fa-fw"></i>shell</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-02">2020-12-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 209 字&nbsp;
+        </div><article class="page single"><h1 class="single-title animated flipInX">JVM-2 字节码</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 383 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#dot">dot</a></li>
-        <li><a href="#normal-mode">normal mode</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="vim-实用技巧笔记">vim 实用技巧笔记</h1>
-<h3 id="dot">dot</h3>
-<p>复合命令:</p>
-<table>
-<thead>
-<tr>
-<th>复合命令</th>
-<th>等效的长命令</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C</td>
-<td>c$</td>
-</tr>
-<tr>
-<td>s</td>
-<td>cl</td>
-</tr>
-<tr>
-<td>S</td>
-<td>^C</td>
-</tr>
-<tr>
-<td>I</td>
-<td>^i</td>
-</tr>
-<tr>
-<td>A</td>
-<td>$a</td>
-</tr>
-<tr>
-<td>o</td>
-<td>A<!-- raw HTML omitted --></td>
-</tr>
-<tr>
-<td>O</td>
-<td>ko</td>
-</tr>
-</tbody>
-</table>
-<h3 id="normal-mode">normal mode</h3>
-<p>vim 的语法只有一条额外规则, 即当一个操作符命令被连续调用两次时, 它会作用于当前行:</p>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><h1 id="java-虚拟机规范">Java 虚拟机规范</h1>
+<p>《Java 虚拟机规范》规定了 Java 虚拟机结构、Class 类文件结构、字节码指令等内容。</p>
+<p>字节码文件结构是一组以 8 位字节为基础的二进制流，各数据项目严格按照顺序紧凑的排列在
+Class 文件之中，中间没有添加任何分隔符。在字节码结构中，有两种最基本的数据类型来表示
+字节码文件格式，分别是：无符号数和表。</p>
+<p>无符号数属于最基本的数据类型。它以 u1、u2、u4、u8 分别代表 1 个字节、2 个字节、
+4 个字节、8 个字节的无符号数。无符号数可以用来描述数字、索引引用、
+数量值或者按照 UTF-8 编码构成的字符串值。</p>
+<p>表是由多个无符号数或者其他表作为数据项构成的复合数据类型。
+所有表都习惯性地以 <code>_info</code> 结尾。表用于描述有层次关系的复合结构的数据</p>
+<p>一个完整的表分为七个部分，构成了完整的 Class 字节码文件：</p>
 <ul>
-<li><i class="far fa-square fa-fw"></i> <code>dd</code> 删除当前行</li>
-<li><i class="far fa-square fa-fw"></i> <code>&gt;&gt;</code> 缩进当前行</li>
-<li><i class="far fa-square fa-fw"></i> <code>gU</code> 特殊情况 gUU 和 gUgU 都可以</li>
+<li>魔数与 Class 文件版本</li>
+<li>常量池</li>
+<li>访问标志</li>
+<li>类索引、父类索引、接口索引</li>
+<li>字段表集合</li>
+<li>方法表集合</li>
+<li>属性表集合</li>
 </ul>
-<p>vim 操作符命令:</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>c</td>
-<td>修改</td>
-</tr>
-<tr>
-<td>d</td>
-<td>删除</td>
-</tr>
-<tr>
-<td>y</td>
-<td>复制到寄存器</td>
-</tr>
-<tr>
-<td>g~</td>
-<td>反转大小写</td>
-</tr>
-<tr>
-<td>gu</td>
-<td>反转为小写</td>
-</tr>
-<tr>
-<td>gU</td>
-<td>反转为大写</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>增加缩进</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>减少缩进</td>
-</tr>
-<tr>
-<td>=</td>
-<td>自动缩进</td>
-</tr>
-<tr>
-<td>!</td>
-<td>使用外部程序过滤{motion}所跨越的行</td>
-</tr>
-</tbody>
-</table>
-<p>操作符待决模式 (operator-pending mode)
-专门用于<strong>操作符</strong>和动作命令之间的短暂瞬间</p>
+<h1 id="此部分详细建议阅读-blog">此部分详细建议阅读 blog</h1>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/jvm_serial_05_jvm_bytecode_analysis.html" target="_blank" rel="noopener noreffer">参考来源</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-12-02</span>
+                <span>更新于 2020-12-09</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -211,14 +123,14 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/vim/">vim</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/jvm/">JVM</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/zsh/zsh-01/" class="prev" rel="prev" title="zsh 学习1-变量"><i class="fas fa-angle-left fa-fw"></i>zsh 学习1-变量</a>
-            <a href="/posts/jvm/jvm01/" class="next" rel="next" title="JVM-1 虚拟机介绍">JVM-1 虚拟机介绍<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/jvm/jvm01/" class="prev" rel="prev" title="JVM-1 虚拟机介绍"><i class="fas fa-angle-left fa-fw"></i>JVM-1 虚拟机介绍</a>
+            <a href="/posts/data-struct/array/" class="next" rel="next" title="数据结构-数组">数据结构-数组<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
