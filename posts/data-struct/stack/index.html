@@ -5,29 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>First_post - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="First_post" />
-<meta property="og:description" content="" />
+        <title>Stack - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Stack" />
+<meta property="og:description" content="Stack 栈也是一种线性结构 相比数组，栈对应的操作是数组的子集 只能从一段添加元素，也只能从一段取出元素 这一端称为栈顶 栈是一种 后进先出 的数据结构 Last In First" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://shun-sfoo.github.io/posts/first_post/" />
-<meta property="article:published_time" content="2020-12-11T10:47:16+08:00" />
-<meta property="article:modified_time" content="2020-12-11T10:47:16+08:00" />
+<meta property="og:url" content="https://shun-sfoo.github.io/posts/data-struct/stack/" />
+<meta property="article:published_time" content="2020-12-11T21:57:46+08:00" />
+<meta property="article:modified_time" content="2020-12-11T21:57:46+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="First_post"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Stack"/>
+<meta name="twitter:description" content="Stack 栈也是一种线性结构 相比数组，栈对应的操作是数组的子集 只能从一段添加元素，也只能从一段取出元素 这一端称为栈顶 栈是一种 后进先出 的数据结构 Last In First"/>
 <meta name="application-name" content="shun-sfoo&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="shun-sfoo&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/first_post/" /><link rel="prev" href="https://shun-sfoo.github.io/posts/data-struct/array/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/data-struct/stack/" /><link rel="prev" href="https://shun-sfoo.github.io/posts/jvm/jvm03/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "First_post",
+        "headline": "Stack",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/shun-sfoo.github.io\/posts\/first_post\/"
-        },"genre": "posts","wordcount":  0 ,
-        "url": "https:\/\/shun-sfoo.github.io\/posts\/first_post\/","datePublished": "2020-12-11T10:47:16+08:00","dateModified": "2020-12-11T10:47:16+08:00","publisher": {
+            "@id": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/stack\/"
+        },"genre": "posts","keywords": "data-struct","wordcount":  115 ,
+        "url": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/stack\/","datePublished": "2020-12-11T21:57:46+08:00","dateModified": "2020-12-11T21:57:46+08:00","publisher": {
             "@type": "Organization",
             "name": "shun-sfoo"},"author": {
                 "@type": "Person",
@@ -74,17 +74,48 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">First_post</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-11">2020-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 0 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 0 分钟&nbsp;</div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Stack</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-11">2020-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 115 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"></div><div class="post-footer" id="post-footer">
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#栈的应用">栈的应用</a></li>
+    <li><a href="#栈的接口">栈的接口</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="stack">Stack</h1>
+<ul>
+<li>栈也是一种线性结构</li>
+<li>相比数组，栈对应的操作是数组的子集</li>
+<li>只能从一段添加元素，也只能从一段取出元素</li>
+<li>这一端称为栈顶</li>
+</ul>
+<p>栈是一种 <em>后进先出</em> 的数据结构
+Last In First Out(LIFO)</p>
+<h2 id="栈的应用">栈的应用</h2>
+<ul>
+<li>无处不在的 Undo 操作（撤销）</li>
+<li>程序调用的系统栈</li>
+</ul>
+<h2 id="栈的接口">栈的接口</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">E</span> <span class="n">e</span><span class="o">);</span>
+
+    <span class="n">E</span> <span class="nf">pop</span><span class="o">();</span>
+
+    <span class="n">E</span> <span class="nf">peek</span><span class="o">();</span>
+
+    <span class="kt">int</span> <span class="nf">getSize</span><span class="o">();</span>
+
+    <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -101,13 +132,13 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/data-struct/">data-struct</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/data-struct/array/" class="prev" rel="prev" title="数据结构-数组"><i class="fas fa-angle-left fa-fw"></i>数据结构-数组</a></div>
+    <div class="post-nav"><a href="/posts/jvm/jvm03/" class="prev" rel="prev" title="JVM-3 Java 虚拟机内存结构"><i class="fas fa-angle-left fa-fw"></i>JVM-3 Java 虚拟机内存结构</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
