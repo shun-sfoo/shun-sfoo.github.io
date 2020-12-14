@@ -4,11 +4,11 @@
         <link>https://shun-sfoo.github.io/posts/</link>
         <description>所有文章 | shun-sfoo&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 11 Dec 2020 21:57:46 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>Stack</title>
-    <link>https://shun-sfoo.github.io/posts/data-struct/stack/</link>
+    <title>数据结构-栈、队列</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/stackandqueue/</link>
     <pubDate>Fri, 11 Dec 2020 21:57:46 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/data-struct/stack/</guid>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/stackandqueue/</guid>
     <description><![CDATA[Stack 栈也是一种线性结构 相比数组，栈对应的操作是数组的子集 只能从一段添加元素，也只能从一段取出元素 这一端称为栈顶 栈是一种 后进先出 的数据结构 Last In First]]></description>
 </item><item>
     <title>JVM-3 Java 虚拟机内存结构</title>
