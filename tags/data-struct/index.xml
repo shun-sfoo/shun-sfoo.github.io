@@ -3,7 +3,14 @@
         <title>data-struct - 标签 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/tags/data-struct/</link>
         <description>data-struct - 标签 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 11 Dec 2020 21:57:46 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/tags/data-struct/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 16 Dec 2020 16:37:11 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/tags/data-struct/" rel="self" type="application/rss+xml" /><item>
+    <title>数据结构-链表</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/linkedlist/</link>
+    <pubDate>Wed, 16 Dec 2020 16:37:11 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/linkedlist/</guid>
+    <description><![CDATA[linkedList 真正的动态数据结构 最简单的动态数据结构 更深入的理解引用（或者指针） 更深入的理解递归 辅助组成其他数据结构 优点：真正的动态，不需要处理固定容量]]></description>
+</item><item>
     <title>数据结构-栈、队列</title>
     <link>https://shun-sfoo.github.io/posts/data-struct/stackandqueue/</link>
     <pubDate>Fri, 11 Dec 2020 21:57:46 &#43;0800</pubDate>
