@@ -3,7 +3,14 @@
         <title>Java - 分类 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/categories/java/</link>
         <description>Java - 分类 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 16 Dec 2020 16:37:11 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/java/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 19 Dec 2020 17:06:28 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/java/" rel="self" type="application/rss+xml" /><item>
+    <title>数据结构-二分搜索树</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/bst/</link>
+    <pubDate>Sat, 19 Dec 2020 17:06:28 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/bst/</guid>
+    <description><![CDATA[二叉树 二叉树具有唯一根节点 二叉树每个节点最多有两个孩子 二叉树每个节点最多有一个父亲 二叉树具有天然的递归结构 每个节点的左右子树都是二叉树 二叉树]]></description>
+</item><item>
     <title>数据结构-链表</title>
     <link>https://shun-sfoo.github.io/posts/data-struct/linkedlist/</link>
     <pubDate>Wed, 16 Dec 2020 16:37:11 &#43;0800</pubDate>
