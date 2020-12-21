@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/bst\/"
-        },"genre": "posts","keywords": "data-struct","wordcount":  694 ,
+        },"genre": "posts","keywords": "data-struct","wordcount":  1140 ,
         "url": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/bst\/","datePublished": "2020-12-19T17:06:28+08:00","dateModified": "2020-12-19T17:06:28+08:00","publisher": {
             "@type": "Organization",
             "name": "shun-sfoo"},"author": {
@@ -76,8 +76,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">数据结构-二分搜索树</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-19">2020-12-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 694 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-19">2020-12-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1140 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -92,7 +92,10 @@
         <li><a href="#前中后序遍历">前中后序遍历</a></li>
         <li><a href="#前序遍历的非递归写法">前序遍历的非递归写法</a></li>
         <li><a href="#层序遍历">层序遍历</a></li>
-        <li><a href="#todo-bst-删除操作">TODO BST 删除操作</a></li>
+        <li><a href="#二分搜索树的最大值和最小值">二分搜索树的最大值和最小值</a></li>
+        <li><a href="#bst-删除操作">BST 删除操作</a></li>
+        <li><a href="#删除任意节点">删除任意节点</a></li>
+        <li><a href="#todo">TODO</a></li>
       </ul>
     </li>
   </ul>
@@ -231,7 +234,102 @@
     <span class="o">}</span>
 
 <span class="o">}</span>
-</code></pre></div><h3 id="todo-bst-删除操作">TODO BST 删除操作</h3>
+</code></pre></div><h3 id="二分搜索树的最大值和最小值">二分搜索树的最大值和最小值</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//寻找最大值
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">E</span> <span class="nf">maximum</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">(</span><span class="s">&#34;BST is empty&#34;</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">maximum</span><span class="o">(</span><span class="n">root</span><span class="o">).</span><span class="na">e</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">Node</span> <span class="nf">maximum</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">maximum</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">// 寻找最小值略
+</span></code></pre></div><h3 id="bst-删除操作">BST 删除操作</h3>
+<h4 id="删除最大值最小值">删除最大值/最小值</h4>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//删除最大值
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">E</span> <span class="nf">removeMax</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">E</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">maximum</span><span class="o">();</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">removeMax</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">Node</span> <span class="nf">removeMax</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">leftNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">size</span><span class="o">--;</span>
+        <span class="k">return</span> <span class="n">leftNode</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">removeMin</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">// 删除最小值略
+</span></code></pre></div><h3 id="删除任意节点">删除任意节点</h3>
+<ul>
+<li>只有左/右子节点：该子节点取代当前节点</li>
+</ul>
+<h4 id="hibbard-deletion">Hibbard Deletion</h4>
+<p>删除左右都有孩子的节点 d 找到其后继 s</p>
+<ul>
+<li><code>s = min(d-&gt;right)</code></li>
+<li><code>s-&gt;right = removeMin(d-&gt;right)</code></li>
+<li><code>s-&gt;left = d-&gt;left</code></li>
+</ul>
+<p>删除 d ， s 是新的子树的根</p>
+<p>同理删除 d 的前驱（predeccesso）也可以完成删除操作。</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 删除任意节点
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">E</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">Node</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">E</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">e</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">e</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="c1">// e.compareTo(node.e) == 0
+</span><span class="c1"></span>
+        <span class="c1">// 待删除左子树为空的情况
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">rightNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">size</span><span class="o">--;</span>
+            <span class="k">return</span> <span class="n">rightNode</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 待删除右子树为空的情况
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">leftNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">size</span><span class="o">--;</span>
+            <span class="k">return</span> <span class="n">leftNode</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 待删除左右子树均不为空的情况
+</span><span class="c1"></span>        <span class="c1">// 找到比待删除节点大的最小节点，即待删除节点右子树的最小节点
+</span><span class="c1"></span>        <span class="c1">// 用这个节点顶替待删除节点的位置
+</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">successor</span> <span class="o">=</span> <span class="n">minimum</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="n">successor</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">removeMin</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="n">successor</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">successor</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="todo">TODO</h3>
+<ul>
+<li>实现 floor ceil rank select</li>
+<li>rank 和 select 的 node 添加一个 size 属性，包含节点个数(包含自身)</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -259,7 +357,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">shun-sfoo</a></span></div>
         </div>
     </footer></div>
