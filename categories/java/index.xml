@@ -3,7 +3,14 @@
         <title>Java - 分类 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/categories/java/</link>
         <description>Java - 分类 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 22 Dec 2020 16:24:35 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/java/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 20:36:10 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/java/" rel="self" type="application/rss+xml" /><item>
+    <title>数据结构-线段树</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/segmenttree/</link>
+    <pubDate>Wed, 23 Dec 2020 20:36:10 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/segmenttree/</guid>
+    <description><![CDATA[线段树 线段树是算法竞赛中常用的用来维护 区间信息 的数据结构。 线段树可以在log(n)的时间复杂度内实现单点修改、 区间修改、区间查询（区间求和，]]></description>
+</item><item>
     <title>数据结构-堆</title>
     <link>https://shun-sfoo.github.io/posts/data-struct/heap/</link>
     <pubDate>Tue, 22 Dec 2020 16:24:35 &#43;0800</pubDate>

@@ -3,9 +3,16 @@
         <title>shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/</link>
         <description>shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 22 Dec 2020 16:24:35 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 20:36:10 &#43;0800</lastBuildDate>
             <atom:link href="https://shun-sfoo.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>数据结构-线段树</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/segmenttree/</link>
+    <pubDate>Wed, 23 Dec 2020 20:36:10 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/segmenttree/</guid>
+    <description><![CDATA[线段树 线段树是算法竞赛中常用的用来维护 区间信息 的数据结构。 线段树可以在log(n)的时间复杂度内实现单点修改、 区间修改、区间查询（区间求和，]]></description>
+</item><item>
     <title>数据结构-堆</title>
     <link>https://shun-sfoo.github.io/posts/data-struct/heap/</link>
     <pubDate>Tue, 22 Dec 2020 16:24:35 &#43;0800</pubDate>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>https://shun-sfoo.github.io/posts/vim/practical-vim/</guid>
     <description><![CDATA[vim 实用技巧笔记 dot 复合命令: 复合命令 等效的长命令 C c$ s cl S ^C I ^i A $a o A O ko normal mode vim 的语法只有一条额外规则, 即当一个操作符命令被连续调用两次时,]]></description>
-</item><item>
-    <title>zsh 学习1-变量</title>
-    <link>https://shun-sfoo.github.io/posts/zsh/zsh-01/</link>
-    <pubDate>Wed, 02 Dec 2020 22:55:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/zsh/zsh-01/</guid>
-    <description><![CDATA[变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号]]></description>
 </item></channel>
 </rss>
