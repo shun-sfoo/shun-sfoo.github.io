@@ -3,7 +3,21 @@
         <title>data-struct - 标签 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/tags/data-struct/</link>
         <description>data-struct - 标签 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 20:36:10 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/tags/data-struct/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 28 Dec 2020 15:29:41 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/tags/data-struct/" rel="self" type="application/rss+xml" /><item>
+    <title>数据结构-avl树</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/avl/</link>
+    <pubDate>Mon, 28 Dec 2020 15:29:41 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/avl/</guid>
+    <description><![CDATA[平衡二叉树和 AVL 树 对于任意一个节点，左子树和右子树的高度差不能超过 1 平衡二叉树的高度和节点数量之间的关系也是 O(logn)的 平衡因子 判断一棵树]]></description>
+</item><item>
+    <title>数据结构-并查集</title>
+    <link>https://shun-sfoo.github.io/posts/data-struct/unionfind/</link>
+    <pubDate>Sat, 26 Dec 2020 13:19:07 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/data-struct/unionfind/</guid>
+    <description><![CDATA[解决连接问题 数据结构 public class UnionFind implements UF { // rank[i]表示以i为根的集合所表示的树的层数 // 在后续的代码中, 并不会维护rank的语意, 也就是rank]]></description>
+</item><item>
     <title>数据结构-线段树</title>
     <link>https://shun-sfoo.github.io/posts/data-struct/segmenttree/</link>
     <pubDate>Wed, 23 Dec 2020 20:36:10 &#43;0800</pubDate>
