@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/avl\/"
-        },"genre": "posts","keywords": "data-struct","wordcount":  171 ,
+        },"genre": "posts","keywords": "data-struct","wordcount":  1212 ,
         "url": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/avl\/","datePublished": "2020-12-28T15:29:41+08:00","dateModified": "2020-12-28T15:29:41+08:00","publisher": {
             "@type": "Organization",
             "name": "shun-sfoo"},"author": {
@@ -76,8 +76,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">数据结构-avl树</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-28">2020-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 171 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-28">2020-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1212 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -87,33 +87,259 @@
   <ul>
     <li><a href="#平衡因子">平衡因子</a></li>
     <li><a href="#判断一棵树是否为-bst">判断一棵树是否为 BST</a></li>
+    <li><a href="#辅助函数-getheight-getbalancefactor">辅助函数 getHeight()， getBalanceFactor()</a></li>
     <li><a href="#avl-的左旋转和右旋转">AVL 的左旋转和右旋转</a>
       <ul>
-        <li><a href="#右旋转">右旋转</a></li>
-        <li><a href="#左旋转">左旋转</a></li>
+        <li><a href="#右旋转-ll">右旋转 LL</a></li>
+        <li><a href="#左旋转-rr">左旋转 RR</a></li>
+        <li><a href="#lr-与-rl">LR 与 RL</a></li>
       </ul>
     </li>
+    <li><a href="#add">add()</a></li>
+    <li><a href="#remove">remove()</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="平衡二叉树和-avl-树">平衡二叉树和 AVL 树</h1>
 <p>对于任意一个节点，左子树和右子树的高度差不能超过 1</p>
-<p>平衡二叉树的高度和节点数量之间的关系也是 O(logn)的</p>
+<p>平衡二叉树的高度和节点数量之间的关系也是 <code>O(logn)</code>的</p>
 <h2 id="平衡因子">平衡因子</h2>
 <h2 id="判断一棵树是否为-bst">判断一棵树是否为 BST</h2>
 <p>利用 BST 中序遍历过程中访问元素是顺序的特点来判断一棵树是否为 BST</p>
-<h2 id="avl-的左旋转和右旋转">AVL 的左旋转和右旋转</h2>
-<h3 id="右旋转">右旋转</h3>
-<p>旋转前:
-<code>T1 &lt; z &lt; T2 &lt; x &lt; T3 &lt; y &lt; T4 </code>
-旋转操作：
-<code>x.right = y</code>
-<code>y.left = T3</code></p>
-<h3 id="左旋转">左旋转</h3>
-<p><code>T4 &lt; y &lt; T3 &lt; x &lt; T1 &lt; z &lt; T2</code>
-旋转操作：
-<code>x.left = y</code>
-<code>y.right = T3</code></p>
-</div><div class="post-footer" id="post-footer">
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 判断该二叉树是否是一棵二分搜索树
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isBST</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">inOrder</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">keys</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">keys</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">keys</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">).</span><span class="na">compareTo</span><span class="o">(</span><span class="n">keys</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">))</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">inOrder</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span><span class="o">;</span>
+
+    <span class="n">inOrder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">keys</span><span class="o">);</span>
+    <span class="n">keys</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+    <span class="n">inOrder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">keys</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="辅助函数-getheight-getbalancefactor">辅助函数 getHeight()， getBalanceFactor()</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 获得节点node的高度
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">int</span> <span class="nf">getHeight</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="na">height</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 获得节点node的平衡因子
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">int</span> <span class="nf">getBalanceFactor</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">-</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="avl-的左旋转和右旋转">AVL 的左旋转和右旋转</h2>
+<h3 id="右旋转-ll">右旋转 LL</h3>
+<p>当不平衡发生在左孩子节点的左孩子新增节点时</p>
+<p><code>balanceFactor &gt; 1 &amp;&amp; getBalanceFactor(node.left) &gt;= 0</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 对节点y进行向右旋转操作，返回旋转后新的根节点x
+</span><span class="c1">//        y                              x
+</span><span class="c1">//       / \                           /   \
+</span><span class="c1">//      x   T4     向右旋转 (y)        z     y
+</span><span class="c1">//     / \       - - - - - - - -&gt;    / \   / \
+</span><span class="c1">//    z   T3                       T1  T2 T3 T4
+</span><span class="c1">//   / \
+</span><span class="c1">// T1   T2
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Node</span> <span class="nf">rightRotate</span><span class="o">(</span><span class="n">Node</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Node</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">T3</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+
+    <span class="c1">// 向右旋转过程
+</span><span class="c1"></span>    <span class="n">x</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+    <span class="n">y</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">T3</span><span class="o">;</span>
+
+    <span class="c1">// 更新height
+</span><span class="c1"></span>    <span class="n">y</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">getHeight</span><span class="o">(</span><span class="n">y</span><span class="o">.</span><span class="na">left</span><span class="o">),</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">y</span><span class="o">.</span><span class="na">right</span><span class="o">))</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+    <span class="n">x</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">getHeight</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">),</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">))</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="左旋转-rr">左旋转 RR</h3>
+<p>当不平衡发生在右孩子节点的右孩子新增节点时</p>
+<p><code>balanceFactor &lt; -1 &amp;&amp; getBalanceFactor(node.right) &lt;= 0</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 对节点y进行向左旋转操作，返回旋转后新的根节点x
+</span><span class="c1"></span>    <span class="c1">//    y                             x
+</span><span class="c1"></span>    <span class="c1">//  /  \                          /   \
+</span><span class="c1"></span>    <span class="c1">// T1   x      向左旋转 (y)       y     z
+</span><span class="c1"></span>    <span class="c1">//     / \   - - - - - - - -&gt;   / \   / \
+</span><span class="c1"></span>    <span class="c1">//   T2  z                     T1 T2 T3 T4
+</span><span class="c1"></span>    <span class="c1">//      / \
+</span><span class="c1"></span>    <span class="c1">//     T3 T4
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="nf">leftRotate</span><span class="o">(</span><span class="n">Node</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+
+        <span class="c1">// 向左旋转过程
+</span><span class="c1"></span>        <span class="n">x</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+        <span class="n">y</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">T2</span><span class="o">;</span>
+
+        <span class="c1">// 更新height
+</span><span class="c1"></span>        <span class="n">y</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">getHeight</span><span class="o">(</span><span class="n">y</span><span class="o">.</span><span class="na">left</span><span class="o">),</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">y</span><span class="o">.</span><span class="na">right</span><span class="o">))</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+        <span class="n">x</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">getHeight</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">),</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">))</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div><h3 id="lr-与-rl">LR 与 RL</h3>
+<p>LR 含义为当前节点左子树比右子树高(平衡因子大于 1),且右子树的左子树比高
+将左子树左旋，此时变成了 LL 的情况然后当前节点右旋。
+RL 为 LR 的镜像操作</p>
+<h2 id="add">add()</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 向二分搜索树中添加新的元素(key, value)
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">add</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">// 向以node为根的二分搜索树中插入元素(key, value)，递归算法
+</span><span class="c1">// 返回插入新节点后二分搜索树的根
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Node</span> <span class="nf">add</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">size</span><span class="o">++;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="k">else</span> <span class="c1">// key.compareTo(node.key) == 0
+</span><span class="c1"></span>        <span class="n">node</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+
+    <span class="c1">// 更新height
+</span><span class="c1"></span>    <span class="n">node</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">1</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">getHeight</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">),</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">));</span>
+
+    <span class="c1">// 计算平衡因子
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">balanceFactor</span> <span class="o">=</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+    <span class="c1">// 平衡维护
+</span><span class="c1"></span>    <span class="c1">// LL
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+    <span class="c1">// RR
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+    <span class="c1">// LR
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// RL
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="remove">remove()</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 从二分搜索树中删除键为key的节点
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">V</span> <span class="nf">remove</span><span class="o">(</span><span class="n">K</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">getNode</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">Node</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="n">Node</span> <span class="n">retNode</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
+        <span class="c1">// return node;
+</span><span class="c1"></span>        <span class="n">retNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
+        <span class="c1">// return node;
+</span><span class="c1"></span>        <span class="n">retNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>   <span class="c1">// key.compareTo(node.key) == 0
+</span><span class="c1"></span>
+        <span class="c1">// 待删除节点左子树为空的情况
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">rightNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">size</span><span class="o">--;</span>
+            <span class="c1">// return rightNode;
+</span><span class="c1"></span>            <span class="n">retNode</span> <span class="o">=</span> <span class="n">rightNode</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 待删除节点右子树为空的情况
+</span><span class="c1"></span>        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">leftNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">size</span><span class="o">--;</span>
+            <span class="c1">// return leftNode;
+</span><span class="c1"></span>            <span class="n">retNode</span> <span class="o">=</span> <span class="n">leftNode</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 待删除节点左右子树均不为空的情况
+</span><span class="c1"></span>        <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
+</span><span class="c1"></span>            <span class="c1">// 用这个节点顶替待删除节点的位置
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">successor</span> <span class="o">=</span> <span class="n">minimum</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+            <span class="c1">//successor.right = removeMin(node.right);
+</span><span class="c1"></span>            <span class="n">successor</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">successor</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+            <span class="n">successor</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+
+            <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+            <span class="c1">// return successor;
+</span><span class="c1"></span>            <span class="n">retNode</span> <span class="o">=</span> <span class="n">successor</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">retNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="c1">// 更新height
+</span><span class="c1"></span>    <span class="n">retNode</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">1</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">getHeight</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">left</span><span class="o">),</span> <span class="n">getHeight</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">right</span><span class="o">));</span>
+
+    <span class="c1">// 计算平衡因子
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">balanceFactor</span> <span class="o">=</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">retNode</span><span class="o">);</span>
+
+    <span class="c1">// 平衡维护
+</span><span class="c1"></span>    <span class="c1">// LL
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">retNode</span><span class="o">);</span>
+
+    <span class="c1">// RR
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">retNode</span><span class="o">);</span>
+
+    <span class="c1">// LR
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">retNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">retNode</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// RL
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">balanceFactor</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">getBalanceFactor</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">retNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">retNode</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">retNode</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="n">retNode</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
