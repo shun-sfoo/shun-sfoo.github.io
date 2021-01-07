@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>数据结构-红黑树 - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="数据结构-红黑树" />
+<meta property="og:description" content="红黑树性质 结合 2-3 树理解 每个节点或者是红色的，或者是黑色的 根节点是黑色的 每一个叶子节点（最后的空节点） 是黑色的 如果一个节点是红色的，那么他的孩" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://shun-sfoo.github.io/posts/data-struct/rbtree/" />
+<meta property="article:published_time" content="2020-12-29T22:10:09+08:00" />
+<meta property="article:modified_time" content="2020-12-29T22:10:09+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构-红黑树"/>
+<meta name="twitter:description" content="红黑树性质 结合 2-3 树理解 每个节点或者是红色的，或者是黑色的 根节点是黑色的 每一个叶子节点（最后的空节点） 是黑色的 如果一个节点是红色的，那么他的孩"/>
+<meta name="application-name" content="shun-sfoo&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="shun-sfoo&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/data-struct/rbtree/" /><link rel="prev" href="https://shun-sfoo.github.io/posts/data-struct/avl/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据结构-红黑树",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/rbtree\/"
+        },"genre": "posts","keywords": "data-struct","wordcount":  1166 ,
+        "url": "https:\/\/shun-sfoo.github.io\/posts\/data-struct\/rbtree\/","datePublished": "2020-12-29T22:10:09+08:00","dateModified": "2020-12-29T22:10:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": "shun-sfoo"},"author": {
+                "@type": "Person",
+                "name": "shun-sfoo"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="shun-sfoo&#39;s blog">shun-sfoo&#39;s blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="shun-sfoo&#39;s blog">shun-sfoo&#39;s blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">数据结构-红黑树</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-29">2020-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1166 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#2-3-树">2-3 树</a></li>
+    <li><a href="#性质">性质</a></li>
+    <li><a href="#2-3-树增加节点">2-3 树增加节点</a></li>
+    <li><a href="#红黑树和-2-3-树">红黑树和 2-3 树</a></li>
+    <li><a href="#红黑树添加新元素">红黑树添加新元素</a>
+      <ul>
+        <li><a href="#rbtree-数据结构">RBTree 数据结构</a></li>
+        <li><a href="#辅助方法-isred-getnode">辅助方法 isRed() getNode()</a></li>
+        <li><a href="#add">add()</a></li>
+      </ul>
+    </li>
+    <li><a href="#todo-右倾红黑树-splay-tree-伸展树">TODO 右倾红黑树 Splay Tree （伸展树）</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="红黑树性质">红黑树性质</h1>
+<p>结合 2-3 树理解</p>
+<ol>
+<li>每个节点或者是红色的，或者是黑色的</li>
+<li>根节点是黑色的</li>
+<li>每一个叶子节点（最后的空节点） 是黑色的</li>
+<li>如果一个节点是红色的，那么他的孩子节点都是黑色的</li>
+<li>从任意一个节点到叶子节点，经过的黑色节点是一样的</li>
+</ol>
+<h2 id="2-3-树">2-3 树</h2>
+<p>有助于理解红黑树和 B 类树</p>
+<h2 id="性质">性质</h2>
+<p>满足二分搜索树的基本性质
+节点可以存放一个元素或者两个元素
+每个节点有 2 个孩子(2 节点)或者 3 个孩子(3 节点)
+2-3 树是一颗绝对平衡的树</p>
+<h2 id="2-3-树增加节点">2-3 树增加节点</h2>
+<p>新添加节点不会添加到空节点上</p>
+<pre><code>[37] -&gt; [42] = [37][42]
+
+-----------------------------------------------------
+[12] -&gt; [37][42] = [12][37][42] = [37]
+                                  /    \
+                                [12]   [42]
+
+-----------------------------------------------------
+
+[18] -&gt; [37]   =        [37]
+        /  \         /       \
+     [12]  [42]   [12][18]    [42]
+
+-----------------------------------------------------
+
+[6]  -&gt;    [37]          =        [37]     =    [37]   =     [12][37]
+         /       \              /      \        /   \          / |   \
+      [12][18]    [42]    [6][12][18]   [42]   [12] [42]    [6] [18] [42]
+                                               /  \
+                                             [6]  [18]
+
+-----------------------------------------------------
+
+</code></pre><h2 id="红黑树和-2-3-树">红黑树和 2-3 树</h2>
+<p>相等性，红黑树可以看作 2-3 树
+当有三节点时左侧节点作为孩子节点标红表示 2-3 树中两个节点并列
+所有的红色节点都是左倾斜的(或者实现右倾斜的版本)
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/BRTree/BR-23.png"
+        data-srcset="/BRTree/BR-23.png, /BRTree/BR-23.png 1.5x, /BRTree/BR-23.png 2x"
+        data-sizes="auto"
+        alt="/BRTree/BR-23.png"
+        title="BRTree" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/BRTree/BR-23-1.png"
+        data-srcset="/BRTree/BR-23-1.png, /BRTree/BR-23-1.png 1.5x, /BRTree/BR-23-1.png 2x"
+        data-sizes="auto"
+        alt="/BRTree/BR-23-1.png"
+        title="BRTree1" /></p>
+<p>添加节点默认为红色: 2-3 树中新添加节点总是先融合</p>
+<p>红黑树是保持“黑平衡”的二叉树
+严格意义上，不是平衡二叉树 最大高度： <code>2logn</code> o(logn)</p>
+<h2 id="红黑树添加新元素">红黑树添加新元素</h2>
+<ul>
+<li>2-3 树中添加一个新元素</li>
+<li>添加进 2 节点，形成一个 3 节点</li>
+<li>添加进 3 节点，暂时形成一个 4 节点</li>
+<li>永远添加红色节点</li>
+<li>根节点为黑色节点</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/BRTree/BRTree_ADD.png"
+        data-srcset="/BRTree/BRTree_ADD.png, /BRTree/BRTree_ADD.png 1.5x, /BRTree/BRTree_ADD.png 2x"
+        data-sizes="auto"
+        alt="/BRTree/BRTree_ADD.png"
+        title="ADD" /></p>
+<p>图中流程可以总结为： <strong>流程想象对应 2-3 树的变换</strong></p>
+<ol>
+<li>如果节点右孩子为红色而左孩子不为红色（都为红只需要颜色翻转）进行左旋转操作，
+换上去节点的颜色为旋转节点的颜色，旋转节点颜色变成红色, 返回换上去的节点。
+(对应 2 节点插入到右边和 3 节点插入到中间的情况)</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//   node                     x
+</span><span class="c1">//  /   \     左旋转         /  \
+</span><span class="c1">// T1   x   ---------&gt;   node   T3
+</span><span class="c1">//     / \              /   \
+</span><span class="c1">//    T2 T3            T1   T2
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Node</span> <span class="nf">leftRotate</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">Node</span> <span class="n">x</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+
+    <span class="c1">// 左旋转
+</span><span class="c1"></span>    <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+    <span class="n">x</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+
+    <span class="n">x</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">color</span><span class="o">;</span>
+    <span class="n">node</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><ol start="2">
+<li>如果左孩子为红色并且左孩子的左孩子也为红色进行右旋转操作。
+换上去节点的颜色为旋转节点的颜色，旋转节点颜色变成红色。</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//     node                   x
+</span><span class="c1">//    /   \     右旋转       /  \
+</span><span class="c1">//   x    T2   -------&gt;   y   node
+</span><span class="c1">//  / \                       /  \
+</span><span class="c1">// y  T1                     T1  T2
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Node</span> <span class="nf">rightRotate</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">Node</span> <span class="n">x</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+
+    <span class="c1">// 右旋转
+</span><span class="c1"></span>    <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+    <span class="n">x</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+
+    <span class="n">x</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">color</span><span class="o">;</span>
+    <span class="n">node</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><ol start="3">
+<li>如果节点的左右孩子都为红色节点进行颜色翻转。</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 颜色翻转
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">flipColors</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+    <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+    <span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><p>三个过程并不是互斥的。</p>
+<h3 id="rbtree-数据结构">RBTree 数据结构</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RBTree</span><span class="o">&lt;</span><span class="n">K</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">RED</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">BLACK</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">K</span> <span class="n">key</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="n">V</span> <span class="n">value</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="n">Node</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">color</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Node</span> <span class="n">root</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">RBTree</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><h3 id="辅助方法-isred-getnode">辅助方法 isRed() getNode()</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 判断节点node的颜色
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isRed</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 所有叶子节点为黑色
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">BLACK</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="na">color</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// getNode 方法作为实现 contains set get 方法的辅助函数
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Node</span> <span class="nf">getNode</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">getNode</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
+  <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span> <span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">getNode</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
+  <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="add">add()</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 向红黑树中添加新的元素(key, value)
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">add</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="n">root</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span> <span class="c1">// 最终根节点为黑色节点
+</span><span class="c1"></span><span class="o">}</span>
+
+<span class="c1">// 向以node为根的红黑树中插入元素(key, value)，递归算法
+</span><span class="c1">// 返回插入新节点后红黑树的根
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Node</span> <span class="nf">add</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">size</span><span class="o">++;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span> <span class="c1">// 默认插入红色节点
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="k">else</span> <span class="c1">// key.compareTo(node.key) == 0
+</span><span class="c1"></span>        <span class="n">node</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">))</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">leftRotate</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">isRed</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">left</span><span class="o">))</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">rightRotate</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">isRed</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">))</span>
+        <span class="n">flipColors</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+    <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="todo-右倾红黑树-splay-tree-伸展树">TODO 右倾红黑树 Splay Tree （伸展树）</h2>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-12-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/data-struct/">data-struct</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/data-struct/avl/" class="prev" rel="prev" title="数据结构-avl树"><i class="fas fa-angle-left fa-fw"></i>数据结构-avl树</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.80.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">shun-sfoo</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
