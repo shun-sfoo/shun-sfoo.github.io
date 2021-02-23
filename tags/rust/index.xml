@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Rust - 标签 - shun-sfoo&#39;s blog</title>
+        <link>https://shun-sfoo.github.io/tags/rust/</link>
+        <description>Rust - 标签 - shun-sfoo&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/tags/rust/" rel="self" type="application/rss+xml" /><item>
+    <title>Rust 所有权</title>
+    <link>https://shun-sfoo.github.io/posts/rust/ownership/</link>
+    <pubDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/rust/ownership/</guid>
+    <description><![CDATA[所有权 Rust 的核心功能之一是 所有权。 通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。 在运行时，所有权系统的任何功能都不会减慢程]]></description>
+</item></channel>
+</rss>
