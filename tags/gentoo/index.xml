@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Gentoo - 标签 - shun-sfoo&#39;s blog</title>
+        <link>https://shun-sfoo.github.io/tags/gentoo/</link>
+        <description>Gentoo - 标签 - shun-sfoo&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/tags/gentoo/" rel="self" type="application/rss+xml" /><item>
+    <title>Gentoo 安装教程</title>
+    <link>https://shun-sfoo.github.io/posts/linux/gentoo/</link>
+    <pubDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/linux/gentoo/</guid>
+    <description><![CDATA[闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P]]></description>
+</item></channel>
+</rss>

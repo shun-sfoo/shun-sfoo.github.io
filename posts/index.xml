@@ -3,13 +3,27 @@
         <title>所有文章 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/posts/</link>
         <description>所有文章 | shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Gentoo 安装教程</title>
+    <link>https://shun-sfoo.github.io/posts/linux/gentoo/</link>
+    <pubDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/linux/gentoo/</guid>
+    <description><![CDATA[闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P]]></description>
+</item><item>
+    <title>使用 rust 实现web server</title>
+    <link>https://shun-sfoo.github.io/posts/rust/rust-web/</link>
+    <pubDate>Thu, 18 Mar 2021 15:12:08 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/rust/rust-web/</guid>
+    <description><![CDATA[因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监]]></description>
+</item><item>
     <title>Rust 所有权</title>
     <link>https://shun-sfoo.github.io/posts/rust/ownership/</link>
     <pubDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://shun-sfoo.github.io/posts/rust/ownership/</guid>
-    <description><![CDATA[所有权 Rust 的核心功能之一是 所有权。 通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。 在运行时，所有权系统的任何功能都不会减慢程]]></description>
+    <description><![CDATA[语句和表达式 Rust 是一门基于表达式（expression-based）的语言 语句（Statements）是执行一些操作但不返回值的指令 表达式（E]]></description>
 </item><item>
     <title>数据结构-红黑树</title>
     <link>https://shun-sfoo.github.io/posts/data-struct/rbtree/</link>
@@ -59,19 +73,5 @@
     <author>作者</author>
     <guid>https://shun-sfoo.github.io/posts/data-struct/linkedlist/</guid>
     <description><![CDATA[linkedList 真正的动态数据结构 最简单的动态数据结构 更深入的理解引用（或者指针） 更深入的理解递归 辅助组成其他数据结构 优点：真正的动态，不需要处理固定容量]]></description>
-</item><item>
-    <title>数据结构-栈、队列</title>
-    <link>https://shun-sfoo.github.io/posts/data-struct/stackandqueue/</link>
-    <pubDate>Fri, 11 Dec 2020 21:57:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/data-struct/stackandqueue/</guid>
-    <description><![CDATA[Stack 栈也是一种线性结构 相比数组，栈对应的操作是数组的子集 只能从一段添加元素，也只能从一段取出元素 这一端称为栈顶 栈是一种 后进先出 的数据结构 Last In First]]></description>
-</item><item>
-    <title>JVM-3 Java 虚拟机内存结构</title>
-    <link>https://shun-sfoo.github.io/posts/jvm/jvm03/</link>
-    <pubDate>Fri, 11 Dec 2020 11:30:51 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/jvm/jvm03/</guid>
-    <description><![CDATA[运行时数据区 在 《Java 虚拟机规范》中用的是「运行时数据区」这个术语。但很多时候并不是很形象。 再加上日积月累的习惯，都习惯用虚拟机内存结构这]]></description>
 </item></channel>
 </rss>

@@ -3,12 +3,19 @@
         <title>Rust - 分类 - shun-sfoo&#39;s blog</title>
         <link>https://shun-sfoo.github.io/categories/rust/</link>
         <description>Rust - 分类 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/rust/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 18 Mar 2021 15:12:08 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/rust/" rel="self" type="application/rss+xml" /><item>
+    <title>使用 rust 实现web server</title>
+    <link>https://shun-sfoo.github.io/posts/rust/rust-web/</link>
+    <pubDate>Thu, 18 Mar 2021 15:12:08 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://shun-sfoo.github.io/posts/rust/rust-web/</guid>
+    <description><![CDATA[因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监]]></description>
+</item><item>
     <title>Rust 所有权</title>
     <link>https://shun-sfoo.github.io/posts/rust/ownership/</link>
     <pubDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://shun-sfoo.github.io/posts/rust/ownership/</guid>
-    <description><![CDATA[所有权 Rust 的核心功能之一是 所有权。 通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。 在运行时，所有权系统的任何功能都不会减慢程]]></description>
+    <description><![CDATA[语句和表达式 Rust 是一门基于表达式（expression-based）的语言 语句（Statements）是执行一些操作但不返回值的指令 表达式（E]]></description>
 </item></channel>
 </rss>

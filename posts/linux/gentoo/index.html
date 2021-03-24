@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Gentoo 安装教程 - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Gentoo 安装教程" />
+<meta property="og:description" content="闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT &#43; UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://shun-sfoo.github.io/posts/linux/gentoo/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-03-24T10:52:31&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-24T10:52:31&#43;08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Gentoo 安装教程"/>
+<meta name="twitter:description" content="闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT &#43; UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P"/>
+<meta name="application-name" content="shun-sfoo&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="shun-sfoo&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/linux/gentoo/" /><link rel="prev" href="https://shun-sfoo.github.io/posts/rust/rust-web/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Gentoo 安装教程",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/shun-sfoo.github.io\/posts\/linux\/gentoo\/"
+        },"genre": "posts","keywords": "Gentoo","wordcount":  2016 ,
+        "url": "https:\/\/shun-sfoo.github.io\/posts\/linux\/gentoo\/","datePublished": "2021-03-24T10:52:31+08:00","dateModified": "2021-03-24T10:52:31+08:00","publisher": {
+            "@type": "Organization",
+            "name": "shun-sfoo"},"author": {
+                "@type": "Person",
+                "name": "shun-sfoo"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="shun-sfoo&#39;s blog">shun-sfoo&#39;s blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="shun-sfoo&#39;s blog">shun-sfoo&#39;s blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Gentoo 安装教程</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-24">2021-03-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2016 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#磁盘分区">磁盘分区</a></li>
+    <li><a href="#gentoo-的概念">Gentoo 的概念</a>
+      <ul>
+        <li><a href="#portage">Portage</a></li>
+        <li><a href="#use">USE</a></li>
+        <li><a href="#cflags">Cflags</a></li>
+      </ul>
+    </li>
+    <li><a href="#正式开始">正式开始</a>
+      <ul>
+        <li><a href="#配置-makeconfg">配置 make.confg</a></li>
+        <li><a href="#选项解释">选项解释</a></li>
+        <li><a href="#配置源镜像">配置源镜像</a></li>
+        <li><a href="#chroot-和-第一次构建">chroot 和 第一次构建</a></li>
+        <li><a href="#第一阶段">第一阶段</a></li>
+        <li><a href="#杂项处理">杂项处理</a></li>
+        <li><a href="#安装内核">安装内核</a></li>
+        <li><a href="#安装-grub">安装 GRUB</a></li>
+        <li><a href="#安装显卡">安装显卡</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="闲话少叙">闲话少叙</h1>
+<p>使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始</p>
+<h2 id="磁盘分区">磁盘分区</h2>
+<p>形式： GPT + UEFI</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+<th>挂载点</th>
+<th>格式化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EFI</td>
+<td>512M</td>
+<td>boot</td>
+<td>mkfs.vfat</td>
+</tr>
+<tr>
+<td>btrfs</td>
+<td>free space</td>
+<td>root</td>
+<td>mkfs.btrfs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gentoo-的概念">Gentoo 的概念</h2>
+<h3 id="portage">Portage</h3>
+<p>Gentoo 的包管理器是 Portage，portage 包含了 emerge 和 ebuild 两部分，
+emerge 是一个可执行程序，负责将 ebuild 中的内容按照规则进行编译和安装，
+ebuild 这个文件，更像是个脚本，emerge 按照它进行下载源代码，打补丁，
+一定的规则编译，然后安装</p>
+<h3 id="use">USE</h3>
+<p>这是一个 Gentoo Linux 发行版比较独特的“标签”，
+它定义了编译和构建整个系统需要依赖什么，不需要依赖什么，
+尽可能让系统简洁，轻快，高效。</p>
+<h3 id="cflags">Cflags</h3>
+<p>这是 GCC 针对源代码编译进行一定优化的标签，通过这些功能，
+可以将我们需要的软件源码进行一定级别的优化，然后生成可执行程序，
+从而提高运行效率。</p>
+<h2 id="正式开始">正式开始</h2>
+<ol>
+<li>通过 su 获取 root 权限,</li>
+<li><code>mkdir -p /mnt/gentoo</code></li>
+<li>将 root 挂载到 <code>/mnt/gentoo</code> 下 <code>mount /dev/sda2 /mnt/gentoo</code></li>
+<li>下载 Stage3 <code>wget https://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64-systemd/stage3-amd64-systemd-最新版.tar.xz</code></li>
+<li>解压 <code>tar vxpf stage3-amd64-systemd-最新版.tar.xz</code></li>
+<li><code>rm stage3-amd64-systemd-最新版.tar.xz</code></li>
+</ol>
+<h3 id="配置-makeconfg">配置 make.confg</h3>
+<pre><code class="language-config" data-lang="config"># /usr/share/portage/config/make.conf.example
+
+# GCC
+COMMON_FLAG=&quot;-march=native -O2 -pipe&quot;
+CFLAGS=&quot;${COMMON_FLAG}&quot;
+CXXFLAGS=&quot;${CFLAGS}&quot;
+CHOST=&quot;x86_64-pc-linux-gnu&quot;
+CPU_FLAGS_X86=&quot;aes avx avx2 fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3&quot;
+FCFLAGS=&quot;${COMMON_FLAG}&quot;
+FFLAGS=&quot;${COMMON_FLAG}&quot;
+
+# Portage
+LC_MESSAGES=C
+USE=&quot;-bindist&quot;
+MAKEOPTS=&quot;-j5&quot;
+PORTDIR=&quot;/var/db/repos/gentoo&quot;
+DISTDIR=&quot;/var/cache/distfiles&quot;
+PKGDIR=&quot;/var/cache/binpkgs&quot;
+GENTOO_MIRRORS=&quot;https://mirrors.ustc.edu.cn/gentoo/&quot;
+EMERGE_DEFAULT_OPTS=&quot;--keep-going --with-bdeps=y&quot;
+ACCEPT_KEYWORDS=&quot;~amd64&quot;
+ACCEPT_LICENSE=&quot;*&quot;
+
+# Language
+L10N=&quot;en-US zh-CN en zh&quot;
+LINGUAS=&quot;en_US zh_CN en zh&quot;
+
+# other
+# intel + nvidia
+VIDEO_CARDS=&quot;intel i965 nvidia&quot;
+# amd + nvida
+# VIDEO_CARDS=&quot;amdgpu radeonsi nvidia&quot;
+
+QEMU_SOFTMMU_TARGETS=&quot;alpha aarch64 arm i386 mips mips64 mips64el mipsel ppc ppc64 s390x sh4 sh4eb sparc sparc64 x86_64&quot;
+QEMU_USER_TARGETS=&quot;alpha aarch64 arm armeb i386 mips mipsel ppc ppc64 ppc64abi32 s390x sh4 sh4eb sparc sparc32plus sparc64&quot;
+</code></pre><h3 id="选项解释">选项解释</h3>
+<ol>
+<li><code>COMMON_FLAGS=</code>，这里添加 <code>-march=native</code> ，个人认为 native 比特指的 CPU 型号优化的效果更好，GCC 会根据你计算机的处理器集成的算法来优化，个人推荐。</li>
+<li><code>CHOST=</code> 和 <code>CPU_FLAGS_X86=</code>，这里特指牙膏厂的处理器，如果是 AMD 的锐龙，可以在后续构建系统以后，通过安装 cpuid2cpuflags 工具，查看输出填写。</li>
+<li><code>USE=</code>，这里只添加了一个 <code>-bindist</code> ，其余如果有默认的先删掉，保证初次构建一切顺利。</li>
+<li><code>MAKEOPTS=</code>，根据计算机的虚拟核心数填写。</li>
+<li><code>EMERGE_DEFAULT_OPTS=</code> 这个设置的目的是在遇到编译错误的时候不要停止，而是继续编译下去。</li>
+<li><code>QEMU_SOFTMMU_TARGETS=</code> 和<code>QEMU_USER_TARGETS=</code>，安装虚拟机 KVM 的需要，如果没有这方面的需求，可以不用填写。</li>
+</ol>
+<h3 id="配置源镜像">配置源镜像</h3>
+<p><code>mkdir -p /mnt/gentoo/etc/portage/repos.conf</code>
+<code>vi /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</code></p>
+<pre><code class="language-config" data-lang="config">[gentoo]
+location = /usr/portage
+sync-type = rsync
+sync-uri = rsync://rsync.mirrors.ustc.edu.cn/gentoo-portage/
+auto-sync = yes
+</code></pre><h3 id="chroot-和-第一次构建">chroot 和 第一次构建</h3>
+<p>我们先了解下什么是 Chroot。以现在我们的安装为例，
+目前我们运行的软件和内核是 LiveUSB 提供给我们的，根目录是 LiveUSB 的，
+而 Gentoo 系统的根目录在 /mnt/gentoo/ ，我们也没有直接运行的能力，
+因为运行环境也不是 Gentoo 系统的，那么下一步我们就可以通过 Chroot 一系列操作，
+实现从 LiveUSB 转移到 Gentoo 系统下。</p>
+<ol>
+<li>
+<p>首先复制 DNS 到 Gentoo 系统下：
+<code>cp - dereference /etc/resolv.conf /mnt/gentoo/etc/</code></p>
+</li>
+<li>
+<p>挂载必要文件系统：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mount -t proc /proc /mnt/gentoo/proc
+mount - rbind /sys /mnt/gentoo/sys
+mount - make-rslave /mnt/gentoo/sys
+mount - rbind /dev /mnt/gentoo/dev
+mount - make-rslave /mnt/gentoo/dev
+</code></pre></div></li>
+<li>
+<p>进入 Chroot：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">chroot /mnt/gentoo /bin/bash
+<span class="nb">source</span> /etc/profile
+</code></pre></div></li>
+<li>
+<p>挂载其余所有的分区：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mount /dev/sda1 /boot
+
+mount /dev/其他分区 /home （如果有）
+mount /dev/其他分区 /opt <span class="o">(</span>如果有<span class="o">)</span>
+</code></pre></div></li>
+</ol>
+<h3 id="第一阶段">第一阶段</h3>
+<ol>
+<li>
+<p>快照更新 Profile 然后使用 rsync 同步
+<code>emerge-webrsync</code>
+<code>emerge - sync</code></p>
+</li>
+<li>
+<p>选择 默认 （kde 或 gnome）作为默认 profile</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">profile list
+eselect profile X
+emerge -auvDN - with-bdeps<span class="o">=</span>y @world
+</code></pre></div></li>
+<li>
+<p>现在开始了漫长的编译过程，如果这个时候出现某些依赖无法满足的情况，
+我们可以通过以下几种方法解决：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">emerge -auvDN - with-bdeps<span class="o">=</span>y - autounmark-write @world
+etc-update - automode -3
+emerge -auvDN - with-bdeps<span class="o">=</span>y @world
+</code></pre></div></li>
+<li>
+<p>确认没有更新</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"> emerge @preserved-rebuild
+ perl-cleaner - all
+ emerge -auvDN --with-bdeps<span class="o">=</span>y @world
+</code></pre></div></li>
+</ol>
+<h4 id="配置时区">配置时区</h4>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&#34;Asia/Shanghai&#34;</span> &gt; /etc/timezone
+emerge --config sys-libs/timezone-data
+
+<span class="nb">echo</span> <span class="s2">&#34;en_US.UTF-8 UTF-8
+</span><span class="s2">zh_CN.UTF-8 UTF-8&#34;</span> &gt;&gt; /etc/locale.gen
+
+locale-gen
+
+eselect locale list
+</code></pre></div><p>这时，应该能够看到列出的中文，但是目前建议暂时不要用 eselect 选择使用中文</p>
+<h4 id="fstab">fstab</h4>
+<p>先了解下 fstab，就像一张表，在 Linux 开机的告诉 mount 应该把哪个分区以什么文件系统，
+以什么方式挂载到系统对应位置。这里提供一份使用 btrfs 的 fstab 书写方式。</p>
+<p>其次，就是挂载时需要注意的挂载选项，无论你是使用 ext4 文件系统，
+还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
+一方面实现快速读取和写入，另一方面最小化文件丢失</p>
+<p>如果使用 btrfs 文件系统的话，非常推荐如下的挂载选项</p>
+<p><code>defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1</code></p>
+<p>使用 discard=async 与 fstrim 是不冲突的；另外透明压缩不需要启动等级 3，第一等级就足够了，
+如果有需求使用 btrfs 下的 swap ，那不能启用透明压缩功能；并且启用了自动碎片整理功能。这样对文件系统是比较好的。</p>
+<p>整个 fstab 的书写就是这样的 UUID 可以使用 blkid 命令查看
+<code>nona /etc/fstab</code></p>
+<pre><code class="language-conf" data-lang="conf">UUID=boot-uuid  /boot       vfat  defaults 0 0
+UUID=root-uuid  /           btrfs subvol=@,defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 1
+UUID=home-uuid  /home       btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 2
+UUID=opt-uuid   /opt        btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1,commit=120 0 2
+tmpfs           /tmp        tmpfs size=8G,notaime 0 0
+tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
+</code></pre><p>最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上</p>
+<p>针对你喜好的文件系统安装相对应的工具</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">btrfs: emerge sys-fs/btrfs-progs
+xfs: emerge sys-fs/xfsprogs
+jfs: emerge sys-fs/jfsutils
+</code></pre></div><h3 id="杂项处理">杂项处理</h3>
+<ol>
+<li>
+<p>网络连接使用 NetworkManager <code>emerge -av networkmanager</code>
+如果出现什么依赖需要解决，还是那三板斧：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">emerge - autounmask-write networkmanager
+etc-update - automode -3
+emerge networkmanager
+</code></pre></div><p>默认开机启动
+<code>systemctl enable NetworkManager</code></p>
+</li>
+<li>
+<p>设置主机名：
+<code>echo hostname=\&quot;Matrix\&quot; &gt; /etc/conf.d/hostname</code></p>
+</li>
+<li>
+<p>安装系统工具：</p>
+</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">emerge app-admin/sysklogd sys-process/cronie sudo layman grub
+sed -i <span class="s1">&#39;s/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g&#39;</span> /etc/sudoers
+passwd <span class="c1">#设置root密码</span>
+</code></pre></div><ol start="4">
+<li>systemd 再操作一波：</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sed -i <span class="s1">&#39;s/\# GRUB_CMDLINE_LINUX=\&#34;init=\/usr\/lib\/systemd\/systemd\&#34;/GRUB_CMDLINE_LINUX=\&#34;init=\/usr\/lib\/systemd\/systemd\&#34;/g&#39;</span> /etc/default/grub
+ln -sf /proc/self/mounts /etc/mtab
+systemd-machine-id-setup
+</code></pre></div><h3 id="安装内核">安装内核</h3>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">emerge -av genkernel
+genkernel --menuconfig all
+genkernel --install initramfs
+
+make -jX <span class="c1">#将 X 替换为你想编译时的线程数</span>
+make modules_install
+make install
+genkernel --install initramfs
+</code></pre></div><h3 id="安装-grub">安装 GRUB</h3>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">grub-install --target<span class="o">=</span>x86_64-efi --efi-directory<span class="o">=</span>/boot --bootloader-id<span class="o">=</span>Gentoo
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></div><p>如果出现 No space left on device
+请运行：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+rm /sys/firmware/efi/efivars/dump-*
+</code></pre></div><p>创建用户名并设置密码</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">useradd -m -G users,wheel,portage,usb,video <span class="c1">#这里换成你的用户名(小写)</span>
+passwd <span class="c1">#用户名</span>
+</code></pre></div><p>检查</p>
+<ol>
+<li><code>/boot</code> 下是否有内核文件生成</li>
+<li><code>/etc/fstab</code> 文件内容是否有误</li>
+<li>插着网线
+重启</li>
+</ol>
+<h3 id="安装显卡">安装显卡</h3>
+<p>intel + nvidia
+<code>emerge -av x11-drivers/nvidia-drivers x11-drivers/xf86-video-intel xrandr</code>
+<code>emerge -av xorg-server</code></p>
+<p>kde
+<code>emerge -av plasma-desktop plasma-nm plasma-pa sddm konsole</code></p>
+<p>gnome
+<code>emerge -av gnome gnome-desktop gnome-shell gdm gnome-terminal</code></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-03-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gentoo/">Gentoo</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/rust/rust-web/" class="prev" rel="prev" title="使用 rust 实现web server"><i class="fas fa-angle-left fa-fw"></i>使用 rust 实现web server</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.81.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">shun-sfoo</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
