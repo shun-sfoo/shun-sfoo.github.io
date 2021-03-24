@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Gentoo 安装教程 - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Gentoo 安装教程" />
-<meta property="og:description" content="闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT &#43; UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P" />
+<meta property="og:description" content="闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 更新：心累，还是用 archlinux 😂 磁盘分区 形式： GPT &#43; UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://shun-sfoo.github.io/posts/linux/gentoo/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-24T10:52:31&#43;08:00" />
@@ -14,7 +14,7 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Gentoo 安装教程"/>
-<meta name="twitter:description" content="闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT &#43; UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P"/>
+<meta name="twitter:description" content="闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 更新：心累，还是用 archlinux 😂 磁盘分区 形式： GPT &#43; UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的"/>
 <meta name="application-name" content="shun-sfoo&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="shun-sfoo&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/shun-sfoo.github.io\/posts\/linux\/gentoo\/"
-        },"genre": "posts","keywords": "Gentoo","wordcount":  2016 ,
+        },"genre": "posts","keywords": "Gentoo","wordcount":  2032 ,
         "url": "https:\/\/shun-sfoo.github.io\/posts\/linux\/gentoo\/","datePublished": "2021-03-24T10:52:31+08:00","dateModified": "2021-03-24T10:52:31+08:00","publisher": {
             "@type": "Organization",
             "name": "shun-sfoo"},"author": {
@@ -77,7 +77,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Gentoo 安装教程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-24">2021-03-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2016 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-24">2021-03-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2032 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -102,15 +102,17 @@
         <li><a href="#chroot-和-第一次构建">chroot 和 第一次构建</a></li>
         <li><a href="#第一阶段">第一阶段</a></li>
         <li><a href="#杂项处理">杂项处理</a></li>
-        <li><a href="#安装内核">安装内核</a></li>
+        <li><a href="#安装内核-待优化">安装内核 (待优化)</a></li>
         <li><a href="#安装-grub">安装 GRUB</a></li>
         <li><a href="#安装显卡">安装显卡</a></li>
       </ul>
     </li>
+    <li><a href="#参考链接">参考链接</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="闲话少叙">闲话少叙</h1>
 <p>使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始</p>
+<p>更新：心累，还是用 archlinux 😂</p>
 <h2 id="磁盘分区">磁盘分区</h2>
 <p>形式： GPT + UEFI</p>
 <table>
@@ -214,10 +216,10 @@ sync-type = rsync
 sync-uri = rsync://rsync.mirrors.ustc.edu.cn/gentoo-portage/
 auto-sync = yes
 </code></pre><h3 id="chroot-和-第一次构建">chroot 和 第一次构建</h3>
-<p>我们先了解下什么是 Chroot。以现在我们的安装为例，
-目前我们运行的软件和内核是 LiveUSB 提供给我们的，根目录是 LiveUSB 的，
-而 Gentoo 系统的根目录在 /mnt/gentoo/ ，我们也没有直接运行的能力，
-因为运行环境也不是 Gentoo 系统的，那么下一步我们就可以通过 Chroot 一系列操作，
+<p>先了解下什么是 Chroot。以现在的安装为例，
+目前运行的软件和内核是 LiveUSB 提供的，根目录是 LiveUSB 的，
+而 Gentoo 系统的根目录在 /mnt/gentoo/ ，也没有直接运行的能力，
+因为运行环境也不是 Gentoo 系统的，那么下一步可以通过 Chroot 一系列操作，
 实现从 LiveUSB 转移到 Gentoo 系统下。</p>
 <ol>
 <li>
@@ -276,8 +278,7 @@ emerge -auvDN - with-bdeps<span class="o">=</span>y @world
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&#34;Asia/Shanghai&#34;</span> &gt; /etc/timezone
 emerge --config sys-libs/timezone-data
 
-<span class="nb">echo</span> <span class="s2">&#34;en_US.UTF-8 UTF-8
-</span><span class="s2">zh_CN.UTF-8 UTF-8&#34;</span> &gt;&gt; /etc/locale.gen
+<span class="nb">echo</span> <span class="s2">&#34;en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8&#34;</span> &gt;&gt; /etc/locale.gen
 
 locale-gen
 
@@ -303,10 +304,12 @@ tmpfs           /tmp        tmpfs size=8G,notaime 0 0
 tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
 </code></pre><p>最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上</p>
 <p>针对你喜好的文件系统安装相对应的工具</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">btrfs: emerge sys-fs/btrfs-progs
-xfs: emerge sys-fs/xfsprogs
-jfs: emerge sys-fs/jfsutils
-</code></pre></div><h3 id="杂项处理">杂项处理</h3>
+<ul>
+<li><i class="far fa-check-square fa-fw"></i> btrfs <code>emerge sys-fs/btrfs-progs</code></li>
+<li><i class="far fa-square fa-fw"></i> xfs <code>emerge sys-fs/xfsprogs</code></li>
+<li><i class="far fa-square fa-fw"></i> jfs <code>emerge sys-fs/jfsutils</code></li>
+</ul>
+<h3 id="杂项处理">杂项处理</h3>
 <ol>
 <li>
 <p>网络连接使用 NetworkManager <code>emerge -av networkmanager</code>
@@ -323,18 +326,19 @@ emerge networkmanager
 </li>
 <li>
 <p>安装系统工具：</p>
-</li>
-</ol>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">emerge app-admin/sysklogd sys-process/cronie sudo layman grub
 sed -i <span class="s1">&#39;s/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g&#39;</span> /etc/sudoers
 passwd <span class="c1">#设置root密码</span>
-</code></pre></div><ol start="4">
-<li>systemd 再操作一波：</li>
-</ol>
+</code></pre></div></li>
+<li>
+<p>systemd 再操作一波：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sed -i <span class="s1">&#39;s/\# GRUB_CMDLINE_LINUX=\&#34;init=\/usr\/lib\/systemd\/systemd\&#34;/GRUB_CMDLINE_LINUX=\&#34;init=\/usr\/lib\/systemd\/systemd\&#34;/g&#39;</span> /etc/default/grub
 ln -sf /proc/self/mounts /etc/mtab
 systemd-machine-id-setup
-</code></pre></div><h3 id="安装内核">安装内核</h3>
+</code></pre></div></li>
+</ol>
+<h3 id="安装内核-待优化">安装内核 (待优化)</h3>
+<p>不定制自动配置</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">emerge -av genkernel
 genkernel --menuconfig all
 genkernel --install initramfs
@@ -368,6 +372,9 @@ passwd <span class="c1">#用户名</span>
 <code>emerge -av plasma-desktop plasma-nm plasma-pa sddm konsole</code></p>
 <p>gnome
 <code>emerge -av gnome gnome-desktop gnome-shell gdm gnome-terminal</code></p>
+<h2 id="参考链接">参考链接</h2>
+<p><a href="https://medium.com/@langleyhouge/gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%8F%8A%E6%80%BB%E7%BB%93-1db269cfa8c7" target="_blank" rel="noopener noreffer">Langley Houge</a></p>
+<p><a href="https://blog.yangmame.org/Gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.html" target="_blank" rel="noopener noreffer">yangmame</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

@@ -9,7 +9,7 @@
     <pubDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://shun-sfoo.github.io/posts/linux/gentoo/</guid>
-    <description><![CDATA[闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的概念 Portage Gentoo 的包管理器是 P]]></description>
+    <description><![CDATA[闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 更新：心累，还是用 archlinux 😂 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的]]></description>
 </item><item>
     <title>使用 rust 实现web server</title>
     <link>https://shun-sfoo.github.io/posts/rust/rust-web/</link>
