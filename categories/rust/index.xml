@@ -1,21 +1,65 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Rust - 分类 - shun-sfoo&#39;s blog</title>
-        <link>https://shun-sfoo.github.io/categories/rust/</link>
-        <description>Rust - 分类 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 18 Mar 2021 15:12:08 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/rust/" rel="self" type="application/rss+xml" /><item>
-    <title>使用 rust 实现web server</title>
-    <link>https://shun-sfoo.github.io/posts/rust/rust-web/</link>
-    <pubDate>Thu, 18 Mar 2021 15:12:08 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/rust/rust-web/</guid>
-    <description><![CDATA[因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监]]></description>
-</item><item>
-    <title>Rust 所有权</title>
-    <link>https://shun-sfoo.github.io/posts/rust/ownership/</link>
-    <pubDate>Mon, 22 Feb 2021 16:37:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/rust/ownership/</guid>
-    <description><![CDATA[语句和表达式 Rust 是一门基于表达式（expression-based）的语言 语句（Statements）是执行一些操作但不返回值的指令 表达式（E]]></description>
-</item></channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rust on Even - A super concise theme for Hugo</title>
+    <link>http://localhost:1313/categories/rust/</link>
+    <description>Recent content in Rust on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 24 Mar 2021 22:38:56 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 语法总结</title>
+      <link>http://localhost:1313/post/rust/summary/</link>
+      <pubDate>Wed, 24 Mar 2021 22:38:56 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/rust/summary/</guid>
+      <description>工欲善其事，必先利其器 工具 rustfmt ：格式化工具 clippy: 用于捕捉常见错误和改进 Rust 代码 cargo doc: 生成本地文档 rust-analyzer: 参见我的 neovim 配置,提供 lsp 功能</description>
+    </item>
+    
+    <item>
+      <title>Rust 语法总结</title>
+      <link>http://localhost:1313/posts/rust/summary/</link>
+      <pubDate>Wed, 24 Mar 2021 22:38:56 +0800</pubDate>
+      
+      <guid>http://localhost:1313/posts/rust/summary/</guid>
+      <description>工欲善其事，必先利其器 工具 rustfmt ：格式化工具 clippy: 用于捕捉常见错误和改进 Rust 代码 cargo doc: 生成本地文档 rust-analyzer: 参见我的 neovim 配置,提供 lsp 功能</description>
+    </item>
+    
+    <item>
+      <title>使用 rust 实现web server</title>
+      <link>http://localhost:1313/post/rust/rust-web/</link>
+      <pubDate>Thu, 18 Mar 2021 15:12:08 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/rust/rust-web/</guid>
+      <description>因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监</description>
+    </item>
+    
+    <item>
+      <title>使用 rust 实现web server</title>
+      <link>http://localhost:1313/posts/rust/rust-web/</link>
+      <pubDate>Thu, 18 Mar 2021 15:12:08 +0800</pubDate>
+      
+      <guid>http://localhost:1313/posts/rust/rust-web/</guid>
+      <description>因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监</description>
+    </item>
+    
+    <item>
+      <title>Rust 所有权</title>
+      <link>http://localhost:1313/post/rust/ownership/</link>
+      <pubDate>Mon, 22 Feb 2021 16:37:35 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/rust/ownership/</guid>
+      <description>语句和表达式 Rust 是一门基于表达式（expression-based）的语言 语句（Statements）是执行一些操作但不返回值的指令 表达式（E</description>
+    </item>
+    
+    <item>
+      <title>Rust 所有权</title>
+      <link>http://localhost:1313/posts/rust/ownership/</link>
+      <pubDate>Mon, 22 Feb 2021 16:37:35 +0800</pubDate>
+      
+      <guid>http://localhost:1313/posts/rust/ownership/</guid>
+      <description>语句和表达式 Rust 是一门基于表达式（expression-based）的语言 语句（Statements）是执行一些操作但不返回值的指令 表达式（E</description>
+    </item>
+    
+  </channel>
 </rss>

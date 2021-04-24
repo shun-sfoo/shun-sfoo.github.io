@@ -1,14 +1,29 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Linux - 分类 - shun-sfoo&#39;s blog</title>
-        <link>https://shun-sfoo.github.io/categories/linux/</link>
-        <description>Linux - 分类 - shun-sfoo&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</lastBuildDate><atom:link href="https://shun-sfoo.github.io/categories/linux/" rel="self" type="application/rss+xml" /><item>
-    <title>Gentoo 安装教程</title>
-    <link>https://shun-sfoo.github.io/posts/linux/gentoo/</link>
-    <pubDate>Wed, 24 Mar 2021 10:52:31 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://shun-sfoo.github.io/posts/linux/gentoo/</guid>
-    <description><![CDATA[闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 更新：心累，还是用 archlinux 😂 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的]]></description>
-</item></channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Even - A super concise theme for Hugo</title>
+    <link>http://localhost:1313/categories/linux/</link>
+    <description>Recent content in Linux on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 24 Mar 2021 10:52:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gentoo 安装教程</title>
+      <link>http://localhost:1313/post/linux/gentoo/</link>
+      <pubDate>Wed, 24 Mar 2021 10:52:31 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/linux/gentoo/</guid>
+      <description>闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 更新：心累，还是用 archlinux 😂 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的</description>
+    </item>
+    
+    <item>
+      <title>Gentoo 安装教程</title>
+      <link>http://localhost:1313/posts/linux/gentoo/</link>
+      <pubDate>Wed, 24 Mar 2021 10:52:31 +0800</pubDate>
+      
+      <guid>http://localhost:1313/posts/linux/gentoo/</guid>
+      <description>闲话少叙 使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始 更新：心累，还是用 archlinux 😂 磁盘分区 形式： GPT + UEFI 类型 大小 挂载点 格式化 EFI 512M boot mkfs.vfat btrfs free space root mkfs.btrfs Gentoo 的</description>
+    </item>
+    
+  </channel>
 </rss>

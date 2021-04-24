@@ -1,101 +1,130 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>zsh 学习1-变量 - shun-sfoo&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="zsh 学习1-变量" />
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>zsh 学习1-变量 - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="shun-sfoo" /><meta name="description" content="变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.82.1 with theme even" />
+
+
+<link rel="canonical" href="http://localhost:1313/posts/zsh/zsh-01/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.39a3e01cac9473be1356f3572fcfe34b2e363efabad244a99a40f28a812c837e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="zsh 学习1-变量" />
 <meta property="og:description" content="变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://shun-sfoo.github.io/posts/zsh/zsh-01/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/zsh/zsh-01/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-12-02T22:55:46&#43;08:00" />
 <meta property="article:modified_time" content="2020-12-02T22:55:46&#43;08:00" />
 
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="name" content="zsh 学习1-变量">
+<meta itemprop="description" content="变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号"><meta itemprop="datePublished" content="2020-12-02T22:55:46&#43;08:00" />
+<meta itemprop="dateModified" content="2020-12-02T22:55:46&#43;08:00" />
+<meta itemprop="wordCount" content="1503">
+<meta itemprop="keywords" content="zsh," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zsh 学习1-变量"/>
 <meta name="twitter:description" content="变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号"/>
-<meta name="application-name" content="shun-sfoo&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="shun-sfoo&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://shun-sfoo.github.io/posts/zsh/zsh-01/" /><link rel="next" href="https://shun-sfoo.github.io/posts/vim/practical-vim/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "zsh 学习1-变量",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https:\/\/shun-sfoo.github.io\/posts\/zsh\/zsh-01\/"
-        },"genre": "posts","keywords": "zsh","wordcount":  1380 ,
-        "url": "https:\/\/shun-sfoo.github.io\/posts\/zsh\/zsh-01\/","datePublished": "2020-12-02T22:55:46+08:00","dateModified": "2020-12-02T22:55:46+08:00","publisher": {
-            "@type": "Organization",
-            "name": "shun-sfoo"},"author": {
-                "@type": "Person",
-                "name": "shun-sfoo"
-            },"description": ""
-    }
-    </script></head>
-    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="shun-sfoo&#39;s blog">shun-sfoo&#39;s blog</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="shun-sfoo&#39;s blog">shun-sfoo&#39;s blog</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw"></i>
-            </a></div>
-    </div>
-</header>
-<div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">shun-sfoo&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
-<div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-</div>
-<main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">zsh 学习1-变量</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>shun-sfoo</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/shell/"><i class="far fa-folder fa-fw"></i>shell</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-02">2020-12-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1380 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#变量定义">变量定义</a></li>
-        <li><a href="#变量比较">变量比较</a></li>
-        <li><a href="#语句">语句</a></li>
-      </ul>
-    </li>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
   </ul>
-</nav></div>
-            </div><div class="content" id="content"><h3 id="变量定义">变量定义</h3>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">shun-sfoo&#39;s blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  <div class="post-content">
+    <h3 id="变量定义">变量定义</h3>
 <p>Zsh 的变量多数情况不需要提前声明或者指定类型,</p>
 <p>可以直接赋值和使用 (但哈希表是一个例外).</p>
 <p>双引号里可以使用变量，而单引号不可以 <code>($var)</code>.</p>
@@ -111,57 +140,164 @@
 <h3 id="语句">语句</h3>
 <h4 id="条件语句">条件语句</h4>
 <p>如果不确定语法是否符合预期, 可以定义一个函数然后使用 <code>which</code> 查看, 内容会被转化成原始 (posix shell 风格) 的样子</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">if</span> <span class="o">[[</span> <span class="o">]]</span> <span class="o">{</span>
 <span class="o">}</span> <span class="k">elif</span> <span class="o">{</span>
 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
 <span class="o">}</span>
-</code></pre></div><p><code>[[ ]]</code> 用于比较字符串, 判断文件等. 注意尽量不要用 <code>[[ ]]</code> 比较数值, 因为不留神的话, 数值会被转化成字符串来比较, 没有任何错误提示, 但结果可能不符合预期, 导致不必要的麻烦.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 样例</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>[[ ]]</code> 用于比较字符串, 判断文件等. 注意尽量不要用 <code>[[ ]]</code> 比较数值, 因为不留神的话, 数值会被转化成字符串来比较, 没有任何错误提示, 但结果可能不符合预期, 导致不必要的麻烦.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 样例</span>
 <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$str</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;name&#34;</span> <span class="o">||</span> <span class="s2">&#34;</span><span class="nv">$str</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;value&#34;</span> <span class="o">]]</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$str</span><span class="s2">&#34;</span>
 <span class="o">}</span>
-</code></pre></div><p><code>(( ))</code> 用于比较数值, 里边可以调用各种数值相关的函数</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>(( ))</code> 用于比较数值, 里边可以调用各种数值相关的函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">if</span> <span class="o">((</span> <span class="o">))</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># 样例</span>
 <span class="k">if</span> <span class="o">((</span>num &gt; <span class="m">3</span> <span class="o">&amp;&amp;</span> num + <span class="m">3</span> &lt; 10<span class="o">))</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="nv">$num</span>
 <span class="o">}</span>
-</code></pre></div><p><code>{ }</code> 用于在当前 shell 运行命令并且判断运行结果.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>{ }</code> 用于在当前 shell 运行命令并且判断运行结果.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">if</span> <span class="o">{</span> <span class="o">}</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># 样例</span>
 <span class="k">if</span> <span class="o">{</span>grep sd1 /etc/fstab<span class="o">}</span> <span class="o">{</span>
     <span class="nb">echo</span> good
 <span class="o">}</span>
-</code></pre></div><p><code>( )</code> 用于在子 shell 运行命令并且判断运行结果，用法和 <code>{}</code> 类似.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>( )</code> 用于在子 shell 运行命令并且判断运行结果，用法和 <code>{}</code> 类似.</p>
 <p>这几种括号可以一起使用, 这样可以同时判断字符串, 数值, 文件, 命令结果等等.</p>
 <p>最好不要混合使用 <code>&amp;&amp; ||</code>, 会导致可读性变差和容易出错.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">if</span> <span class="o">[[</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">((</span> <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="o">{</span> <span class="o">}</span> <span class="o">{</span>
 <span class="o">}</span>
-</code></pre></div><h4 id="循环语句">循环语句</h4>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="循环语句">循环语句</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">while</span> <span class="o">[[</span> <span class="o">]]</span> <span class="o">{</span>
     break/continue
 <span class="o">}</span>
-</code></pre></div><p>和 <code>if</code> 一样, 这里的 <code>[[ ]]</code> 可以替换成其他几种括号, 功能也是一样的.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>和 <code>if</code> 一样, 这里的 <code>[[ ]]</code> 可以替换成其他几种括号, 功能也是一样的.</p>
 <p>break 用于结束循环, continue 用于直接进入下一次循环.</p>
 <p>所有的循环语句中都可以使用 break 和 continue.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 样例 死循环</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 样例 死循环</span>
  <span class="k">while</span> <span class="o">((</span> <span class="m">1</span> <span class="o">))</span> <span class="o">{</span>
     <span class="nb">echo</span> good
 <span class="o">}</span>
-</code></pre></div><p><code>until</code> 和 <code>while</code> 相反, 不满足条件时运行, 一旦满足则停止, 其他的用法和 while 相同</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>until</code> 和 <code>while</code> 相反, 不满足条件时运行, 一旦满足则停止, 其他的用法和 while 相同</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">until</span> <span class="o">[[</span> <span class="o">]]</span> <span class="o">{</span>
 <span class="o">}</span>
-</code></pre></div><p><code>for</code> 循环主要用于枚举, 这里的括号是 <code>for</code> 的特有用法, 不是在子 shell 执行.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>for</code> 循环主要用于枚举, 这里的括号是 <code>for</code> 的特有用法, 不是在子 shell 执行.</p>
 <p>括号内是字符串 (可放多个, 空格隔开), 数组 (可放多个) 或者哈希表 (可放多个, 哈希表是枚举值而不是键). <code>i</code> 是用于枚举内容的变量名, 变量名随意.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">for</span> i <span class="o">(</span> <span class="o">)</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># 样例</span>
@@ -179,30 +315,100 @@
 <span class="k">for</span> i <span class="o">(</span><span class="nv">$array</span><span class="o">)</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="nv">$i</span>
 <span class="o">}</span>
-</code></pre></div><p>经典的 c 风格 for 循环.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>经典的 c 风格 for 循环.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">for</span> <span class="o">((</span> <span class="p">;</span> <span class="p">;</span> <span class="o">))</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># 样例</span>
 <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i &lt; 10<span class="p">;</span> i++<span class="o">))</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="nv">$i</span>
 <span class="o">}</span>
-</code></pre></div><p>这个样例只是举例,实际上多数情况不需要使用这种 for 循环,可以这样.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 样例，{1..10} 可以生成一个 1 到 10 的数组</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这个样例只是举例,实际上多数情况不需要使用这种 for 循环,可以这样.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 样例，{1..10} 可以生成一个 1 到 10 的数组</span>
 <span class="k">for</span> i <span class="o">({</span>1..10<span class="o">})</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="nv">$i</span>
 <span class="o">}</span>
-</code></pre></div><p><code>repeat</code> 语句用于循环固定次数, n 是一个整数或者内容为整数的变量.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>repeat</code> 语句用于循环固定次数, n 是一个整数或者内容为整数的变量.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 repeat n <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># 样例</span>
 repeat <span class="m">5</span> <span class="o">{</span>
     <span class="nb">echo</span> good
 <span class="o">}</span>
-</code></pre></div><h4 id="分支语句">分支语句</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="分支语句">分支语句</h4>
 <p>分支逻辑用 <code>if</code> 也可以实现, 但 <code>case</code> 更适合这种场景, 并且功能更强大.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式 + 样例</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式 + 样例</span>
 <span class="k">case</span> <span class="nv">$i</span> <span class="o">{</span>
     <span class="o">(</span>a<span class="o">)</span>
     <span class="nb">echo</span> <span class="m">1</span>
@@ -230,10 +436,26 @@ repeat <span class="m">5</span> <span class="o">{</span>
     <span class="nb">echo</span> other
     <span class="p">;;</span>
 <span class="o">}</span>
-</code></pre></div><p><code>;;</code> 代表结束 case 语句, <code>;&amp;</code> 代表继续执行紧接着的下一个匹配的语句（不再进行匹配）, <code>;|</code> 代表继续往下匹配看是否有满足条件的分支.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>;;</code> 代表结束 case 语句, <code>;&amp;</code> 代表继续执行紧接着的下一个匹配的语句（不再进行匹配）, <code>;|</code> 代表继续往下匹配看是否有满足条件的分支.</p>
 <h4 id="用户输入选择语句">用户输入选择语句</h4>
 <p><code>select</code> 语句是用于根据用户的选择决定分支的语句, 语法和 <code>for</code> 语句差不多, 如果不 <code>break</code>, 会循环让用户选择.</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="k">select</span> i <span class="o">(</span> <span class="o">)</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># 样例</span>
@@ -243,64 +465,111 @@ repeat <span class="m">5</span> <span class="o">{</span>
 <span class="c1"># 输出是这样的。</span>
 1<span class="o">)</span> aa  2<span class="o">)</span> bb  3<span class="o">)</span> cc
 ?#
-</code></pre></div><h4 id="异常处理语句">异常处理语句</h4>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="异常处理语句">异常处理语句</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 格式</span>
 <span class="o">{</span>
     语句 <span class="m">1</span>
 <span class="o">}</span> always <span class="o">{</span>
     语句 <span class="m">2</span>
 <span class="o">}</span>
-</code></pre></div><p>如果语句 1 执行出错, 则执行语句 2.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果语句 1 执行出错, 则执行语句 2.</p>
 <h4 id="简化的条件语句">简化的条件语句</h4>
 <p><code>if</code> 语句的简化版, 在只有一个分支的情况下更简洁, 功能和 <code>if</code> 语句类似</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">格式：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">格式：
 <span class="o">[[</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">{</span>
 <span class="o">}</span>
 
 <span class="o">[[</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">{</span>
 <span class="o">}</span>
-</code></pre></div><p>最好不要连续混合使用 <code>&amp;&amp; ||</code>, 比如:</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>最好不要连续混合使用 <code>&amp;&amp; ||</code>, 比如:</p>
 <p><code>aa &amp;&amp; bb || cc &amp;&amp; dd</code></p>
 <p>容易导致逻辑错误或者误解，可以用 <code>{ }</code> 把语句包含起来.</p>
 <p><code>aa &amp;&amp; { bb || { cc &amp;&amp; dd } }</code></p>
 <p>比较复杂的判断还是用 <code>if</code> 可读写更好, <code>&amp;&amp; ||</code> 通常只适用于简单的场景.</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2020-12-02</span>
-            </div>
-            <div class="post-info-license"></div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span></span>
-            </div>
-        </div>
-    </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/zsh/">zsh</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+  </div>
+</article>
+        </div>
+        
 
-    <div class="post-nav">
-            <a href="/posts/vim/practical-vim/" class="next" rel="next" title="vim 实用技巧">vim 实用技巧<i class="fas fa-angle-right fa-fw"></i></a></div>
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
-</article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.81.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">shun-sfoo</a></span></div>
-        </div>
-    </footer></div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw"></i>
-            </a>
-        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>shun-sfoo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
 </html>
