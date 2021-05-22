@@ -6,7 +6,25 @@
     <description>Recent content on Even - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 04 Apr 2021 11:40:58 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 May 2021 17:43:39 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「透过 Rust 探索系统本原」 学习笔记</title>
+      <link>http://localhost:1313/post/rust/base/</link>
+      <pubDate>Thu, 20 May 2021 17:43:39 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/rust/base/</guid>
+      <description>类型系统 来源:程序人生公众号 Rust 中是如何构建类型系统的呢？ 基本类型 (primitive type) struct 通过 product type 笛卡尔积的方式组成 enum 通过 sum type 构成 primitive type primitive type，基本类型。 基本</description>
+    </item>
+    
+    <item>
+      <title>动态规划</title>
+      <link>http://localhost:1313/post/algo/dynamic/</link>
+      <pubDate>Tue, 18 May 2021 13:15:03 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/algo/dynamic/</guid>
+      <description>动态规划 序号 区间 收益 1 1-3 5 2 3-5 1 3 0-6 8 4 4-7 4 5 3-8 6 6 5-9 3 7 6-10 2 8 8-11 4 $$ opt(i) = max \begin{cases} v(i) + opt(prev(i)) \\ opt(i-1) \end{cases} $$ prev(8) = 5; prev(7) = 3; prev(6) = 2; prev(2) = 0;</description>
+    </item>
+    
     <item>
       <title>Too_many_linked_list</title>
       <link>http://localhost:1313/post/book/too_many_linked_list/</link>

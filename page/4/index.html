@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.82.1 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="http://localhost:1313/" />
@@ -37,7 +37,7 @@
 
 
 
-<link href="/sass/main.min.39a3e01cac9473be1356f3572fcfe34b2e363efabad244a99a40f28a812c837e.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -122,6 +122,52 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/jvm/jvm03/">JVM-3 Java 虚拟机内存结构</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-12-11 </span>
+      <div class="post-category">
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="more-meta"> 1475 words </span>
+        <span class="more-meta"> 3 mins read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      运行时数据区 在 《Java 虚拟机规范》中用的是「运行时数据区」这个术语。但很多时候并不是很形象。 再加上日积月累的习惯，都习惯用虚拟机内存结构这
+    </div>
+    <div class="read-more">
+      <a href="/post/jvm/jvm03/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/data-struct/array/">数据结构-数组</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-12-10 </span>
+      <div class="post-category">
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="more-meta"> 634 words </span>
+        <span class="more-meta"> 2 mins read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      定义 在 Java 中数组定义为承载某种类型元素可重复集合。 数据结构 1 2 3 4 5 6 7 8 9 10 11 public class Array&lt;E&gt; { /** * 数组内容 */ private E[] data; /** * 数组中元素的个数 */ private int size; } capacity 为
+    </div>
+    <div class="read-more">
+      <a href="/post/data-struct/array/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/jvm/jvm02/">JVM-2 字节码</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-12-09 </span>
@@ -189,29 +235,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/zsh/zsh-01/">zsh 学习1-变量</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-12-02 </span>
-      <div class="post-category">
-          <a href="/categories/shell/"> shell </a>
-          </div>
-        <span class="more-meta"> 1503 words </span>
-        <span class="more-meta"> 3 mins read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      变量定义 Zsh 的变量多数情况不需要提前声明或者指定类型, 可以直接赋值和使用 (但哈希表是一个例外). 双引号里可以使用变量，而单引号不可以 ($var). 单双引号
-    </div>
-    <div class="read-more">
-      <a href="/post/zsh/zsh-01/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -219,7 +242,10 @@
         <i class="iconfont icon-left"></i>
         <span class="prev-text">Prev</span>
       </a>
-    
+    <a class="next" href="/page/5/">
+        <span class="next-text">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
   </nav>
         </div>
         
@@ -265,6 +291,13 @@
 
 
 <script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

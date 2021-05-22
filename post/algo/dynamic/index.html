@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>使用 rust 实现web server - Even - A super concise theme for Hugo</title>
+  <title>动态规划 - Even - A super concise theme for Hugo</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="shun-sfoo" /><meta name="description" content="因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="shun-sfoo" /><meta name="description" content="动态规划 序号 区间 收益 1 1-3 5 2 3-5 1 3 0-6 8 4 4-7 4 5 3-8 6 6 5-9 3 7 6-10 2 8 8-11 4 $$ opt(i) = max \begin{cases} v(i) &#43; opt(prev(i)) \\ opt(i-1) \end{cases} $$ prev(8) = 5; prev(7) = 3; prev(6) = 2; prev(2) = 0;" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
-<link rel="canonical" href="http://localhost:1313/posts/rust/rust-web/" />
+<link rel="canonical" href="http://localhost:1313/post/algo/dynamic/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,20 +39,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="使用 rust 实现web server" />
-<meta property="og:description" content="因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监" />
+<meta property="og:title" content="动态规划" />
+<meta property="og:description" content="动态规划 序号 区间 收益 1 1-3 5 2 3-5 1 3 0-6 8 4 4-7 4 5 3-8 6 6 5-9 3 7 6-10 2 8 8-11 4 $$ opt(i) = max \begin{cases} v(i) &#43; opt(prev(i)) \\ opt(i-1) \end{cases} $$ prev(8) = 5; prev(7) = 3; prev(6) = 2; prev(2) = 0;" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://localhost:1313/posts/rust/rust-web/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-03-18T15:12:08&#43;08:00" />
-<meta property="article:modified_time" content="2021-03-18T15:12:08&#43;08:00" />
+<meta property="og:url" content="http://localhost:1313/post/algo/dynamic/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-18T13:15:03&#43;08:00" />
+<meta property="article:modified_time" content="2021-05-18T13:15:03&#43;08:00" />
 
-<meta itemprop="name" content="使用 rust 实现web server">
-<meta itemprop="description" content="因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监"><meta itemprop="datePublished" content="2021-03-18T15:12:08&#43;08:00" />
-<meta itemprop="dateModified" content="2021-03-18T15:12:08&#43;08:00" />
-<meta itemprop="wordCount" content="104">
-<meta itemprop="keywords" content="Rust," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="使用 rust 实现web server"/>
-<meta name="twitter:description" content="因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象， 并能够选择比其他语言可能或可用的层次更低的层次。 目的 学习一些 TCP 与 HTTP 知识 在套接字上监"/>
+<meta itemprop="name" content="动态规划">
+<meta itemprop="description" content="动态规划 序号 区间 收益 1 1-3 5 2 3-5 1 3 0-6 8 4 4-7 4 5 3-8 6 6 5-9 3 7 6-10 2 8 8-11 4 $$ opt(i) = max \begin{cases} v(i) &#43; opt(prev(i)) \\ opt(i-1) \end{cases} $$ prev(8) = 5; prev(7) = 3; prev(6) = 2; prev(2) = 0;"><meta itemprop="datePublished" content="2021-05-18T13:15:03&#43;08:00" />
+<meta itemprop="dateModified" content="2021-05-18T13:15:03&#43;08:00" />
+<meta itemprop="wordCount" content="58">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="动态规划"/>
+<meta name="twitter:description" content="动态规划 序号 区间 收益 1 1-3 5 2 3-5 1 3 0-6 8 4 4-7 4 5 3-8 6 6 5-9 3 7 6-10 2 8 8-11 4 $$ opt(i) = max \begin{cases} v(i) &#43; opt(prev(i)) \\ opt(i-1) \end{cases} $$ prev(8) = 5; prev(7) = 3; prev(6) = 2; prev(2) = 0;"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -123,20 +123,120 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <article class="post">
-  <div class="post-content">
-    <p>因为 rust 是一个系统编程语言， 我们能够选择处理什么层次的抽象，
-并能够选择比其他语言可能或可用的层次更低的层次。</p>
-<h1 id="目的">目的</h1>
-<ol>
-<li>学习一些 TCP 与 HTTP 知识</li>
-<li>在套接字上监听 TCP 请求</li>
-<li>解析少量的 HTTP 请求</li>
-<li>创建一个合适的 HTTP 响应</li>
-<li>通过线程池改善 server 的吞吐量</li>
-</ol>
+    
+    <header class="post-header">
+      <h1 class="post-title">动态规划</h1>
 
+      <div class="post-meta">
+        <span class="post-time"> 2021-05-18 </span>
+        
+          <span class="more-meta"> 58 words </span>
+          <span class="more-meta"> 1 min read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
   </div>
-</article>
+</div>
+    <div class="post-content">
+      <p>动态规划</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>区间</th>
+<th>收益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1-3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3-5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0-6</td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4-7</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3-8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5-9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>6-10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8-11</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>$$
+opt(i) = max \begin{cases} v(i) + opt(prev(i))
+\\ opt(i-1) \end{cases}
+$$</p>
+<p>prev(8) = 5;
+prev(7) = 3;
+prev(6) = 2;
+prev(2) = 0;</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">shun-sfoo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-05-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/rust/base/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">「透过 Rust 探索系统本原」 学习笔记</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/book/too_many_linked_list/">
+            <span class="next-text nav-default">Too_many_linked_list</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
 

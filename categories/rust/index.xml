@@ -6,7 +6,16 @@
     <description>Recent content in Rust on Even - A super concise theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Mar 2021 22:38:56 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 May 2021 17:43:39 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「透过 Rust 探索系统本原」 学习笔记</title>
+      <link>http://localhost:1313/post/rust/base/</link>
+      <pubDate>Thu, 20 May 2021 17:43:39 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/rust/base/</guid>
+      <description>类型系统 来源:程序人生公众号 Rust 中是如何构建类型系统的呢？ 基本类型 (primitive type) struct 通过 product type 笛卡尔积的方式组成 enum 通过 sum type 构成 primitive type primitive type，基本类型。 基本</description>
+    </item>
+    
     <item>
       <title>Rust 语法总结</title>
       <link>http://localhost:1313/post/rust/summary/</link>
