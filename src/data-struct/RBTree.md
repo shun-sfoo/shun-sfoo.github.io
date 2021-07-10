@@ -54,8 +54,8 @@
 相等性，红黑树可以看作 2-3 树
 当有三节点时左侧节点作为孩子节点标红表示 2-3 树中两个节点并列
 所有的红色节点都是左倾斜的(或者实现右倾斜的版本)
-![BRTree](/BRTree/BR-23.png)
-![BRTree1](/BRTree/BR-23-1.png)
+![BRTree](../static/Java/BR-23.png)
+![BRTree1](../static/Java/BR-23-1.png)
 
 添加节点默认为红色: 2-3 树中新添加节点总是先融合
 
@@ -70,7 +70,7 @@
 - 永远添加红色节点
 - 根节点为黑色节点
 
-![ADD](/BRTree/BRTree_ADD.png)
+![ADD](../static/Java/BRTree_ADD.png)
 
 图中流程可以总结为： **流程想象对应 2-3 树的变换**
 
