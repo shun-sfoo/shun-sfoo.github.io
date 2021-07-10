@@ -1,0 +1,6 @@
+[book]
+authors = ["shun-sfoo"]
+language = "en"
+multilingual = false
+src = "src"
+title = "awesome-book"
