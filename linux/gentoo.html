@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>geento - shun-sfoo Tech blog</title>
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../data-struct/intro.html">数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../data-struct/array.html">数组</a></li><li class="chapter-item expanded "><a href="../data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item expanded "><a href="../data-struct/linkedList.html">链表</a></li><li class="chapter-item expanded "><a href="../data-struct/heap.html">堆</a></li><li class="chapter-item expanded "><a href="../data-struct/bst.html">二分搜索树</a></li><li class="chapter-item expanded "><a href="../data-struct/RBTree.html">红黑树</a></li><li class="chapter-item expanded "><a href="../data-struct/segmentTree.html">线段树</a></li><li class="chapter-item expanded "><a href="../data-struct/avl.html">avl 树</a></li><li class="chapter-item expanded "><a href="../data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item expanded "><a href="../linux/intro.html">linux</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../linux/gentoo.html" class="active">geento</a></li><li class="chapter-item expanded "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item expanded "><a href="../linux/zsh-01.html">zsh 1</a></li></ol></li><li class="chapter-item expanded "><a href="../Java/intro.html">Java</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item expanded "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item expanded "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item expanded "><a href="../reading/intro.html">阅读</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item expanded "><a href="../Rust/intro.html">Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Rust/base.html">base</a></li><li class="chapter-item expanded "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item expanded "><a href="../Rust/lists.html">list</a></li><li class="chapter-item expanded "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item expanded "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item expanded "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item expanded "><a href="../Rust/summary.html">summary</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shun-sfoo/shun-sfoo.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="gentoo-安装教程"><a class="header" href="#gentoo-安装教程">Gentoo 安装教程</a></h1>
+<p>使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始</p>
+<p>更新：心累，还是用 archlinux 😂</p>
+<h2 id="磁盘分区"><a class="header" href="#磁盘分区">磁盘分区</a></h2>
+<p>形式： GPT + UEFI</p>
+<table><thead><tr><th>类型</th><th>大小</th><th>挂载点</th><th>格式化</th></tr></thead><tbody>
+<tr><td>EFI</td><td>512M</td><td>boot</td><td>mkfs.vfat</td></tr>
+<tr><td>btrfs</td><td>free space</td><td>root</td><td>mkfs.btrfs</td></tr>
+</tbody></table>
+<h2 id="gentoo-的概念"><a class="header" href="#gentoo-的概念">Gentoo 的概念</a></h2>
+<h3 id="portage"><a class="header" href="#portage">Portage</a></h3>
+<p>Gentoo 的包管理器是 Portage，portage 包含了 emerge 和 ebuild 两部分，
+emerge 是一个可执行程序，负责将 ebuild 中的内容按照规则进行编译和安装，
+ebuild 这个文件，更像是个脚本，emerge 按照它进行下载源代码，打补丁，
+一定的规则编译，然后安装</p>
+<h3 id="use"><a class="header" href="#use">USE</a></h3>
+<p>这是一个 Gentoo Linux 发行版比较独特的“标签”，
+它定义了编译和构建整个系统需要依赖什么，不需要依赖什么，
+尽可能让系统简洁，轻快，高效。</p>
+<h3 id="cflags"><a class="header" href="#cflags">Cflags</a></h3>
+<p>这是 GCC 针对源代码编译进行一定优化的标签，通过这些功能，
+可以将我们需要的软件源码进行一定级别的优化，然后生成可执行程序，
+从而提高运行效率。</p>
+<h2 id="正式开始"><a class="header" href="#正式开始">正式开始</a></h2>
+<ol>
+<li>通过 su 获取 root 权限,</li>
+<li><code>mkdir -p /mnt/gentoo</code></li>
+<li>将 root 挂载到 <code>/mnt/gentoo</code> 下 <code>mount /dev/sda2 /mnt/gentoo</code></li>
+<li>下载 Stage3 <code>wget https://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64-systemd/stage3-amd64-systemd-最新版.tar.xz</code></li>
+<li>解压 <code>tar vxpf stage3-amd64-systemd-最新版.tar.xz</code></li>
+<li><code>rm stage3-amd64-systemd-最新版.tar.xz</code></li>
+</ol>
+<h3 id="配置-makeconfg"><a class="header" href="#配置-makeconfg">配置 make.confg</a></h3>
+<pre><code class="language-config"># /usr/share/portage/config/make.conf.example
+
+# GCC
+COMMON_FLAG=&quot;-march=native -O2 -pipe&quot;
+CFLAGS=&quot;${COMMON_FLAG}&quot;
+CXXFLAGS=&quot;${CFLAGS}&quot;
+CHOST=&quot;x86_64-pc-linux-gnu&quot;
+CPU_FLAGS_X86=&quot;aes avx avx2 fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3&quot;
+FCFLAGS=&quot;${COMMON_FLAG}&quot;
+FFLAGS=&quot;${COMMON_FLAG}&quot;
+
+# Portage
+LC_MESSAGES=C
+USE=&quot;-bindist&quot;
+MAKEOPTS=&quot;-j5&quot;
+PORTDIR=&quot;/var/db/repos/gentoo&quot;
+DISTDIR=&quot;/var/cache/distfiles&quot;
+PKGDIR=&quot;/var/cache/binpkgs&quot;
+GENTOO_MIRRORS=&quot;https://mirrors.ustc.edu.cn/gentoo/&quot;
+EMERGE_DEFAULT_OPTS=&quot;--keep-going --with-bdeps=y&quot;
+ACCEPT_KEYWORDS=&quot;~amd64&quot;
+ACCEPT_LICENSE=&quot;*&quot;
+
+# Language
+L10N=&quot;en-US zh-CN en zh&quot;
+LINGUAS=&quot;en_US zh_CN en zh&quot;
+
+# other
+# intel + nvidia
+VIDEO_CARDS=&quot;intel i965 nvidia&quot;
+# amd + nvida
+# VIDEO_CARDS=&quot;amdgpu radeonsi nvidia&quot;
+
+QEMU_SOFTMMU_TARGETS=&quot;alpha aarch64 arm i386 mips mips64 mips64el mipsel ppc ppc64 s390x sh4 sh4eb sparc sparc64 x86_64&quot;
+QEMU_USER_TARGETS=&quot;alpha aarch64 arm armeb i386 mips mipsel ppc ppc64 ppc64abi32 s390x sh4 sh4eb sparc sparc32plus sparc64&quot;
+</code></pre>
+<h3 id="选项解释"><a class="header" href="#选项解释">选项解释</a></h3>
+<ol>
+<li><code>COMMON_FLAGS=</code>，这里添加 <code>-march=native</code> ，个人认为 native 比特指的 CPU 型号优化的效果更好，GCC 会根据你计算机的处理器集成的算法来优化，个人推荐。</li>
+<li><code>CHOST=</code> 和 <code>CPU_FLAGS_X86=</code>，这里特指牙膏厂的处理器，如果是 AMD 的锐龙，可以在后续构建系统以后，通过安装 cpuid2cpuflags 工具，查看输出填写。</li>
+<li><code>USE=</code>，这里只添加了一个 <code>-bindist</code> ，其余如果有默认的先删掉，保证初次构建一切顺利。</li>
+<li><code>MAKEOPTS=</code>，根据计算机的虚拟核心数填写。</li>
+<li><code>EMERGE_DEFAULT_OPTS=</code> 这个设置的目的是在遇到编译错误的时候不要停止，而是继续编译下去。</li>
+<li><code>QEMU_SOFTMMU_TARGETS=</code> 和<code>QEMU_USER_TARGETS=</code>，安装虚拟机 KVM 的需要，如果没有这方面的需求，可以不用填写。</li>
+</ol>
+<h3 id="配置源镜像"><a class="header" href="#配置源镜像">配置源镜像</a></h3>
+<p><code>mkdir -p /mnt/gentoo/etc/portage/repos.conf</code>
+<code>vi /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</code></p>
+<pre><code class="language-config">[gentoo]
+location = /usr/portage
+sync-type = rsync
+sync-uri = rsync://rsync.mirrors.ustc.edu.cn/gentoo-portage/
+auto-sync = yes
+</code></pre>
+<h3 id="chroot-和-第一次构建"><a class="header" href="#chroot-和-第一次构建">chroot 和 第一次构建</a></h3>
+<p>先了解下什么是 Chroot。以现在的安装为例，
+目前运行的软件和内核是 LiveUSB 提供的，根目录是 LiveUSB 的，
+而 Gentoo 系统的根目录在 /mnt/gentoo/ ，也没有直接运行的能力，
+因为运行环境也不是 Gentoo 系统的，那么下一步可以通过 Chroot 一系列操作，
+实现从 LiveUSB 转移到 Gentoo 系统下。</p>
+<ol>
+<li>
+<p>首先复制 DNS 到 Gentoo 系统下：
+<code>cp - dereference /etc/resolv.conf /mnt/gentoo/etc/</code></p>
+</li>
+<li>
+<p>挂载必要文件系统：</p>
+<pre><code class="language-bash">mount -t proc /proc /mnt/gentoo/proc
+mount - rbind /sys /mnt/gentoo/sys
+mount - make-rslave /mnt/gentoo/sys
+mount - rbind /dev /mnt/gentoo/dev
+mount - make-rslave /mnt/gentoo/dev
+</code></pre>
+</li>
+<li>
+<p>进入 Chroot：</p>
+<pre><code class="language-bash">chroot /mnt/gentoo /bin/bash
+source /etc/profile
+</code></pre>
+</li>
+<li>
+<p>挂载其余所有的分区：</p>
+<pre><code class="language-bash">mount /dev/sda1 /boot
+
+mount /dev/其他分区 /home （如果有）
+mount /dev/其他分区 /opt (如果有)
+</code></pre>
+</li>
+</ol>
+<h3 id="第一阶段"><a class="header" href="#第一阶段">第一阶段</a></h3>
+<ol>
+<li>
+<p>快照更新 Profile 然后使用 rsync 同步
+<code>emerge-webrsync</code>
+<code>emerge - sync</code></p>
+</li>
+<li>
+<p>选择 默认 （kde 或 gnome）作为默认 profile</p>
+<pre><code class="language-bash">profile list
+eselect profile X
+emerge -auvDN - with-bdeps=y @world
+</code></pre>
+</li>
+<li>
+<p>现在开始了漫长的编译过程，如果这个时候出现某些依赖无法满足的情况，
+我们可以通过以下几种方法解决：</p>
+<pre><code class="language-bash">emerge -auvDN - with-bdeps=y - autounmark-write @world
+etc-update - automode -3
+emerge -auvDN - with-bdeps=y @world
+</code></pre>
+</li>
+<li>
+<p>确认没有更新</p>
+<pre><code class="language-bash"> emerge @preserved-rebuild
+ perl-cleaner - all
+ emerge -auvDN --with-bdeps=y @world
+</code></pre>
+</li>
+</ol>
+<h4 id="配置时区"><a class="header" href="#配置时区">配置时区</a></h4>
+<pre><code class="language-bash">echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone
+emerge --config sys-libs/timezone-data
+
+echo &quot;en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8&quot; &gt;&gt; /etc/locale.gen
+
+locale-gen
+
+eselect locale list
+</code></pre>
+<p>这时，应该能够看到列出的中文，但是目前建议暂时不要用 eselect 选择使用中文</p>
+<h4 id="fstab"><a class="header" href="#fstab">fstab</a></h4>
+<p>先了解下 fstab，就像一张表，在 Linux 开机的告诉 mount 应该把哪个分区以什么文件系统，
+以什么方式挂载到系统对应位置。这里提供一份使用 btrfs 的 fstab 书写方式。</p>
+<p>其次，就是挂载时需要注意的挂载选项，无论你是使用 ext4 文件系统，
+还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
+一方面实现快速读取和写入，另一方面最小化文件丢失</p>
+<p>如果使用 btrfs 文件系统的话，非常推荐如下的挂载选项</p>
+<p><code>defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1</code></p>
+<p>使用 discard=async 与 fstrim 是不冲突的；另外透明压缩不需要启动等级 3，第一等级就足够了，
+如果有需求使用 btrfs 下的 swap ，那不能启用透明压缩功能；并且启用了自动碎片整理功能。这样对文件系统是比较好的。</p>
+<p>整个 fstab 的书写就是这样的 UUID 可以使用 blkid 命令查看
+<code>nona /etc/fstab</code></p>
+<pre><code class="language-conf">UUID=boot-uuid  /boot       vfat  defaults 0 0
+UUID=root-uuid  /           btrfs subvol=@,defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 1
+UUID=home-uuid  /home       btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 2
+UUID=opt-uuid   /opt        btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1,commit=120 0 2
+tmpfs           /tmp        tmpfs size=8G,notaime 0 0
+tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
+</code></pre>
+<p>最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上</p>
+<p>针对你喜好的文件系统安装相对应的工具</p>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+btrfs <code>emerge sys-fs/btrfs-progs</code></li>
+<li><input disabled="" type="checkbox"/>
+xfs <code>emerge sys-fs/xfsprogs</code></li>
+<li><input disabled="" type="checkbox"/>
+jfs <code>emerge sys-fs/jfsutils</code></li>
+</ul>
+<h3 id="杂项处理"><a class="header" href="#杂项处理">杂项处理</a></h3>
+<ol>
+<li>
+<p>网络连接使用 NetworkManager <code>emerge -av networkmanager</code>
+如果出现什么依赖需要解决，还是那三板斧：</p>
+<pre><code class="language-bash">emerge - autounmask-write networkmanager
+etc-update - automode -3
+emerge networkmanager
+</code></pre>
+<p>默认开机启动
+<code>systemctl enable NetworkManager</code></p>
+</li>
+<li>
+<p>设置主机名：
+<code>echo hostname=\&quot;Matrix\&quot; &gt; /etc/conf.d/hostname</code></p>
+</li>
+<li>
+<p>安装系统工具：</p>
+<pre><code class="language-bash">emerge app-admin/sysklogd sys-process/cronie sudo layman grub
+sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
+passwd #设置root密码
+</code></pre>
+</li>
+<li>
+<p>systemd 再操作一波：</p>
+<pre><code class="language-bash">sed -i 's/\# GRUB_CMDLINE_LINUX=\&quot;init=\/usr\/lib\/systemd\/systemd\&quot;/GRUB_CMDLINE_LINUX=\&quot;init=\/usr\/lib\/systemd\/systemd\&quot;/g' /etc/default/grub
+ln -sf /proc/self/mounts /etc/mtab
+systemd-machine-id-setup
+</code></pre>
+</li>
+</ol>
+<h3 id="安装内核-待优化"><a class="header" href="#安装内核-待优化">安装内核 (待优化)</a></h3>
+<p>不定制自动配置</p>
+<pre><code class="language-bash">emerge -av genkernel
+genkernel --menuconfig all
+genkernel --install initramfs
+
+make -jX #将 X 替换为你想编译时的线程数
+make modules_install
+make install
+genkernel --install initramfs
+</code></pre>
+<h3 id="安装-grub"><a class="header" href="#安装-grub">安装 GRUB</a></h3>
+<pre><code class="language-bash">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Gentoo
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<p>如果出现 No space left on device
+请运行：</p>
+<pre><code class="language-bash">mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+rm /sys/firmware/efi/efivars/dump-*
+</code></pre>
+<p>创建用户名并设置密码</p>
+<pre><code class="language-bash">useradd -m -G users,wheel,portage,usb,video #这里换成你的用户名(小写)
+passwd #用户名
+</code></pre>
+<p>检查</p>
+<ol>
+<li><code>/boot</code> 下是否有内核文件生成</li>
+<li><code>/etc/fstab</code> 文件内容是否有误</li>
+<li>插着网线
+重启</li>
+</ol>
+<h3 id="安装显卡"><a class="header" href="#安装显卡">安装显卡</a></h3>
+<p>intel + nvidia
+<code>emerge -av x11-drivers/nvidia-drivers x11-drivers/xf86-video-intel xrandr</code>
+<code>emerge -av xorg-server</code></p>
+<p>kde
+<code>emerge -av plasma-desktop plasma-nm plasma-pa sddm konsole</code></p>
+<p>gnome
+<code>emerge -av gnome gnome-desktop gnome-shell gdm gnome-terminal</code></p>
+<h2 id="参考链接"><a class="header" href="#参考链接">参考链接</a></h2>
+<p><a href="https://medium.com/@langleyhouge/gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%8F%8A%E6%80%BB%E7%BB%93-1db269cfa8c7">Langley Houge</a></p>
+<p><a href="https://blog.yangmame.org/Gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.html">yangmame</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../linux/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../linux/practical-vim.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../linux/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../linux/practical-vim.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
