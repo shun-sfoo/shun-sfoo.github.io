@@ -114,16 +114,16 @@ auto-sync = yes
 实现从 LiveUSB 转移到 Gentoo 系统下。
 
 1. 首先复制 DNS 到 Gentoo 系统下：
-   `cp - dereference /etc/resolv.conf /mnt/gentoo/etc/`
+   `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
 2. 挂载必要文件系统：
 
    ```bash
    mount -t proc /proc /mnt/gentoo/proc
-   mount - rbind /sys /mnt/gentoo/sys
-   mount - make-rslave /mnt/gentoo/sys
-   mount - rbind /dev /mnt/gentoo/dev
-   mount - make-rslave /mnt/gentoo/dev
+   mount --rbind /sys /mnt/gentoo/sys
+   mount --make-rslave /mnt/gentoo/sys
+   mount --rbind /dev /mnt/gentoo/dev
+   mount --make-rslave /mnt/gentoo/dev
    ```
 
 3. 进入 Chroot：
@@ -146,30 +146,30 @@ auto-sync = yes
 
 1. 快照更新 Profile 然后使用 rsync 同步
    `emerge-webrsync`
-   `emerge - sync`
+   `emerge --sync`
 
 2. 选择 默认 （kde 或 gnome）作为默认 profile
 
    ```bash
    profile list
    eselect profile X
-   emerge -auvDN - with-bdeps=y @world
+   emerge -auvDN --with-bdeps=y @world
    ```
 
 3. 现在开始了漫长的编译过程，如果这个时候出现某些依赖无法满足的情况，
    我们可以通过以下几种方法解决：
 
    ```bash
-   emerge -auvDN - with-bdeps=y - autounmark-write @world
-   etc-update - automode -3
-   emerge -auvDN - with-bdeps=y @world
+   emerge -auvDN --with-bdeps=y --autounmask-write @world
+   etc-update --automode -3
+   emerge -auvDN --with-bdeps=y @world
    ```
 
 4. 确认没有更新
 
    ```bash
     emerge @preserved-rebuild
-    perl-cleaner - all
+    perl-cleaner --all
     emerge -auvDN --with-bdeps=y @world
    ```
 
@@ -230,8 +230,8 @@ tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
    如果出现什么依赖需要解决，还是那三板斧：
 
    ```bash
-   emerge - autounmask-write networkmanager
-   etc-update - automode -3
+   emerge --autounmask-write networkmanager
+   etc-update --automode -3
    emerge networkmanager
    ```
 

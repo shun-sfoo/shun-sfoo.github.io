@@ -11,7 +11,7 @@
   - [avl 树](./data-struct/avl.md)
   - [并查集](./data-struct/unionFind.md)
 - [linux](./linux/intro.md)
-  - [geento](./linux/gentoo.md)
+  - [gentoo](./linux/gentoo.md)
   - [vim](./linux/practical-vim.md)
   - [zsh 1](./linux/zsh-01.md)
 - [Java](./Java/intro.md)
