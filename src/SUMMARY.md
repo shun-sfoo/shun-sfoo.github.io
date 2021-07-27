@@ -13,6 +13,7 @@
 - [linux](./linux/intro.md)
   - [gentoo](./linux/gentoo.md)
   - [vim](./linux/practical-vim.md)
+  - [dbus](./linux/dbus.md)
   - [zsh 1](./linux/zsh-01.md)
 - [Java](./Java/intro.md)
   - [jvm1](./Java/jvm01.md)
