@@ -29,3 +29,5 @@
   - [ownership](./Rust/ownership.md)
   - [rust-web](./Rust/rust-web.md)
   - [summary](./Rust/summary.md)
+- [chromium](./chromium/intro.md)
+  - [update-engine](./chromium/update_engine.md)
