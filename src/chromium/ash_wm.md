@@ -5,3 +5,5 @@
 `https://chromium.googlesource.com/chromiumos/platform2/+/master/power_manager/docs/power_buttons.md#Tablet-Mode`
 
 `https://source.chromium.org/chromium/chromium/src/+/HEAD:ash/wm/session_state_animator.h`
+
+`https://stackoverflow.com/questions/65285260/how-to-detect-chromebook-mode-programmatically`
