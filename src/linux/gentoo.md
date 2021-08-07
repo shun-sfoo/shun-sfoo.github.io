@@ -53,80 +53,9 @@ mount /dev/sdXx /mnt/gentoo/boot/efi
 
 ### 配置 make.confg
 
-`vim /etc/portage/make.conf`
+为了控制页面长度，配置示例放到了前言中。
 
-```bash
-
-# GCC
-# Please consult /usr/share/portage/config/make.conf.example for a more
-COMMON_FLAGS="-march=native -O2 -pipe"
-# 无论何种intel、amd的CPU，且无论何种新老CPU架构，均建议-march=native，CPU指令集自动识别全面
-# 程序员的用户注意了，“-fomit-frame-pointer"这一项会导致你编译出来的程序无法debug；
-# 不做程序开发或debug的普通用户可以放心开启。
-
-CFLAGS="${COMMON_FLAGS}"
-CXXFLAGS="${COMMON_FLAGS}"
-FCFLAGS="${COMMON_FLAGS}"
-FFLAGS="${COMMON_FLAGS}"
-MAKEOPTS="-j4"
-# 推荐值为CPU中核心/逻辑处理器的数量，可用lscpu命令查看，结果为“CPU(s):”后面的数字
-
-# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
-# cpu参数用cpuid2cpuflags命令看，这里先不用管，暂时注释掉，后面再来配置
-
-EMERGE_DEFAULT_OPTS="--with-bdeps=y --ask --verbose=y --load-average --keep-going --deep"
-# 这个设置的目的是在遇到编译错误的时候不要停止，而是继续编译下去
-
-# NOTE: This stage was built with the bindist Use flag enabled
-PORTDIR="/var/db/repos/gentoo"
-DISTDIR="/var/cache/distfiles"
-PKGDIR="/var/cache/binpkgs"
-PORTAGE_TMPDIR="/tmp"
-# 大内存(8G、16G) 设置 小于 4G内存不用设置。
-
-# This sets the language of build output to English.
-# Please keep this setting intact when reporting bugs.
-LC_MESSAGES=C
-
-MINUS="-bindist -mdev -systemd -consolekit -bluetooth -gtk -netifrc -oss -gpm -iptables"
-DESKTOP="-gnome-shell -gnome -gnome-keyring -wayland X cjk"
-AUDIO="-pulseaudio alsa jack"
-VIDEO="vulkan nvidia"
-COMPILE="fortran lto pgo openmp minizip"
-ELSE="sudo ccache aria2"
-# USE="plugins ${MINUS} ${DESKTOP} ${AUDIO}  ${VIDEO} ${COMPILE} ${ELSE}"
-# 建议不要在 make.conf 中定义 USE 去 /etc/portage/package.use/ 中定义。
-
-ACCEPT_LICENSE="*"
-ACCEPT_KEYWORDS="amd64"
-# "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
-
-L10N="en-US zh-CN en zh"
-LINGUAS="en-US zh-CN en zh"
-AUTO_CLEAN="yes"
-
-GRUB_PLATFORMS="efi-64"
-# UEFI 64位系统引导必须项
-
-VIDEO_CARDS="nvidia"
-# VIDEO_CARDS="intel i965 iris"
-# VIDEO_CARDS="intel i965 iris nvidia"
-
-ALSA_CARDS="hda-intel"
-# intel HD声卡
-# INPUT_DEVICES="libinput synaptics"
-# 笔记本电脑的触控板
-MICROCODE_SIGNATURES="-S"
-# 如果想把CPU的microcode直接编译进内核，则需要设置为“-S”；否则注释掉
-
-LLVM_TARGETS="X86"
-
-GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
-
-#FEATURES="ccache"
-#CCACHE_DIR="/var/cache/ccache"
-#此处先注释掉,配置完ccache后再去掉注释
-```
+[示例](./intro.md)
 
 ### gcc 优化
 
@@ -136,8 +65,8 @@ GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
 ### 配置源镜像
 
 ```bash
-mkdir -p /mnt/gentoo/etc/portage/repos.conf`
-vi /mnt/gentoo/etc/portage/repos.conf/gentoo.conf`
+mkdir -p /mnt/gentoo/etc/portage/repos.conf
+vi /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
 
 [gentoo]
 location = /usr/portage
@@ -154,97 +83,103 @@ auto-sync = yes
 因为运行环境也不是 Gentoo 系统的，那么下一步可以通过 Chroot 一系列操作，
 实现从 LiveUSB 转移到 Gentoo 系统下。
 
-1. 首先复制 DNS 到 Gentoo 系统下：
-   `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
+#### 首先复制 DNS 到 Gentoo 系统下：
 
-2. 挂载必要文件系统：
+`cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
-   ```bash
-   mount -t proc /proc /mnt/gentoo/proc
-   mount --rbind /sys /mnt/gentoo/sys
-   # mount --make-rslave /mnt/gentoo/sys
-   mount --rbind /dev /mnt/gentoo/dev
-   # mount --make-rslave /mnt/gentoo/dev
-   ```
+##### 挂载必要文件系统：
 
-   注意 `--make-rslave` 操作是稍后安装 systemd 支持时所需要的,所以这里注释掉
+```bash
+mount -t proc /proc /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+# mount --make-rslave /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+# mount --make-rslave /mnt/gentoo/dev
+```
 
-3. 进入 Chroot：
+注意 `--make-rslave` 操作是安装 systemd 支持时所需要的,所以这里注释掉
 
-   ```bash
-   chroot /mnt/gentoo /bin/bash
-   mkdir -p /var/db/repos/gentoo
-   env-update
-   source /etc/profile
-   export PS1="(chroot) ${PS1}"
-   ```
+#### 进入 Chroot：
+
+```bash
+chroot /mnt/gentoo /bin/bash
+source /etc/profile
+mkdir -p /var/db/repos/gentoo
+env-update
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+```
 
 ### 第一阶段
 
-1. 快照更新 Profile 然后使用 rsync 同步
-   `emerge-webrsync`
-   websync 会将数据库同步到 24 小时之内，`emerge --sync` 会同步到 1 小时之内，这样做很慢且没有必要。
+#### 快照更新 Profile 然后使用 rsync 同步
 
-2. 选择 默认 profile
+`emerge-webrsync`
 
-   ```bash
-   profile list
-   eselect profile X
-   emerge -auvDN --with-bdeps=y @world
-   ```
+websync 会将数据库同步到 24 小时之内，`emerge --sync` 会同步到 1 小时之内，这样做很慢且没有必要。
 
-   如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，选择默认就可以了。
+#### 选择 默认 profile
 
-3. 确认 CPU_FLAGS_X86
+```bash
+eselect profile list
+eselect profile set X
+```
 
-   ```bash
-   emerge -ask app-portage/cpuid2cpuflags
-   cpuid2cpuflags
-   ```
+如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，选择默认就可以了。
 
-4. 安装 ccache
+#### 确认 CPU_FLAGS_X86
 
-   ```bash
-   emerge --ask dev-util/ccache
-   mkdir -p /var/cache/ccache
-   chown root:portage /var/cache/ccache
-   chmod 2775 /var/cache/ccache
-   ```
+```bash
+emerge -ask -verbose app-portage/cpuid2cpuflags
+cpuid2cpuflags
+```
 
-   编辑我们的 ccache 配置文件 /var/cache/ccache/ccache.conf ，内容如下：
+make.conf 中启用 CPU_FLAGS_X86
 
-   ```bash
-   max_size = 100.0G
-   umask = 002
-   cache_dir_levels = 3
-   ```
+#### 安装 ccache
 
-   最后到 make.conf 中启用 ccache 就可以了
+```bash
+emerge --ask dev-util/ccache
+mkdir -p /var/cache/ccache
+chown root:portage /var/cache/ccache
+chmod 2775 /var/cache/ccache
+```
 
-5. 更新系统
-   `emerge --ask --verbose --update --deep --newuse @world`
+编辑 ccache 配置文件 `/var/cache/ccache/ccache.conf` ，内容如下：
 
-6. 现在开始了漫长的编译过程，如果这个时候出现某些依赖无法满足的情况，
-   我们可以通过以下几种方法解决：
+```bash
+max_size = 100.0G
+umask = 002
+cache_dir_levels = 3
+```
 
-   ```bash
-   emerge -auvDN --with-bdeps=y --autounmask-write @world
-   etc-update --automode -3
-   emerge -auvDN --with-bdeps=y @world
-   ```
+make.conf 中启用 ccache
 
-   pyhon3.9 这个版本需要用 -bluetooth 这个 USE 编译一遍
-   `USE=-bluetooth emerge -av python`
+#### 更新系统
 
-   如果中途因为某个包挂了，可以尝试以下两个命令：
+`emerge --ask --verbose --update --deep --newuse @world`
 
-   ```bash
-   emerge @preserved-rebuild -j
-   perl-cleaner --all
-   ```
+现在开始了漫长的编译过程，如果这个时候出现某些依赖无法满足的情况，
+我们可以通过以下几种方法解决：
 
-   如果以上还是不能解决问题,则进入/etc/portage 目录
-   删掉 package.use,package.mask 和 package.unmask 文件或目录再次尝试
+```bash
+emerge -auvDN --with-bdeps=y --autounmask-write @world
+etc-update --automode -3
+emerge -auvDN --with-bdeps=y @world
+```
+
+pyhon3.9 这个版本需要用 -bluetooth 这个 USE 编译一遍
+`USE=-bluetooth emerge -av python`
+
+如果中途因为某个包挂了，可以尝试以下两个命令：
+
+```bash
+emerge @preserved-rebuild -j
+perl-cleaner --all
+```
+
+如果以上还是不能解决问题,则进入/etc/portage 目录
+删掉 package.use,package.mask 和 package.unmask 文件或目录再次尝试
 
 #### 配置时区
 
@@ -271,53 +206,13 @@ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
 一方面实现快速读取和写入，另一方面最小化文件丢失
 
-如果使用 btrfs 文件系统的话，非常推荐如下的挂载选项
-
-`defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1`
-
-使用 discard=async 与 fstrim 是不冲突的；另外透明压缩不需要启动等级 3，第一等级就足够了，
-如果有需求使用 btrfs 下的 swap ，那不能启用透明压缩功能；并且启用了自动碎片整理功能。这样对文件系统是比较好的。
-
-整个 fstab 的书写就是这样的 UUID 可以使用 blkid 命令查看
-`nona /etc/fstab`
-
-```conf
-UUID=boot-uuid  /boot       vfat  defaults 0 0
-UUID=root-uuid  /           btrfs subvol=@,defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 1
-UUID=home-uuid  /home       btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 2
-UUID=opt-uuid   /opt        btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1,commit=120 0 2
-tmpfs           /tmp        tmpfs size=8G,notaime 0 0
-tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
-```
-
-最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上
-
-针对你喜好的文件系统安装相对应的工具
-
-- [x] btrfs `emerge sys-fs/btrfs-progs`
-- [ ] xfs `emerge sys-fs/xfsprogs`
-- [ ] jfs `emerge sys-fs/jfsutils`
-
-```bash
-blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后根据追加的内容进行下述修改
-
-nano -w /etc/fstab：      #请参考我的配置，建议使用uuid的形式设置（不建议使用/dev/sdX？的形式）(是uuid，而不是partuuid哦)
-UUID=......      /boot/efi      vfat      noauto,defaults,noatime,umask=0077                               0 2
-UUID=......      /boot          ext4      defaults,noatime,discard                                         0 2
-UUID=......      /              xfs       defaults,noatime                                                 0 1
-UUID=......      /home          xfs       noatime,discard                                                  0 2
-UUID=......      none           swap      sw,noatime,discard                                               0 0
-tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=1777,size=6G               0 0
-#内存tmpfs(/tmp目录)的大小，2G内存设为1G、4G内存设为2G、8G内存可设为4-6G、16G内存可设为10-13G
-#根分区/不建议设置discard参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
-#discard和fstrim都是专门针对SSD固态硬盘的优化，并且你的SSD必须确保支持TRIM；否则在不支持TRIM的SSD上盲目使用discard和fstrim优化很可能会有数据丢失的风险，2017年以后的SSD基本上都支持TRIM了。
-```
-
-台式机的 ssd 在 2017 年前生产，考虑去掉 discard 和 fstrim
+[示例](./intro.md#fstab)
 
 #### 安装必须的文件系统支持，否则无法访问硬盘上的分区
 
 ```bash
+
+# emerge --ask sys-fs/btrfs-progs # btrfs
 emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
 emerge --ask sys-fs/xfsprogs #xfs
 emerge --ask sys-fs/dosfstools #fat32
@@ -326,24 +221,166 @@ emerge --ask sys-fs/fuse-exfat #exfat
 emerge --ask sys-fs/exfat-utils #exfat
 ```
 
+### 编译内核
+
+#### 编译内核前，先安装一些必要工具并配置
+
+```bash
+emerge xz-utils
+echo 'sys-apps/kmod lzma zlib' > /etc/portage/package.use/kmod
+emerge --ask --verbose eix sudo pciutils usbutils hwinfo gentoolkit euses kmod layman
+```
+
+如果提示需要更新 USE 配置
+
+```bash
+etc-update --automode -3
+```
+
+```bash
+echo "SOLARIZED=true" > /etc/eixrc/99-colour
+depmod -a
+```
+
+#### 用取巧的方式，设置并编译安装 liunx 内核
+
+```bash
+emerge --ask sys-kernel/gentoo-sources
+ls -l /usr/src/linux  #有输出结果表示内核初步下载成功
+emerge --ask --verbose sys-kernel/linux-firmware    #时间较长30分钟左右，下载安装wifi网卡和intel核显的必要驱动固件
+emerge --ask sys-firmware/intel-microcode sys-apps/iucode_tool   #下载速度慢
+iucode_tool -S
+iucode_tool -S -l /lib/firmware/intel-ucode/*
+# 识别处理器签名并查找相应microcode文件名,其为“06-9e-0d”这样的编号格式，选择最末尾的那个（最新的）
+# 建议把找到的结果用手机拍照下来，然后设置编译内核（make menuconfig）的时候
+```
+
+```bash
+make menuconfig 中
+Device Driver:
+    Generic Driver Options:
+         Firmware loader:
+             Build name firmware blobs into the kernel binary
+
+输入“intel-ucode/06-9e-0d”这样的编号格式，将微码文件直接编译进内核。
+```
+
+确保 emerge intel-microcode 之前就得在 已经在 make.conf 中设置好了
+`MICROCODE_SIGNATURES="-S"`
+
+配置内核时开启
+
+```bash
+CONFIG_MICROCODE=y
+CONFIG_MICROCODE_INTEL=y
+```
+
+#### 永久禁用 nouveau
+
+```bash
+vim  /etc/modprobe.d/blacklist.conf：
+blacklist nouveau
+blacklist lbm-nouveau
+options nouveau modeset=0
+```
+
+即便在编译内核前就已经设置内核禁用 Nouveau 驱动了，但是内核安装时还是会默认把 nouveau 驱动作为内核模块自动加载。
+启用了 nouveau 驱动模块的内核会出现各式各样的莫名其妙的数不清的问题，所以为了避免以后出现这些问题，
+从现在就开始永久禁用 nouveau 模块！这是很多教程包括 gentoo wiki 上都不曾提到过的大问题，也是让很多人遭坑的关键地方。
+
+#### 在 genkernel 默认内核基础上修改
+
+将 genkernel 的默认内核配置文件“generated-config”复制过来，
+里面已经为你设置好了绝大部分应用场景以及绝大部分硬件驱动的配置，非常方便，值得借过来使用，
+只需要在自己手动配置内核的时候将其加载，在其基础上做一点点轻微的修改或完全不修改都可以，
+对内核新手极其友好！
+
+```bash
+emerge --ask sys-kernel/genkernel
+cd /usr/src/linux
+cp /usr/share/genkernel/arch/x86_64/generated-config /usr/src/linux/
+```
+
+将 generated-config 复制为 1.config 使用，而 generated-config 留作备份
+
+```bash
+cp /usr/src/linux/generated-config /usr/src/linux/1.config
+```
+
+想在以后支持 jack 低延迟实时音频组件（Jack-Audio-Connection-Kit），则还需要 vim 1.config，手动设置
+顺便此时设置上一步提到的微码改动
+
+```bash
+# jack
+CONFIG_CGROUPS=y
+CONFIG_CGROUP_SCHED=y
+CONFIG_RT_GROUP_SCHED=y
+
+# mcirocode
+CONFIG_MICROCODE=y
+CONFIG_MICROCODE_INTEL=y
+```
+
+### 内核配置
+
+`make menuconfig`
+首先基本配置下
+
+```bash
+load 1.config
+“Core 2/newer Xeon”，Preemption Model：“Low-Latency Desktop”，Timer frequecy 1000hz，Timer tick handling：“tickless idle”，Cputime accounting：“Simple tick based cputime accounting”，去掉了不需要的文件系统支持，去掉了对AMD CPU的支持，禁用Nouveau驱动）。“Support for extended (non-PC) x86 platforms”这一项取消掉。 之后“Save”你的设置，并且“Exit”即可
+```
+
+禁用 Nouveau 驱动
+`CONFIG_I2C_NVIDIA_GPU` 禁用
+
+### 编译内核
+
+```bash
+make -j4
+make modules_install
+make install
+```
+
+#### 使用 dracut 生成内核的 initramfs (可选)
+
+```bash
+emerge --ask sys-kernel/dracut
+cd /boot
+dracut --hostonly
+```
+
+#### 使用 genkernel 生成内核的 initramfs (推荐)
+
+```bash
+cp /usr/src/linux/1.config /etc/kernels/kernel-config-<内核版本号>-gentoo-x86_64
+genkernel --install initramfs
+```
+
+### 设置 grub 引导
+
+```bash
+emerge --ask sys-boot/grub:2
+emerge --ask sys-boot/os-prober
+
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Gentoo  多个系统
+grub-install --target=x86_64-efi --efi-directory=/boot--bootloader-id=Gentoo
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
 ### 杂项处理
 
-1. 网络连接使用 NetworkManager `emerge -av networkmanager`
-   如果出现什么依赖需要解决，还是那三板斧：
+#### 网络连接使用 NetworkManager
 
-   ```bash
-   emerge --autounmask-write networkmanager
-   etc-update --automode -3
-   emerge networkmanager
-   ```
+`emerge -av networkmanager`
+默认开机启动
+`rc-update add NetworkManager default`
 
-   默认开机启动
-   `rc-update add NetworkManager default`
+#### 设置主机名：
 
-2. 设置主机名：
-   `echo hostname=\"Matrix\" > /etc/conf.d/hostname`
+`echo hostname=\"Matrix\" > /etc/conf.d/hostname`
 
-3. 设置密码强度
+#### 设置密码强度
 
 查看两个配置
 
@@ -364,50 +401,20 @@ enforce=everyone
 retry=3
 ```
 
-3. 安装系统工具：
+#### 安装系统工具：
 
-   ```bash
-   emerge app-admin/sysklogd sys-process/cronie sudo layman grub
-   sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
-   passwd #设置root密码
-   ```
+```bash
+emerge app-admin/sysklogd sys-process/cronie sudo layman grub
+sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
+passwd #设置root密码
+```
 
 ```bash
 rc-update add sysklogd default
 rc-update add cronie default
 ```
 
-### 安装内核 (待优化)
-
-不定制自动配置
-
-```bash
-emerge -av genkernel
-genkernel --menuconfig all
-genkernel --install initramfs
-
-make -jX #将 X 替换为你想编译时的线程数
-make modules_install
-make install
-genkernel --install initramfs
-```
-
-### 安装 GRUB
-
-```bash
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Gentoo
-grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-如果出现 No space left on device
-请运行：
-
-```bash
-mount -t efivarfs efivarfs /sys/firmware/efi/efivars
-rm /sys/firmware/efi/efivars/dump-*
-```
-
-创建用户名并设置密码
+#### 创建用户名并设置密码
 
 ```bash
 useradd -m -G users,wheel,portage,usb,video #这里换成你的用户名(小写)

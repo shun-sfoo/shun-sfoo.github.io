@@ -80,3 +80,127 @@ app-eidtors/neovim-9999 **
 `/etc/portage/make.conf`
 定义整个系统在构建的过程中按照怎样的规则来进行编译，具有一定的全局属性。
 比方说编译器的选择，系统语言的设定，使用什么特性来编译，系统架构，显卡类型等等
+
+一个例子：
+
+```bash
+
+# GCC
+# Please consult /usr/share/portage/config/make.conf.example for a more
+COMMON_FLAGS="-march=native -O2 -pipe"
+# 无论何种intel、amd的CPU，且无论何种新老CPU架构，均建议-march=native，CPU指令集自动识别全面
+# 程序员的用户注意了，“-fomit-frame-pointer"这一项会导致你编译出来的程序无法debug；
+# 不做程序开发或debug的普通用户可以放心开启。
+
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+FCFLAGS="${COMMON_FLAGS}"
+FFLAGS="${COMMON_FLAGS}"
+MAKEOPTS="-j4"
+# 推荐值为CPU中核心/逻辑处理器的数量，可用lscpu命令查看，结果为“CPU(s):”后面的数字
+
+# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
+# cpu参数用cpuid2cpuflags命令看，这里先不用管，暂时注释掉，后面再来配置
+
+EMERGE_DEFAULT_OPTS="--with-bdeps=y --ask --verbose=y --load-average --keep-going --deep"
+# 这个设置的目的是在遇到编译错误的时候不要停止，而是继续编译下去
+
+# NOTE: This stage was built with the bindist Use flag enabled
+PORTDIR="/var/db/repos/gentoo"
+DISTDIR="/var/cache/distfiles"
+PKGDIR="/var/cache/binpkgs"
+PORTAGE_TMPDIR="/tmp"
+# 大内存(8G、16G) 设置 小于 4G内存不用设置。
+
+# This sets the language of build output to English.
+# Please keep this setting intact when reporting bugs.
+LC_MESSAGES=C
+
+MINUS="-bindist -mdev -systemd -consolekit -bluetooth -gtk -netifrc -oss -gpm -iptables"
+DESKTOP="-gnome-shell -gnome -gnome-keyring -wayland X cjk"
+AUDIO="-pulseaudio alsa jack"
+VIDEO="vulkan nvidia"
+COMPILE="fortran lto pgo openmp minizip"
+ELSE="sudo ccache aria2"
+# USE="plugins ${MINUS} ${DESKTOP} ${AUDIO}  ${VIDEO} ${COMPILE} ${ELSE}"
+# 建议不要在 make.conf 中定义 USE 去 /etc/portage/package.use/ 中定义。
+
+ACCEPT_LICENSE="*"
+ACCEPT_KEYWORDS="amd64"
+# "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
+
+L10N="en-US zh-CN en zh"
+LINGUAS="en-US zh-CN en zh"
+AUTO_CLEAN="yes"
+
+GRUB_PLATFORMS="efi-64"
+# UEFI 64位系统引导必须项
+
+VIDEO_CARDS="nvidia"
+# VIDEO_CARDS="intel i965 iris"
+# VIDEO_CARDS="intel i965 iris nvidia"
+
+ALSA_CARDS="hda-intel"
+# intel HD声卡
+# INPUT_DEVICES="libinput synaptics"
+# 笔记本电脑的触控板
+MICROCODE_SIGNATURES="-S"
+# 如果想把CPU的microcode直接编译进内核，则需要设置为“-S”；否则注释掉
+
+LLVM_TARGETS="X86"
+
+GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
+
+#FEATURES="ccache"
+#CCACHE_DIR="/var/cache/ccache"
+#此处先注释掉,配置完ccache后再去掉注释
+```
+
+## fstab
+
+分别记录 btrfs 和 xpf 的 fstab 方案
+
+```bash
+blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后根据追加的内容进行下述修改
+```
+
+### btrfs
+
+如果使用 btrfs 文件系统的话，非常推荐如下的挂载选项
+
+`defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1`
+
+使用 discard=async 与 fstrim 是不冲突的；另外透明压缩不需要启动等级 3，第一等级就足够了，
+如果有需求使用 btrfs 下的 swap ，那不能启用透明压缩功能；并且启用了自动碎片整理功能。这样对文件系统是比较好的。
+
+整个 fstab 的书写就是这样的 UUID 可以使用 blkid 命令查看
+`nona /etc/fstab`
+
+```conf
+UUID=boot-uuid  /boot       vfat  defaults 0 0
+UUID=root-uuid  /           btrfs subvol=@,defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 1
+UUID=home-uuid  /home       btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 2
+UUID=opt-uuid   /opt        btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1,commit=120 0 2
+tmpfs           /tmp        tmpfs size=8G,notaime 0 0
+tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
+```
+
+最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上
+
+### xpf
+
+```bash
+nano -w /etc/fstab：      #请参考我的配置，建议使用uuid的形式设置（不建议使用/dev/sdX？的形式）(是uuid，而不是partuuid哦)
+UUID=......      /boot/efi      vfat      noauto,defaults,noatime,umask=0077                               0 2
+UUID=......      /boot          ext4      defaults,noatime,discard                                         0 2
+UUID=......      /              xfs       defaults,noatime                                                 0 1
+UUID=......      /home          xfs       noatime,discard                                                  0 2
+UUID=......      none           swap      sw,noatime,discard                                               0 0
+tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=1777,size=6G               0 0
+
+# 内存tmpfs(/tmp目录)的大小，2G内存设为1G、4G内存设为2G、8G内存可设为4-6G、16G内存可设为10-13G
+# 根分区/不建议设置discard参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
+# discard和fstrim都是专门针对SSD固态硬盘的优化，并且你的SSD必须确保支持TRIM；否则在不支持TRIM的SSD上盲目使用discard和fstrim优化很可能会有数据丢失的风险，2017年以后的SSD基本上都支持TRIM了。
+```
+
+我的台式机的 ssd 在 2017 年前生产，考虑去掉 discard 和 fstrim
