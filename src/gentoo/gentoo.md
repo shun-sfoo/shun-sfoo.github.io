@@ -1,24 +1,53 @@
 # Gentoo 安装
 
-使用 LiveUSB （推荐 Fedora） 可以直接从磁盘分区开始
-好处是可以在终端复制粘贴
+前置说明:
+
+1. 不考虑老旧的 mbr 格式 一律选择 gpt + uefi 的组合
+2. 文件的主要格式是 xfs
+3. 使用 wm 而不是 de (de 有崩溃风险，且编译太耗时)
+4. systemd 的手越来越长越管越多, 选择使用 openrc。
+5. gentoo 放弃了 consolekit ，选择 elogind
+
+关于显卡驱动:
+
+- sway 不支持 nvidia 驱动, 所以 n 卡选择 `xserver + dwm`
+- 集成显卡和 amd 显卡选择 `wayland + sway`
+- intel 显卡也不需要 xf86-driver 推荐的是 mesa
+- 笔记本可选择双显卡驱动， 台式机只用单显卡。
+
+上述组合拳下来 选择 profile 方案就是默认，也即服务器 openrc 版本,
+
+由此也可初步选择一些全局 USE:
+`USE="-consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind (-)X (-)wayland (-)grub (-)wifi networkmanager -dhcpcd (nvidia) vulkan ccache sudo"`
+(使用 networkmanage 也不需要 dhcpcd)
+单系统不需要 grub 使用 efibootmgr 就可以识别到 boot
+使用 LiveUSB （推荐 Fedora）安装, 好处是可以直接从磁盘分区开始
+而且可以在终端复制粘贴此处的 code。
 
 ## 磁盘分区
 
-使用 sfdisk -z `磁盘名称`
-以下都是一块硬盘通常分成三个分区
-有多余的硬盘考虑挂在 home opt 等目录
-一般是来说 root 也就是 `/` 是挂在到 `/mnt/gentoo`
-home 对应的硬盘空间挂载到 `/mnt/gentoo/home`
+使用 sfdisk -z `磁盘名称` (`-z` 选项可以选择文件类型 gpt)
+
+一块硬盘通常分成三个分区
+
+- `/boot` 作为引导
+- `/` 根目录
+- `swap` 交换分区
+
+有多余的硬盘考虑挂载到 (wiki 中的建议)
+
+- `/home` 多用户
+- `/opt` 游戏服务软件
+- `/var` 邮件服务器
 
 形式： GPT + UEFI
 
-| 类型 | 大小       | 挂载点 | 格式化        |
-| ---- | ---------- | ------ | ------------- |
-| EFI  | 256M       | boot   | mkfs.vfat     |
-| xfs  | free space | root   | mkfs.xfs      |
-| xfs  | free space | home   | mkfs.xfs      |
-| swap | 16G        | swap   | mkswap swapon |
+| 类型 | 大小       | 挂载点            | 格式化        |
+| ---- | ---------- | ----------------- | ------------- |
+| EFI  | 256M       | /mnt/gentoo/boot  | mkfs.vfat     |
+| xfs  | free space | /mnt/gentoo       | mkfs.xfs      |
+| xfs  | free space | /ment/gentoo/home | mkfs.xfs      |
+| swap | 16G        | swap              | mkswap swapon |
 
 目前来说的理解是 `/boot` 是必要的 一般 设置为 256M 格式化是 vfat ，
 `/boot/efi` 是挂载在/boot 下 对应多系统的，如果系统中有 windows 那么
@@ -28,22 +57,7 @@ home 对应的硬盘空间挂载到 `/mnt/gentoo/home`
 
 ## 正式开始
 
-### 挂载
-
-```bash
-mkdir -p /mnt/gentoo
-mount /dev/sda3 /mnt/gentoo
-
-mkdir -p /mnt/gentoo/boot
-# 如果有多余硬盘挂载到home目录
-mkdir -p /mnt/gentoo/home
-mount /dev/sda1 /mnt/gentoo/boot
-mount /dev/sdb1 /mnt/gentoo/home
-
-# 如果是多系统
-mkdir -p /mnt/gentoo/boot/efi
-mount /dev/sdXx /mnt/gentoo/boot/efi
-```
+按照上表挂载
 
 ### 下载镜像解压
 
@@ -53,9 +67,11 @@ mount /dev/sdXx /mnt/gentoo/boot/efi
 
 ### 配置 make.confg
 
-为了控制页面长度，配置示例放到了前言中。
+为了控制页面长度，配置示例单独放在文件中。
 
-[示例](./intro.md)
+[一份直接 copy 的配置](./make-conf.md#default)
+一般有两个优化设置 ccache 和 CPU-FLAGS-X86
+可以参见后面的内容。
 
 ### gcc 优化
 
@@ -127,14 +143,16 @@ eselect profile set X
 
 如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，选择默认就可以了。
 
-#### 确认 CPU_FLAGS_X86
+#### 确认 CPU-FLAGS-X86
 
 ```bash
 emerge -ask -verbose app-portage/cpuid2cpuflags
 cpuid2cpuflags
 ```
 
-make.conf 中启用 CPU_FLAGS_X86
+make.conf 中启用 CPU-FLAGS-X86
+
+[CPU-FLAGS-X86](./make-conf.md#cpu-flags-x86)
 
 #### 安装 ccache
 
@@ -154,6 +172,7 @@ cache_dir_levels = 3
 ```
 
 make.conf 中启用 ccache
+[ccache](./make-conf.md#ccache)
 
 #### 更新系统
 
@@ -191,56 +210,24 @@ echo "en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8" >> /etc/locale.gen
 
 locale-gen
 
+echo "LANG=en_US.UTF-8" >> /etc/env.d/02locale
+
 eselect locale list
 env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 ```
 
 这时，应该能够看到列出的中文，但是目前建议暂时不要用 eselect 选择使用中文
 
-#### fstab
-
-先了解下 fstab，就像一张表，在 Linux 开机的告诉 mount 应该把哪个分区以什么文件系统，
-以什么方式挂载到系统对应位置。这里提供一份使用 btrfs 的 fstab 书写方式。
-
-其次，就是挂载时需要注意的挂载选项，无论你是使用 ext4 文件系统，
-还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
-一方面实现快速读取和写入，另一方面最小化文件丢失
-
-[示例](./intro.md#fstab)
-
-#### 安装必须的文件系统支持，否则无法访问硬盘上的分区
-
-```bash
-
-# emerge --ask sys-fs/btrfs-progs # btrfs
-emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
-emerge --ask sys-fs/xfsprogs #xfs
-emerge --ask sys-fs/dosfstools #fat32
-emerge --ask sys-fs/ntfs3g #ntfs
-emerge --ask sys-fs/fuse-exfat #exfat
-emerge --ask sys-fs/exfat-utils #exfat
-```
-
 ### 编译内核
 
-#### 编译内核前，先安装一些必要工具并配置
-
 ```bash
-emerge xz-utils
-echo 'sys-apps/kmod lzma zlib' > /etc/portage/package.use/kmod
-emerge --ask --verbose eix sudo pciutils usbutils hwinfo gentoolkit euses kmod layman
+emerge --ask sys-kernel/gentoo-sources
+eselect kernel list
+eselect kernel set 1
+ls -l /usr/src/linux
 ```
 
-如果提示需要更新 USE 配置
-
-```bash
-etc-update --automode -3
-```
-
-```bash
-echo "SOLARIZED=true" > /etc/eixrc/99-colour
-depmod -a # 由于不是gentoo live cd 这一步不能用
-```
+可以看到下载的内核源码链接到了 linux 下
 
 #### 用取巧的方式，设置并编译安装 liunx 内核
 
@@ -356,7 +343,33 @@ dracut --hostonly
 genkernel --install initramfs
 ```
 
-### 设置 grub 引导
+#### fstab
+
+先了解下 fstab，就像一张表，在 Linux 开机的告诉 mount 应该把哪个分区以什么文件系统，
+以什么方式挂载到系统对应位置。这里提供一份使用 btrfs 的 fstab 书写方式。
+
+其次，就是挂载时需要注意的挂载选项，无论你是使用 ext4 文件系统，
+还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
+一方面实现快速读取和写入，另一方面最小化文件丢失
+
+[示例](./fstab.md#fstab)
+
+#### 安装必须的文件系统支持，否则无法访问硬盘上的分区
+
+```bash
+
+# emerge --ask sys-fs/btrfs-progs # btrfs
+emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
+emerge --ask sys-fs/xfsprogs #xfs
+emerge --ask sys-fs/dosfstools #fat32
+emerge --ask sys-fs/ntfs3g #ntfs
+emerge --ask sys-fs/fuse-exfat #exfat
+emerge --ask sys-fs/exfat-utils #exfat
+```
+
+### 设置 grub 引导 descped
+
+单系统 改成使用 efimgrboot
 
 ```bash
 emerge --ask sys-boot/grub:2
@@ -366,8 +379,6 @@ emerge --ask sys-boot/os-prober
 grub-install --target=x86_64-efi --efi-directory=/boot--bootloader-id=Gentoo
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-
-###
 
 #### 网络连接使用 NetworkManager
 
