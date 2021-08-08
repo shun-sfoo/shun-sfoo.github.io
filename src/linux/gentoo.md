@@ -367,13 +367,9 @@ grub-install --target=x86_64-efi --efi-directory=/boot--bootloader-id=Gentoo
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### 杂项处理
+###
 
 #### 网络连接使用 NetworkManager
-
-`emerge -av networkmanager`
-默认开机启动
-`rc-update add NetworkManager default`
 
 #### 设置主机名：
 
@@ -402,9 +398,12 @@ retry=3
 
 #### 安装系统工具
 
-安装必要的系统日志工具和守护进程工具、文件索引工具、电源管理工具、设备管理工具
+安装必要的网络工具，系统日志工具和守护进程工具、文件索引工具、电源管理工具、设备管理工具
 
 ```bash
+emerge -av networkmanager
+rc-update add NetworkManager default
+
 emerge --ask app-admin/sysklogd
 rc-update add sysklogd default
 
