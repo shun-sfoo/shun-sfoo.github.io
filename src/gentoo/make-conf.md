@@ -9,11 +9,16 @@ CXXFLAGS="${COMMON_FLAGS}"
 FCFLAGS="${COMMON_FLAGS}"
 FFLAGS="${COMMON_FLAGS}"
 MAKEOPTS="-j4"
+
+# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
+# cpu参数用cpuid2cpuflags命令看，这里先不用管，暂时注释掉，后面再来配置
+
 # 注意核心数
 EMERGE_DEFAULT_OPTS="--with-bdeps=y --ask --verbose=y --load-average --keep-going --deep"
 PORTDIR="/var/db/repos/gentoo"
 DISTDIR="/var/cache/distfiles"
 PKGDIR="/var/cache/binpkgs"
+
 
 PORTAGE_TMPDIR="/tmp"
 # 大内存(8G、16G) 设置 小于 4G内存不用设置。
@@ -23,32 +28,30 @@ ACCEPT_LICENSE="*"
 ACCEPT_KEYWORDS="amd64"
 # "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
 
+
+USE="-consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind lto pgo netifrc (-)X (-)wayland (-)grub (-)wifi -networkmanager -dhcpcd (nvidia) vulkan ccache (sudo) (dosa) minizip"
+
 L10N="en-US zh-CN en zh"
 LINGUAS="en-US zh-CN en zh"
 AUTO_CLEAN="yes"
 
 ALSA_CARDS="hda-intel"
 # intel HD声卡
+# INPUT_DEVICES="libinput synaptics"
+# 笔记本电脑的触控板
+
 LLVM_TARGETS="X86"
 GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
-```
 
-## CPU-FLAGS-X86
+GRUB_PLATFORMS="efi-64"
+# UEFI 64位系统引导必须项
 
-```bash
-# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
-# cpu参数用cpuid2cpuflags命令看，这里先不用管，暂时注释掉，后面再来配置
-```
-
-## CCACHE
-
-```bash
 #FEATURES="ccache"
 #CCACHE_DIR="/var/cache/ccache"
 #此处先注释掉,配置完ccache后再去掉注释
 ```
 
-#### make.conf
+## compelete
 
 `/etc/portage/make.conf`
 定义整个系统在构建的过程中按照怎样的规则来进行编译，具有一定的全局属性。

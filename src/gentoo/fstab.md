@@ -1,3 +1,12 @@
+# fstab
+
+先了解下 fstab，就像一张表，在 Linux 开机的告诉 mount 应该把哪个分区以什么文件系统，
+以什么方式挂载到系统对应位置。这里提供一份使用 btrfs 的 fstab 书写方式。
+
+其次，就是挂载时需要注意的挂载选项，无论你是使用 ext4 文件系统，
+还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
+一方面实现快速读取和写入，另一方面最小化文件丢失
+
 ## fstab
 
 分别记录 btrfs 和 xpf 的 fstab 方案
@@ -32,7 +41,7 @@ tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
 ### xpf
 
 ```bash
-nano -w /etc/fstab：      #请参考我的配置，建议使用uuid的形式设置（不建议使用/dev/sdX？的形式）(是uuid，而不是partuuid哦)
+nano -w /etc/fstab：      #参考配置，建议使用uuid的形式设置（不建议使用/dev/sdX？的形式）(是uuid，而不是partuuid)
 UUID=......      /boot/efi      vfat      noauto,defaults,noatime,umask=0077                               0 2
 UUID=......      /boot          ext4      defaults,noatime,discard                                         0 2
 UUID=......      /              xfs       defaults,noatime                                                 0 1
@@ -46,4 +55,3 @@ tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=
 ```
 
 我的台式机的 ssd 在 2017 年前生产，考虑去掉 discard 和 fstrim
-以 gentoo 为例。

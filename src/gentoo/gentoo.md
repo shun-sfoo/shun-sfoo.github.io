@@ -1,29 +1,5 @@
 # Gentoo 安装
 
-前置说明:
-
-1. 不考虑老旧的 mbr 格式 一律选择 gpt + uefi 的组合
-2. 文件的主要格式是 xfs
-3. 使用 wm 而不是 de (de 有崩溃风险，且编译太耗时)
-4. systemd 的手越来越长越管越多, 选择使用 openrc。
-5. gentoo 放弃了 consolekit ，选择 elogind
-
-关于显卡驱动:
-
-- sway 不支持 nvidia 驱动, 所以 n 卡选择 `xserver + dwm`
-- 集成显卡和 amd 显卡选择 `wayland + sway`
-- intel 显卡也不需要 xf86-driver 推荐的是 mesa
-- 笔记本可选择双显卡驱动， 台式机只用单显卡。
-
-上述组合拳下来 选择 profile 方案就是默认，也即服务器 openrc 版本,
-
-由此也可初步选择一些全局 USE:
-`USE="-consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind (-)X (-)wayland (-)grub (-)wifi networkmanager -dhcpcd (nvidia) vulkan ccache sudo"`
-(使用 networkmanage 也不需要 dhcpcd)
-单系统不需要 grub 使用 efibootmgr 就可以识别到 boot
-使用 LiveUSB （推荐 Fedora）安装, 好处是可以直接从磁盘分区开始
-而且可以在终端复制粘贴此处的 code。
-
 ## 磁盘分区
 
 使用 sfdisk -z `磁盘名称` (`-z` 选项可以选择文件类型 gpt)
@@ -49,40 +25,38 @@
 | xfs  | free space | /ment/gentoo/home | mkfs.xfs      |
 | swap | 16G        | swap              | mkswap swapon |
 
-目前来说的理解是 `/boot` 是必要的 一般 设置为 256M 格式化是 vfat ，
-`/boot/efi` 是挂载在/boot 下 对应多系统的，如果系统中有 windows 那么
-不用格式化它，直接挂载到 efi 上
-`mkdir -p /mnt/gentoo/boot`
-`mkdir -p /mnt/gentoo/boot/efi`
+目前来说的理解是 `/boot` 是必要的, 一般设置为 256M 格式化是 vfat ，
 
-## 正式开始
+`/boot/efi` 是挂载在/boot 下 对应多系统的，
 
-按照上表挂载
+如果系统中有 windows 那么不用格式化它，直接挂载到 efi 上
 
-### 下载镜像解压
+```bash
+mkdir -p /mnt/gentoo/boot
+mkdir -p /mnt/gentoo/boot/efi
+```
 
-- 下载 Stage3 `wget https://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-最新版.tar.xz`
-- 解压 `tar vxpf stage3-amd64-最新版.tar.xz`
-- `rm stage3-amd64-最新版.tar.xz`
+## 下载镜像
 
-### 配置 make.confg
+建议去中科大的镜像站下载 stage3。(ustc)
+
+```bash
+cd /mnt/gentoo/
+wget http://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-20210630T214504Z.tar.xz
+tar vxpf stage3-amd64-20210630T214504Z.tar.xz
+```
+
+## 配置编译选项
 
 为了控制页面长度，配置示例单独放在文件中。
 
 [一份直接 copy 的配置](./make-conf.md#default)
-一般有两个优化设置 ccache 和 CPU-FLAGS-X86
-可以参见后面的内容。
 
-### gcc 优化
-
-打开 GCC lto 和 pgo 优化，新建 `/mnt/gentoo/etc/portage/package.use/gcc`,
-输入以下内容：`sys-devel/gcc pgo lto`
-
-### 配置源镜像
+## 配置源镜像
 
 ```bash
 mkdir -p /mnt/gentoo/etc/portage/repos.conf
-vi /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+vim /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
 
 [gentoo]
 location = /usr/portage
@@ -91,19 +65,19 @@ sync-uri = rsync://rsync.mirrors.ustc.edu.cn/gentoo-portage/
 auto-sync = yes
 ```
 
-### chroot 和 第一次构建
+## chroot
 
-先了解下什么是 Chroot。以现在的安装为例，
-目前运行的软件和内核是 LiveUSB 提供的，根目录是 LiveUSB 的，
-而 Gentoo 系统的根目录在 /mnt/gentoo/ ，也没有直接运行的能力，
-因为运行环境也不是 Gentoo 系统的，那么下一步可以通过 Chroot 一系列操作，
-实现从 LiveUSB 转移到 Gentoo 系统下。
+了解下什么是 Chroot。以现在的安装为例，目前运行的软件和内核是 LiveUSB 提供的，
 
-#### 首先复制 DNS 到 Gentoo 系统下：
+根目录是 LiveUSB 的，而 Gentoo 系统的根目录在 /mnt/gentoo/ ，也没有直接运行的能力，
+
+因为运行环境也不是 Gentoo 系统的，可以通过 Chroot 一系列操作，实现从 LiveUSB 转移到 Gentoo 系统下。
+
+### 复制 DNS 到 Gentoo 系统下：
 
 `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
-##### 挂载必要文件系统：
+### 挂载必要文件系统：
 
 ```bash
 mount -t proc /proc /mnt/gentoo/proc
@@ -113,9 +87,9 @@ mount --rbind /dev /mnt/gentoo/dev
 # mount --make-rslave /mnt/gentoo/dev
 ```
 
-注意 `--make-rslave` 操作是安装 systemd 支持时所需要的,所以这里注释掉
+**注意** `--make-rslave` 操作是安装 systemd 支持时所需要的，所以这里注释掉
 
-#### 进入 Chroot：
+### 进入 Chroot：
 
 ```bash
 chroot /mnt/gentoo /bin/bash
@@ -126,24 +100,29 @@ source /etc/profile
 export PS1="(chroot) ${PS1}"
 ```
 
-### 第一阶段
+## 配置 portage 设置
 
-#### 快照更新 Profile 然后使用 rsync 同步
+### 从网路下载 gentoo ebuild 仓库
 
 `emerge-webrsync`
 
-websync 会将数据库同步到 24 小时之内，`emerge --sync` 会同步到 1 小时之内，这样做很慢且没有必要。
+websync 会将数据库同步到 24 小时之内，`emerge --sync` 会同步到 1 小时之内，
 
-#### 选择 默认 profile
+这样做很慢且没有必要。
+
+### 选择 默认 profile
 
 ```bash
 eselect profile list
 eselect profile set X
 ```
 
-如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，选择默认就可以了。
+如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，
+选择默认就可以了。
 
-#### 确认 CPU-FLAGS-X86
+### CPU-FLAGS-X86 设置
+
+针对自己 cpu 优化
 
 ```bash
 emerge -ask -verbose app-portage/cpuid2cpuflags
@@ -152,9 +131,9 @@ cpuid2cpuflags
 
 make.conf 中启用 CPU-FLAGS-X86
 
-[CPU-FLAGS-X86](./make-conf.md#cpu-flags-x86)
+### ccache 设置
 
-#### 安装 ccache
+将编译放在内存中，提升编译速度，保护硬盘。
 
 ```bash
 emerge --ask dev-util/ccache
@@ -172,44 +151,23 @@ cache_dir_levels = 3
 ```
 
 make.conf 中启用 ccache
-[ccache](./make-conf.md#ccache)
 
-#### 更新系统
+## 更新系统
 
 `emerge --ask --verbose --update --deep --newuse @world`
 
-现在开始了漫长的编译过程，如果这个时候出现某些依赖无法满足的情况，
-我们可以通过以下几种方法解决：
-
-```bash
-emerge -auvDN --with-bdeps=y --autounmask-write @world
-etc-update --automode -3
-emerge -auvDN --with-bdeps=y @world
-```
-
-pyhon3.9 这个版本需要用 -bluetooth 这个 USE 编译一遍
-`USE=-bluetooth emerge -av python`
-
-如果中途因为某个包挂了，可以尝试以下两个命令：
-
-```bash
-emerge @preserved-rebuild -j
-perl-cleaner --all
-```
-
-如果以上还是不能解决问题,则进入/etc/portage 目录
-删掉 package.use,package.mask 和 package.unmask 文件或目录再次尝试
-
-#### 配置时区
+## 配置时区
 
 ```bash
 echo "Asia/Shanghai" > /etc/timezone
 emerge --config sys-libs/timezone-data
+```
 
+## 配置 locale
+
+```bash
 echo "en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8" >> /etc/locale.gen
-
 locale-gen
-
 echo "LANG=en_US.UTF-8" >> /etc/env.d/02locale
 
 eselect locale list
@@ -218,146 +176,17 @@ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
 这时，应该能够看到列出的中文，但是目前建议暂时不要用 eselect 选择使用中文
 
-### 编译内核
+## 设置 fstab
+
+提供 btrfs 和 xfs 两种方案
+
+TODO: 这部分细节待研究
+
+[fstab](./fstab.md)
+
+### 安装必须的文件系统支持，否则无法访问硬盘上的分区
 
 ```bash
-emerge --ask sys-kernel/gentoo-sources
-eselect kernel list
-eselect kernel set 1
-ls -l /usr/src/linux
-```
-
-可以看到下载的内核源码链接到了 linux 下
-
-#### 用取巧的方式，设置并编译安装 liunx 内核
-
-```bash
-emerge --ask sys-kernel/gentoo-sources  # 下载的是以内核作为名称 手动复制下
-ls -l /usr/src/linux  #有输出结果表示内核初步下载成功
-emerge --ask --verbose sys-kernel/linux-firmware    #时间较长30分钟左右，下载安装wifi网卡和intel核显的必要驱动固件
-emerge --ask sys-firmware/intel-microcode sys-apps/iucode_tool   #下载速度慢 需要科学上网，微码的部分可先跳过
-iucode_tool -S
-iucode_tool -S -l /lib/firmware/intel-ucode/*
-# 识别处理器签名并查找相应microcode文件名,其为“06-9e-0d”这样的编号格式，选择最末尾的那个（最新的）
-# 建议把找到的结果用手机拍照下来，然后设置编译内核（make menuconfig）的时候
-```
-
-```bash
-make menuconfig 中
-Device Driver:
-    Generic Driver Options:
-         Firmware loader:
-             Build name firmware blobs into the kernel binary
-
-输入“intel-ucode/06-9e-0d”这样的编号格式，将微码文件直接编译进内核。
-```
-
-确保 emerge intel-microcode 之前就得在 已经在 make.conf 中设置好了
-`MICROCODE_SIGNATURES="-S"`
-
-配置内核时开启
-
-```bash
-CONFIG_MICROCODE=y
-CONFIG_MICROCODE_INTEL=y
-```
-
-#### 永久禁用 nouveau
-
-```bash
-vim  /etc/modprobe.d/blacklist.conf：
-blacklist nouveau
-blacklist lbm-nouveau
-options nouveau modeset=0
-```
-
-即便在编译内核前就已经设置内核禁用 Nouveau 驱动了，但是内核安装时还是会默认把 nouveau 驱动作为内核模块自动加载。
-启用了 nouveau 驱动模块的内核会出现各式各样的莫名其妙的数不清的问题，所以为了避免以后出现这些问题，
-从现在就开始永久禁用 nouveau 模块！这是很多教程包括 gentoo wiki 上都不曾提到过的大问题，也是让很多人遭坑的关键地方。
-
-#### 在 genkernel 默认内核基础上修改
-
-将 genkernel 的默认内核配置文件“generated-config”复制过来，
-里面已经为你设置好了绝大部分应用场景以及绝大部分硬件驱动的配置，非常方便，值得借过来使用，
-只需要在自己手动配置内核的时候将其加载，在其基础上做一点点轻微的修改或完全不修改都可以，
-对内核新手极其友好！
-
-```bash
-emerge --ask sys-kernel/genkernel
-cd /usr/src/linux
-cp /usr/share/genkernel/arch/x86_64/generated-config /usr/src/linux/
-```
-
-将 generated-config 复制为 1.config 使用，而 generated-config 留作备份
-
-```bash
-cp /usr/src/linux/generated-config /usr/src/linux/1.config
-```
-
-想在以后支持 jack 低延迟实时音频组件（Jack-Audio-Connection-Kit），则还需要 vim 1.config，手动设置
-顺便此时设置上一步提到的微码改动
-
-```bash
-# jack
-CONFIG_CGROUPS=y
-CONFIG_CGROUP_SCHED=y
-CONFIG_RT_GROUP_SCHED=y
-
-# mcirocode
-CONFIG_MICROCODE=y
-CONFIG_MICROCODE_INTEL=y
-```
-
-### 内核配置
-
-`make menuconfig`
-首先基本配置下
-
-```bash
-load 1.config
-“Core 2/newer Xeon”，Preemption Model：“Low-Latency Desktop”，Timer frequecy 1000hz，Timer tick handling：“tickless idle”，Cputime accounting：“Simple tick based cputime accounting”，去掉了不需要的文件系统支持，去掉了对AMD CPU的支持，禁用Nouveau驱动）。“Support for extended (non-PC) x86 platforms”这一项取消掉。 之后“Save”你的设置，并且“Exit”即可
-```
-
-禁用 Nouveau 驱动
-`CONFIG_I2C_NVIDIA_GPU` 禁用
-
-### 编译内核
-
-```bash
-make -j4
-make modules_install
-make install
-```
-
-#### 使用 dracut 生成内核的 initramfs (可选)
-
-```bash
-emerge --ask sys-kernel/dracut
-cd /boot
-dracut --hostonly
-```
-
-#### 使用 genkernel 生成内核的 initramfs (推荐)
-
-```bash
-genkernel --install initramfs
-```
-
-#### fstab
-
-先了解下 fstab，就像一张表，在 Linux 开机的告诉 mount 应该把哪个分区以什么文件系统，
-以什么方式挂载到系统对应位置。这里提供一份使用 btrfs 的 fstab 书写方式。
-
-其次，就是挂载时需要注意的挂载选项，无论你是使用 ext4 文件系统，
-还是使用 btrfs 文件系统，使用合适的挂载选项有助于最大性能的发挥你的文件系统的性能，
-一方面实现快速读取和写入，另一方面最小化文件丢失
-
-[示例](./fstab.md#fstab)
-
-#### 安装必须的文件系统支持，否则无法访问硬盘上的分区
-
-```bash
-
 # emerge --ask sys-fs/btrfs-progs # btrfs
 emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
 emerge --ask sys-fs/xfsprogs #xfs
@@ -367,26 +196,61 @@ emerge --ask sys-fs/fuse-exfat #exfat
 emerge --ask sys-fs/exfat-utils #exfat
 ```
 
-### 设置 grub 引导 descped
-
-单系统 改成使用 efimgrboot
+## 下载内核源码
 
 ```bash
-emerge --ask sys-boot/grub:2
-emerge --ask sys-boot/os-prober
-
-# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Gentoo  多个系统
-grub-install --target=x86_64-efi --efi-directory=/boot--bootloader-id=Gentoo
-grub-mkconfig -o /boot/grub/grub.cfg
+emerge --ask sys-kernel/gentoo-sources
+eselect kernel list
+eselect kernel set 1 # 这一步会将linux版本链接到linux目录
+ls -l /usr/src/linux
 ```
 
-#### 网络连接使用 NetworkManager
+## 配置内核
 
-#### 设置主机名：
+```bash
+emerge --ask sys-apps/pciutils # lspci
+emerge --ask sys-kernel/genkernel
+cd /usr/src/linux
+emerge --ask sys-kernel/linux-firmware # 一些额外固件，wifi等
+make menuconfig
+```
 
-`echo hostname=\"Matrix\" > /etc/conf.d/hostname`
+[使用 N 卡禁用 Nouveau 驱动](./core.md)
 
-#### 设置密码强度
+内核配置部分查看官网 handbook
+
+[menuconfig](https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation#Kernel_configuration_and_compilation)
+
+### 生成 initramfs
+
+```bash
+emerge --ask sys-kernel/genkernel
+genkernel --install --kernel-config=/path/to/used/kernel.config initramfs
+ls /boot/initramfs*
+```
+
+## 设置主机名：
+
+```bash
+echo hostname=\"matrix\" > /etc/conf.d/hostname
+# Set the dns_domain_lo variable to the selected domain name
+echo dns_domain_lo=\"homenetwork\" >> d/etc/conf.d/net
+```
+
+## hosts
+
+`vim /etc/hosts`
+
+```bash
+# This defines the current system and must be set
+127.0.0.1     matrix.homenetwork matrix localhost
+
+# Optional definition of extra systems on the network
+192.168.0.5   jenny.homenetwork jenny
+192.168.0.6   benny.homenetwork benny
+```
+
+## 修改密码强度
 
 查看两个配置
 
@@ -394,7 +258,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 /etc/pam.d/system-auth
 
-后者告诉我们相关配置文件在 /etc/security/passwdqc.conf
+后者说明相关配置文件在 /etc/security/passwdqc.conf
 
 ```bash
 min=disabled,24,11,8,7  => min=3,3,3,3,3
@@ -407,46 +271,89 @@ enforce=everyone
 retry=3
 ```
 
-#### 安装系统工具
+## 安装系统工具
 
-安装必要的网络工具，系统日志工具和守护进程工具、文件索引工具、电源管理工具、设备管理工具
+安装必要的系统日志工具和守护进程工具、文件索引工具、设备管理工具
 
 ```bash
-emerge -av networkmanager
-rc-update add NetworkManager default
+emerge sys-apps/ifplugd
 
-emerge --ask app-admin/sysklogd
+emerge --ask app-admin/sysklogd # system logger
 rc-update add sysklogd default
 
-emerge --ask sys-process/cronie
+emerge --ask sys-process/cronie # cron daemon
 rc-update add cronie default
 
-emerge --ask sys-apps/mlocate
+emerge --ask sys-apps/mlocate # file indexing
 
-emerge --ask sys-power/acpid
-rc-update add acpid default
-
-emerge sys-power/thermald
-rc-update add thermald default
+rc-update add sshd default # remote access
 
 emerge virtual/udev
 emerge --oneshot sys-fs/eudev
 sudo rc-update add udev sysinit
 ```
 
+## 网络连接
+
+`ip addr` 查看网卡信息
+
+### 有线 netifrc
+
 ```bash
-sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
-passwd #设置root密码
+emerge net-misc/netifrc
+vim /etc/conf.d/net
+
+# 设置动态分配
+config_eth0="dhcp"
+
+cd /etc/init.d
+ln -s net.lo net.eth0
+rc-update add net.eth0 default
 ```
 
-#### 创建用户名并设置密码
+### wifi iwd
 
 ```bash
-useradd -m -G users,wheel,portage,usb,video,audio  #这里换成你的用户名(小写)
-passwd #用户名
+emerge -av iwd #wifi
+rc-update add iwd default
 ```
 
-检查
+## bootloader
+
+TODO: 目前使用 grub2，后续修改成 efibootmgr
+
+保证 make.conf 中设置了 GRUB-PLATFORMS
+
+```bash
+# echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
+emerge --ask sys-boot/grub:2
+grub-install --target=x86_64-efi --efi-directory=/boot # 注意 efi 文件夹位置
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+## 配置用户
+
+日常用户组
+
+| group   | description                                                                 |
+| ------- | --------------------------------------------------------------------------- |
+| audio   | Be able to access the audio devices.                                        |
+| games   | Be able to play games.                                                      |
+| portage | Be able to access portage restricted resources.                             |
+| usb     | Be able to access USB devices.                                              |
+| video   | Be able to access video capturing hardware and doing hardware acceleration. |
+| wheel   | Be able to use su.                                                          |
+
+```bash
+useradd -m -G users,wheel,audio,video,usb -s /bin/bash larry
+passwd larry
+```
+
+## 清理及重启
+
+`rm /stage3-*.tar.*`
+
+## 检查
 
 1. `/boot` 下是否有内核文件生成
 2. `/etc/fstab` 文件内容是否有误
@@ -456,3 +363,5 @@ passwd #用户名
 [Langley Houge](https://medium.com/@langleyhouge/gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%8F%8A%E6%80%BB%E7%BB%93-1db269cfa8c7)
 
 [yangmame](https://blog.yangmame.org/Gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.html)
+
+[医学生折腾 Gentoo Linux 记](https://www.zhihu.com/column/c_1271625347856310272)

@@ -1,71 +1,45 @@
 # 前言
 
-虽然很多人都说过使用了 gentoo 之后就没重装系统的需求，
-由于有多台设备和记录一下过程还是有了这片文章。
+![larry](../static/gentoo/Larry-hi.png)
 
-gentoo 安装过程概括为
+前置说明:
 
-stage1：联网，硬盘分区和挂载，下载镜像，配置编译选项和同步镜像源,
-stage2：更新 @world
-stage3: 配置时区，配置本地化， 下载内核，配置内核，配置 fstab, 网络配置，系统信息，系统登陆，系统工具
+1. 不考虑老旧的 mbr 格式 一律选择 gpt + uefi 的组合
+2. 文件的主要格式是 xfs
+3. 使用 wm 而不是 de (de 有崩溃风险，且编译太耗时)
+4. systemd 的手越来越长越管越多, 选择使用 openrc。
+5. 网络方案选择 netifrc 和 iwd, networkmanage 和 systemd 都是 red hat 弄出来的，弃之。
+6. gentoo 放弃了 consolekit ，选择 elogind
+7. lto pgo 优化,可以提升程序运行速度并且减小程序体积
+8. bootloader 中暂时先选择 grub2, 后续改成直接用 efibootmgr
+9. jack 低延迟音频组件
+10. TODO: 使用 doas 作为权限管理 取代 sudo
+11. TODO: X11 桌面的选择 bspwm ... , sway 的配置, iwd
 
-# 概念
+关于显卡驱动:
 
-make.conf 中的 USE 标签是一个全局的标签，针对单独的软件可以通过
-在 package.use, pakage.mask, package.accept-keywords
-三者组合起来，如果配置呢，首先是配置自己熟悉的，需要设置全局的
-比如说使用 X11 不需要 wayland 就配置 -wayland
-如需要用到某个加上 配置，然后更新 etc-update
+- sway 不支持 nvidia 驱动, 所以 n 卡选择 `xserver + dwm`
+- 集成显卡和 amd 显卡选择 `wayland + sway`
+- intel 显卡驱动 xf86-video-intel 年久失修 ,现在推荐的是的 `x11-base/xorg-drivers` 和 `media-lib/mesa`
+- 笔记本可选择双显卡驱动， 台式机只用单显卡。
 
-在知乎上看到一个医学生做的一系列 gentoo 安装和内核调整的教程，
-重新对安装 gentoo 产生了兴趣，对一件事没把握最主要是对他不了解，
-看到这个系列教程有种豁然开朗的感觉
-他里面提到的一个终点就是把通过内核配置，把驱动完全加载到了内核，
-省去 initramfs 然后内核也能压缩到 10m，这样不论运行速度和启动速度都能提升，
-也符合 gentoo 的为自己的机器
-完全配置的想法。 然后是坚决不用 systemd。
-我也打算仿照他的记录一下，尽量详细，符合自己的安装习惯，该简化的简化，觉得有深入
-价值的就深化一下。
-首先说下机器情况，一个台式机是 i5 4590 加 nvidia 组合，由于 sway 不支持 nvidia 驱动，所以在
-这个台式机上是 X + dwm 的组合，。
-还有一个 nuc8i5 这个可以用 sway 了就不用 X 。
-终端模拟器用 alacritty,都有虚拟化的需求用到 kvm。
-驱动问题， 台式机直接用 nvidia 闭源驱动，
-intel 不需要 xf86-video-intel 好几年没有维护
-使用 mesa 如果用 X 的话 还要 xserver-driver X 也没必要全部安装
-只用 xserver 然后加上一些小组件。
+上述组合拳下来 选择 profile 方案就是默认，也即服务器 openrc 版本,
 
-虽然很多人都说过使用了 gentoo 之后就没重装系统的需求，
-由于有多台设备和记录一下过程还是有了这片文章。
+由此也可初步选择一些全局 USE:
 
-gentoo 安装过程概括为
+`USE="-consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind lto pgo netifrc (-)X (-)wayland (-)grub (-)wifi -networkmanager -dhcpcd (nvidia) vulkan ccache (sudo) (dosa) minizip"`
 
-stage1：联网，硬盘分区和挂载，下载镜像，配置编译选项和同步镜像源,
-stage2：更新 @world
-stage3: 配置时区，配置本地化， 下载内核，配置内核，配置 fstab, 网络配置，系统信息，系统登陆，系统工具
+使用 LiveUSB （推荐 Fedora）安装, 好处是可以直接从磁盘分区开始
+而且可以在终端复制粘贴此处的 code。
 
-# 概念
+教程跟着官网走就行，以下步骤是为了安装时能无脑复制。(最好还是对照官网)
 
-make.conf 中的 USE 标签是一个全局的标签，针对单独的软件可以通过
-在 package.use, pakage.mask, package.accept-keywords
-三者组合起来，如果配置呢，首先是配置自己熟悉的，需要设置全局的
-比如说使用 X11 不需要 wayland 就配置 -wayland
-如需要用到某个加上 配置，然后更新 etc-update
+# 文章列表
 
-在知乎上看到一个医学生做的一系列 gentoo 安装和内核调整的教程，
-重新对安装 gentoo 产生了兴趣，对一件事没把握最主要是对他不了解，
-看到这个系列教程有种豁然开朗的感觉
-他里面提到的一个终点就是把通过内核配置，把驱动完全加载到了内核，
-省去 initramfs 然后内核也能压缩到 10m，这样不论运行速度和启动速度都能提升，
-也符合 gentoo 的为自己的机器
-完全配置的想法。 然后是坚决不用 systemd。
-我也打算仿照他的记录一下，尽量详细，符合自己的安装习惯，该简化的简化，觉得有深入
-价值的就深化一下。
-首先说下机器情况，一个台式机是 i5 4590 加 nvidia 组合，由于 sway 不支持 nvidia 驱动，所以在
-这个台式机上是 X + dwm 的组合，。
-还有一个 nuc8i5 这个可以用 sway 了就不用 X 。
-终端模拟器用 alacritty,都有虚拟化的需求用到 kvm。
-驱动问题， 台式机直接用 nvidia 闭源驱动，
-intel 不需要 xf86-video-intel 好几年没有维护
-使用 mesa 如果用 X 的话 还要 xserver-driver X 也没必要全部安装
-只用 xserver 然后加上一些小组件。
+[安装](./gentoo.md)
+
+[portage](./portage.md)
+
+[内核配置](./core.md)
+
+[fstab 设置](./fstab.md)
