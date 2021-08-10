@@ -347,6 +347,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```bash
 useradd -m -G users,wheel,audio,video,usb -s /bin/bash larry
 passwd larry
+# wheel 用户组能够使用 sudo 的权限
+sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
 ```
 
 ## 清理及重启
@@ -360,7 +362,7 @@ passwd larry
 
 ## 参考链接
 
-[Langley Houge](https://medium.com/@langleyhouge/gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%8F%8A%E6%80%BB%E7%BB%93-1db269cfa8c7)
+[Langley Houge](https://litterhougelangley.life/blog/2021/05/21/gentoo/)
 
 [yangmame](https://blog.yangmame.org/Gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.html)
 

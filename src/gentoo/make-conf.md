@@ -29,7 +29,7 @@ ACCEPT_KEYWORDS="amd64"
 # "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
 
 
-USE="-consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind lto pgo netifrc (-)X (-)wayland (-)grub (-)wifi -networkmanager -dhcpcd (nvidia) vulkan ccache (sudo) (dosa) minizip"
+USE="-bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind lto pgo netifrc (-)X (-)wayland (-)wifi (-)bluetooth -networkmanager -dhcpcd (nvidia) vulkan ccache (sudo) (dosa) minizip openmp"
 
 L10N="en-US zh-CN en zh"
 LINGUAS="en-US zh-CN en zh"
@@ -40,11 +40,19 @@ ALSA_CARDS="hda-intel"
 # INPUT_DEVICES="libinput synaptics"
 # 笔记本电脑的触控板
 
+VIDEO_CARDS="nvidia"
+# VIDEO_CARDS="intel i965 iris"
+# VIDEO_CARDS="intel i965 iris nvidia"
+
 LLVM_TARGETS="X86"
 GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
 
 GRUB_PLATFORMS="efi-64"
 # UEFI 64位系统引导必须项
+
+# QEMU_SOFTMMU_TARGETS="alpha aarch64 arm i386 mips mips64 mips64el mipsel ppc ppc64 s390x sh4 sh4eb sparc sparc64 x86_64"
+# QEMU_USER_TARGETS="alpha aarch64 arm armeb i386 mips mipsel ppc ppc64 ppc64abi32 s390x sh4 sh4eb sparc sparc32plus sparc64 x86_64"
+# 虚拟机
 
 #FEATURES="ccache"
 #CCACHE_DIR="/var/cache/ccache"
@@ -122,6 +130,10 @@ ALSA_CARDS="hda-intel"
 # 笔记本电脑的触控板
 MICROCODE_SIGNATURES="-S"
 # 如果想把CPU的microcode直接编译进内核，则需要设置为“-S”；否则注释掉
+
+# QEMU_SOFTMMU_TARGETS="alpha aarch64 arm i386 mips mips64 mips64el mipsel ppc ppc64 s390x sh4 sh4eb sparc sparc64 x86_64"
+# QEMU_USER_TARGETS="alpha aarch64 arm armeb i386 mips mipsel ppc ppc64 ppc64abi32 s390x sh4 sh4eb sparc sparc32plus sparc64 x86_64"
+# 虚拟机
 
 LLVM_TARGETS="X86"
 
