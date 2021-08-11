@@ -20,6 +20,8 @@
   - [make.conf](./gentoo/make-conf.md)
   - [fstab](./gentoo/fstab.md)
   - [内核配置](./gentoo/core.md)
+  - [驱动](./gentoo/driver.md)
+  - [笔记](./gentoo/note.md)
 - [Java](./Java/intro.md)
   - [jvm1](./Java/jvm01.md)
   - [jvm2](./Java/jvm02.md)

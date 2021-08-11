@@ -212,7 +212,23 @@ emerge --ask sys-apps/pciutils # lspci
 emerge --ask sys-kernel/genkernel
 cd /usr/src/linux
 emerge --ask sys-kernel/linux-firmware # 一些额外固件，wifi等
+```
+
+## 使用默认配置
+
+使用官方的配置可以做到开箱即用
+
+```bash
+cp /usr/share/genkernel/arch/x86_64/generated-config /usr/src/linux/
+cd /usr/src/linux
+cp generated-config 1.config
+
 make menuconfig
+load 1.config
+# nvidia驱动禁用 nouveau
+save as .config
+make -j4 && make modules_install
+make install
 ```
 
 [使用 N 卡禁用 Nouveau 驱动](./core.md)
@@ -234,7 +250,7 @@ ls /boot/initramfs*
 ```bash
 echo hostname=\"matrix\" > /etc/conf.d/hostname
 # Set the dns_domain_lo variable to the selected domain name
-echo dns_domain_lo=\"homenetwork\" >> d/etc/conf.d/net
+echo dns_domain_lo=\"homenetwork\" >> /etc/conf.d/net
 ```
 
 ## hosts
@@ -290,7 +306,9 @@ rc-update add sshd default # remote access
 
 emerge virtual/udev
 emerge --oneshot sys-fs/eudev
-sudo rc-update add udev sysinit
+rc-update add udev sysinit
+
+rc-update add elogind boot
 ```
 
 ## 网络连接
@@ -304,11 +322,14 @@ emerge net-misc/netifrc
 vim /etc/conf.d/net
 
 # 设置动态分配
-config_eth0="dhcp"
+config_enp3s0="dhcp"
 
 cd /etc/init.d
-ln -s net.lo net.eth0
-rc-update add net.eth0 default
+ln -s net.lo net.enp3s0
+rc-update add net.enp3s0 default
+
+# 重新启动
+rc-service net.enp3s0 restart
 ```
 
 ### wifi iwd
@@ -317,6 +338,13 @@ rc-update add net.eth0 default
 emerge -av iwd #wifi
 rc-update add iwd default
 ```
+
+### NOTE iwd and netifrc
+
+gentoo iwd wiki 提到的 netifrc 用不能共存的说法
+配置一个就禁用另一个。
+
+[iwd](https://wiki.gentoo.org/wiki/Iwd)
 
 ## bootloader
 
@@ -363,7 +391,5 @@ sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
 ## 参考链接
 
 [Langley Houge](https://litterhougelangley.life/blog/2021/05/21/gentoo/)
-
-[yangmame](https://blog.yangmame.org/Gentoo%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.html)
 
 [医学生折腾 Gentoo Linux 记](https://www.zhihu.com/column/c_1271625347856310272)

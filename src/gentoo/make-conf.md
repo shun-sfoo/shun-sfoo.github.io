@@ -29,7 +29,22 @@ ACCEPT_KEYWORDS="amd64"
 # "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
 
 
-USE="-bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind lto pgo netifrc (-)X (-)wayland (-)wifi (-)bluetooth -networkmanager -dhcpcd (nvidia) vulkan ccache (sudo) (dosa) minizip openmp"
+# 括号表示根据情况选装
+# vdpau vaapi 安装视频播放器需要
+NEO_VIDEO="(nvidia) vulkan vdpau vaapi"
+
+# pluseaudio与alsa基本一致， oss太过古老
+NEO_AUDIO="jack libsamplerate alsa -pulseaudio -oss"
+
+NEO_COMPILE="lto pgo ccache (sudo) (dosa) minizip openmp"
+
+# nftables防火墙可以取代了iptables
+NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
+
+# elogind 取代了 consolekit
+NEO_DESKTOP="elogind -bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk"
+
+USE="${NEO_VIDEO} ${NEO_AUDIO} ${NOE_COMPLE} ${NEO_NET} ${NEO_DESKTOP}"
 
 L10N="en-US zh-CN en zh"
 LINGUAS="en-US zh-CN en zh"
@@ -106,7 +121,7 @@ AUDIO="-pulseaudio alsa jack"
 VIDEO="vulkan nvidia"
 COMPILE="fortran lto pgo openmp minizip"
 ELSE="sudo ccache aria2"
-# USE="plugins ${MINUS} ${DESKTOP} ${AUDIO}  ${VIDEO} ${COMPILE} ${ELSE}"
+# USE="${MINUS} ${DESKTOP} ${AUDIO}  ${VIDEO} ${COMPILE} ${ELSE}"
 # 建议不要在 make.conf 中定义 USE 去 /etc/portage/package.use/ 中定义。
 
 ACCEPT_LICENSE="*"

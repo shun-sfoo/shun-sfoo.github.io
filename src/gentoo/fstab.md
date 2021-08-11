@@ -47,7 +47,7 @@ UUID=......      /boot          ext4      defaults,noatime,discard              
 UUID=......      /              xfs       defaults,noatime                                                 0 1
 UUID=......      /home          xfs       noatime,discard                                                  0 2
 UUID=......      none           swap      sw,noatime,discard                                               0 0
-tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=1777,size=6G               0 0
+tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
 
 # 内存tmpfs(/tmp目录)的大小，2G内存设为1G、4G内存设为2G、8G内存可设为4-6G、16G内存可设为10-13G
 # 根分区/不建议设置discard参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/

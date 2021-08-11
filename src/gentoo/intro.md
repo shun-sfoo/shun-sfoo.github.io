@@ -12,9 +12,10 @@
 6. gentoo 放弃了 consolekit ，选择 elogind
 7. lto pgo 优化,可以提升程序运行速度并且减小程序体积
 8. bootloader 中暂时先选择 grub2, 后续改成直接用 efibootmgr
-9. jack 低延迟音频组件
-10. TODO: 使用 doas 作为权限管理 取代 sudo
-11. TODO: X11 桌面的选择 bspwm ... , sway 的配置, iwd
+9. jack2 低延迟音频组件 cmus 播放器 mpv 播放器
+10. nftables 作为防火墙
+11. TODO: 使用 doas 作为权限管理 取代 sudo
+12. TODO: X11 桌面的选择 bspwm ... , sway 的配置, iwd
 
 关于显卡驱动:
 
@@ -27,7 +28,24 @@
 
 由此也可初步选择一些全局 USE:
 
-`USE="-consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd elogind lto pgo netifrc (-)X (-)wayland (-)grub (-)wifi -networkmanager -dhcpcd (nvidia) vulkan ccache (sudo) (dosa) minizip"`
+```bash
+# 括号表示根据情况选装
+# vdpau vaapi 安装视频播放器需要
+NEO_VIDEO="(nvidia) vulkan vdpau vaapi"
+
+# pluseaudio与alsa基本一致， oss太过古老
+NEO_AUDIO="jack libsamplerate alsa -pulseaudio -oss"
+
+NEO_COMPILE="lto pgo ccache (sudo) (dosa) minizip openmp"
+
+# nftables防火墙可以取代了iptables
+NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
+
+# elogind 取代了 consolekit
+NEO_DESKTOP="elogind -bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk"
+
+USE="${NEO_VIDEO} ${NEO_AUDIO} ${NOE_COMPLE} ${NEO_NET} ${NEO_DESKTOP}"
+```
 
 使用 LiveUSB （推荐 Fedora）安装, 好处是可以直接从磁盘分区开始
 而且可以在终端复制粘贴此处的 code。
@@ -43,3 +61,7 @@
 [内核配置](./core.md)
 
 [fstab 设置](./fstab.md)
+
+[驱动](./driver.md)
+
+[笔记](./note.md)
