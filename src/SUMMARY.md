@@ -14,6 +14,7 @@
   - [vim](./linux/practical-vim.md)
   - [dbus](./linux/dbus.md)
   - [zsh 1](./linux/zsh-01.md)
+  - [openwrt 作为旁路由](./linux/openwrt.md)
 - [gentoo](./gentoo/intro.md)
   - [安装](./gentoo/gentoo.md)
   - [portage](./gentoo/portage.md)
