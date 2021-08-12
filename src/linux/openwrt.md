@@ -1,5 +1,7 @@
 # 使用 openwrt 做旁路由
 
+[参考](https://xmanyou.com/vmware-esxi-install-openwrt/)
+
 ## 虚拟机方案
 
 以 mac 平台为例
@@ -52,6 +54,8 @@ ipv4 地址填设置的 115
 
 ipv4 网关填 本地路由器地址
 
+ipv4 广播设置为 255 (这个是否需要设定？)
+
 自定 dns 服务器地址填本地路由地址
 
 保存，在网络诊断中点击 ping 测试是否网络联通。
@@ -67,7 +71,7 @@ dns 设置为 `114.114.114.114`
 
 ```bash
 vim /etc/conf.d/net
-config_eth0="192.168.0.7 netmask 255.255.255.0"
-routes_eth0="default via 192.168.0.1"
-dns_servers_eth0="192.168.0.1 8.8.8.8"
+config_eth0="192.168.1.7 netmask 255.255.255.0"
+routes_eth0="default via 192.168.1.1"
+dns_servers_eth0="192.168.1.1 114.114.114.114"
 ```
