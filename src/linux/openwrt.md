@@ -71,7 +71,7 @@ dns 设置为 `114.114.114.114`
 
 ```bash
 vim /etc/conf.d/net
-config_eth0="192.168.1.7 netmask 255.255.255.0"
-routes_eth0="default via 192.168.1.1"
-dns_servers_eth0="192.168.1.1 114.114.114.114"
+config_enp3s0="192.168.1.7 netmask 255.255.255.0"
+routes_enp3s0="default via 192.168.1.1"
+dns_servers_enp3s0="192.168.1.1 114.114.114.114"
 ```
