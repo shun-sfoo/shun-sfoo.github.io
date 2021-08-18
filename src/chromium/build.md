@@ -31,3 +31,16 @@ cd ~/chromiumos
 repo init -u https://chromium.googlesource.com/chromiumos/manifest
 repo sync -j4
 ```
+
+## 环境设置
+
+`export BOARD=amd64-generic`
+`setup_board --board=${BOARD}`
+
+## 构建镜像
+
+`./build_packages --borad=${BOARD}`
+
+## u 盘刷入
+
+`cros flash usb:// ${BOARD}/latest`
