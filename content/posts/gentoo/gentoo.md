@@ -258,7 +258,54 @@ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
 TODO: 这部分细节待研究
 
-[fstab](./fstab.md)
+## fstab
+
+分别记录 btrfs 和 xpf 的 fstab 方案
+
+```bash
+blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后根据追加的内容进行下述修改
+```
+
+### btrfs
+
+如果使用 btrfs 文件系统的话，非常推荐如下的挂载选项
+
+`defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1`
+
+使用 discard=async 与 fstrim 是不冲突的；另外透明压缩不需要启动等级 3，第一等级就足够了，
+如果有需求使用 btrfs 下的 swap ，那不能启用透明压缩功能；并且启用了自动碎片整理功能。这样对文件系统是比较好的。
+
+整个 fstab 的书写就是这样的 UUID 可以使用 blkid 命令查看
+`nona /etc/fstab`
+
+```conf
+UUID=boot-uuid  /boot       vfat  defaults 0 0
+UUID=root-uuid  /           btrfs subvol=@,defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 1
+UUID=home-uuid  /home       btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 2
+UUID=opt-uuid   /opt        btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1,commit=120 0 2
+tmpfs           /tmp        tmpfs size=8G,notaime 0 0
+tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
+```
+
+最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上
+
+### xpf
+
+```bash
+nano -w /etc/fstab：      #参考配置，建议使用uuid的形式设置（不建议使用/dev/sdX？的形式）(是uuid，而不是partuuid)
+UUID=......      /boot/efi      vfat      noauto,defaults,noatime,umask=0077                               0 2
+UUID=......      /boot          ext4      defaults,noatime,discard                                         0 2
+UUID=......      /              xfs       defaults,noatime                                                 0 1
+UUID=......      /home          xfs       noatime,discard                                                  0 2
+UUID=......      none           swap      sw,noatime,discard                                               0 0
+tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
+
+# 内存tmpfs(/tmp目录)的大小，2G内存设为1G、4G内存设为2G、8G内存可设为4-6G、16G内存可设为10-13G
+# 根分区/不建议设置discard参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
+# discard和fstrim都是专门针对SSD固态硬盘的优化，并且你的SSD必须确保支持TRIM；否则在不支持TRIM的SSD上盲目使用discard和fstrim优化很可能会有数据丢失的风险，2017年以后的SSD基本上都支持TRIM了。
+```
+
+我的台式机的 ssd 在 2017 年前生产，考虑去掉 discard 和 fstrim
 
 ### 安装必须的文件系统支持，否则无法访问硬盘上的分区
 
@@ -307,7 +354,43 @@ make -j4 && make modules_install
 make install
 ```
 
-[使用 N 卡禁用 Nouveau 驱动](./core.md)
+### nvidia
+
+```bash
+sudo emerge x11-drivers/nvidia-drivers
+```
+
+**注意**：如果安装后提示 warning（红色"\*"号提示）当前内核配置的“CONFIG_I2C_NVIDIA_GPU=y”这一项不符合要求，
+与 nvidia-drivers 冲突，需要按照提示将这一项内核配置禁用，并重新编译安装内核
+
+**注意** ：以后每次重新编译安装内核 kernel 后，均须要运行一遍“emerge @module-rebuild”，重新编译安装 nvidia 驱动模块加载到内核之中，否则 nvidia 驱动无法加载！！！
+
+```bash
+lsmod | grep nvidia
+
+sudo rmmod nvidia
+sudo  modprobe nvidia
+
+lsmod | grep nvidia
+
+
+sudo vim /etc/modules-load.d/nvidia.conf:
+nvidia
+
+sudo vim /etc/modprobe.d/nvidia-drm.conf：
+options nvidia-drm modeset=1
+
+
+sudo rc-update add modules boot
+
+sudo reboot   #重启系统
+```
+
+### xorg-server
+
+```bash
+sudo emerge x11-base/xorg-server
+```
 
 内核配置部分查看官网 handbook
 
