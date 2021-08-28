@@ -56,7 +56,77 @@ tar vxpf stage3-amd64-20210630T214504Z.tar.xz
 
 为了控制页面长度，配置示例单独放在文件中。
 
-[一份直接 copy 的配置](./make-conf.md#default)
+```bash
+COMMON_FLAGS="-march=native -O2 -pipe"
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+FCFLAGS="${COMMON_FLAGS}"
+FFLAGS="${COMMON_FLAGS}"
+MAKEOPTS="-j4"
+
+# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
+# cpu参数用cpuid2cpuflags命令看，这里先不用管，暂时注释掉，后面再来配置
+
+# 注意核心数
+EMERGE_DEFAULT_OPTS="--with-bdeps=y --ask --verbose=y --load-average --keep-going --deep"
+PORTDIR="/var/db/repos/gentoo"
+DISTDIR="/var/cache/distfiles"
+PKGDIR="/var/cache/binpkgs"
+
+
+PORTAGE_TMPDIR="/tmp"
+# 大内存(8G、16G) 设置 小于 4G内存不用设置。
+LC_MESSAGES=C
+
+ACCEPT_LICENSE="*"
+ACCEPT_KEYWORDS="amd64"
+# "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
+
+
+# 括号表示根据情况选装
+# vdpau vaapi 安装视频播放器需要
+NEO_VIDEO="(nvidia) vulkan vdpau vaapi"
+
+# pluseaudio与alsa基本一致， oss太过古老
+NEO_AUDIO="jack libsamplerate alsa -pulseaudio -oss"
+
+NEO_COMPILE="lto pgo ccache (sudo) (dosa) minizip openmp"
+
+# nftables防火墙可以取代了iptables
+NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
+
+# elogind 取代了 consolekit
+NEO_DESKTOP="elogind -bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk"
+
+USE="${NEO_VIDEO} ${NEO_AUDIO} ${NOE_COMPLE} ${NEO_NET} ${NEO_DESKTOP}"
+
+L10N="en-US zh-CN en zh"
+LINGUAS="en-US zh-CN en zh"
+AUTO_CLEAN="yes"
+
+ALSA_CARDS="hda-intel"
+# intel HD声卡
+# INPUT_DEVICES="libinput synaptics"
+# 笔记本电脑的触控板
+
+VIDEO_CARDS="nvidia"
+# VIDEO_CARDS="intel i965 iris"
+# VIDEO_CARDS="intel i965 iris nvidia"
+
+LLVM_TARGETS="X86"
+GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
+
+GRUB_PLATFORMS="efi-64"
+# UEFI 64位系统引导必须项
+
+# QEMU_SOFTMMU_TARGETS="alpha aarch64 arm i386 mips mips64 mips64el mipsel ppc ppc64 s390x sh4 sh4eb sparc sparc64 x86_64"
+# QEMU_USER_TARGETS="alpha aarch64 arm armeb i386 mips mipsel ppc ppc64 ppc64abi32 s390x sh4 sh4eb sparc sparc32plus sparc64 x86_64"
+# 虚拟机
+
+#FEATURES="ccache"
+#CCACHE_DIR="/var/cache/ccache"
+#此处先注释掉,配置完ccache后再去掉注释
+```
 
 ## 配置源镜像
 
