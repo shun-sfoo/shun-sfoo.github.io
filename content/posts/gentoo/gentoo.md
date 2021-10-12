@@ -24,12 +24,12 @@ draft: false
 
 形式： GPT + UEFI
 
-| 类型 | 大小       | 挂载点            | 格式化        |
-| ---- | ---------- | ----------------- | ------------- |
-| EFI  | 256M       | /mnt/gentoo/boot  | mkfs.vfat     |
-| xfs  | free space | /mnt/gentoo       | mkfs.xfs      |
-| xfs  | free space | /ment/gentoo/home | mkfs.xfs      |
-| swap | 16G        | swap              | mkswap swapon |
+| 类型  | 大小       | 挂载点            | 格式化        |
+| ----- | ---------- | ----------------- | ------------- |
+| EFI   | 256M       | /mnt/gentoo/boot  | mkfs.vfat     |
+| btrfs | free space | /mnt/gentoo       | mkfs.btrfs    |
+| btrfs | free space | /ment/gentoo/home | mkfs.btrfs    |
+| swap  | 16G        | swap              | mkswap swapon |
 
 目前来说的理解是 `/boot` 是必要的, 一般设置为 256M 格式化是 vfat ，
 
