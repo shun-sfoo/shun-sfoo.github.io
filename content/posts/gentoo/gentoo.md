@@ -8,7 +8,7 @@ draft: false
 
 ## 磁盘分区
 
-使用 sfdisk -z `磁盘名称` (`-z` 选项可以选择文件类型 gpt)
+使用 cfdisk -z `磁盘名称` (`-z` 选项可以选择文件类型 gpt)
 
 一块硬盘通常分成三个分区
 
@@ -54,7 +54,7 @@ tar vxpf stage3-amd64-20210630T214504Z.tar.xz
 
 ## 配置编译选项
 
-为了控制页面长度，配置示例单独放在文件中。
+一个示例
 
 ```bash
 COMMON_FLAGS="-march=native -O2 -pipe"
@@ -79,7 +79,7 @@ PORTAGE_TMPDIR="/tmp"
 LC_MESSAGES=C
 
 ACCEPT_LICENSE="*"
-ACCEPT_KEYWORDS="amd64"
+ACCEPT_KEYWORDS="~amd64"
 # "amd64"是使用稳定版的较旧的软件，"~amd64"是使用不稳定版的更新的软件
 
 
@@ -178,7 +178,7 @@ export PS1="(chroot) ${PS1}"
 
 ## 配置 portage 设置
 
-### 从网路下载 gentoo ebuild 仓库
+### 同步 gentoo ebuild 仓库
 
 `emerge-webrsync`
 
@@ -193,19 +193,18 @@ eselect profile list
 eselect profile set X
 ```
 
-如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，
 选择默认就可以了。
 
 ### CPU-FLAGS-X86 设置
 
-针对自己 cpu 优化
+针对 cpu 优化
 
 ```bash
 emerge -ask -verbose app-portage/cpuid2cpuflags
 cpuid2cpuflags
 ```
 
-make.conf 中启用 CPU-FLAGS-X86
+make.conf 中启用 `CPU_FLAGS_X86`
 
 ### ccache 设置
 
@@ -254,13 +253,9 @@ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
 ## 设置 fstab
 
-提供 btrfs 和 xfs 两种方案
-
-TODO: 这部分细节待研究
+提供 btrfs 方案
 
 ## fstab
-
-分别记录 btrfs 和 xpf 的 fstab 方案
 
 ```bash
 blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后根据追加的内容进行下述修改
@@ -268,55 +263,30 @@ blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后
 
 ### btrfs
 
-如果使用 btrfs 文件系统的话，非常推荐如下的挂载选项
-
-`defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1`
-
-使用 discard=async 与 fstrim 是不冲突的；另外透明压缩不需要启动等级 3，第一等级就足够了，
-如果有需求使用 btrfs 下的 swap ，那不能启用透明压缩功能；并且启用了自动碎片整理功能。这样对文件系统是比较好的。
-
-整个 fstab 的书写就是这样的 UUID 可以使用 blkid 命令查看
-`nona /etc/fstab`
-
 ```conf
-UUID=boot-uuid  /boot       vfat  defaults 0 0
-UUID=root-uuid  /           btrfs subvol=@,defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 1
-UUID=home-uuid  /home       btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1 0 2
-UUID=opt-uuid   /opt        btrfs defaults,noatime,space_cache,space_cache=v2,autodefrag,discard=async,ssd,compress=zstd:1,commit=120 0 2
-tmpfs           /tmp        tmpfs size=8G,notaime 0 0
-tmpfs           /var/tmp    tmpfs size=8G,notaime 0 0
+/dev/sda1 /boot  vfat  defaults                                                          0 0
+/dev/sda3 /      btrfs default,subvol=@                                                  0 1
+/dev/sdb1 /home  btrfs defaults,subvol=@home                                             0 2
+tmpfs     /tmp   tmpfs rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
 ```
 
-最后加了 tmpfs 的内容，建议所有不论你安装什么桌面环境，不论用于什么生产环境，都加上
-
-### xpf
-
-```bash
-nano -w /etc/fstab：      #参考配置，建议使用uuid的形式设置（不建议使用/dev/sdX？的形式）(是uuid，而不是partuuid)
-UUID=......      /boot/efi      vfat      noauto,defaults,noatime,umask=0077                               0 2
-UUID=......      /boot          ext4      defaults,noatime,discard                                         0 2
-UUID=......      /              xfs       defaults,noatime                                                 0 1
-UUID=......      /home          xfs       noatime,discard                                                  0 2
-UUID=......      none           swap      sw,noatime,discard                                               0 0
-tmpfs            /tmp           tmpfs     rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
-
-# 内存tmpfs(/tmp目录)的大小，2G内存设为1G、4G内存设为2G、8G内存可设为4-6G、16G内存可设为10-13G
-# 根分区/不建议设置discard参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
-# discard和fstrim都是专门针对SSD固态硬盘的优化，并且你的SSD必须确保支持TRIM；否则在不支持TRIM的SSD上盲目使用discard和fstrim优化很可能会有数据丢失的风险，2017年以后的SSD基本上都支持TRIM了。
-```
-
-我的台式机的 ssd 在 2017 年前生产，考虑去掉 discard 和 fstrim
+由于没有经常更换硬盘的需求,使用分区名就可以了。
+对文件系统优化的感知不强，目前就用默认配置
+内存 tmpfs(/tmp 目录)的大小，2G 内存设为 1G、4G 内存设为 2G、8G 内存可设为 4-6G、16G 内存可设为 10-13G
+根分区/不建议设置 discard 参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
+discard 和 fstrim 都是专门针对 SSD 固态硬盘的优化，并且你的 SSD 必须确保支持 TRIM；
+否则在不支持 TRIM 的 SSD 上盲目使用 discard 和 fstrim 优化很可能会有数据丢失的风险，2017 年以后的 SSD 基本上都支持 TRIM 了。
 
 ### 安装必须的文件系统支持，否则无法访问硬盘上的分区
 
 ```bash
+emerge --ask e2fsprogs dosfstools btrfs-progs ntfs3g fuse-exfat exfat-utils
+# emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
+# emerge --ask sys-fs/dosfstools #fat32
 # emerge --ask sys-fs/btrfs-progs # btrfs
-emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
-emerge --ask sys-fs/xfsprogs #xfs
-emerge --ask sys-fs/dosfstools #fat32
-emerge --ask sys-fs/ntfs3g #ntfs
-emerge --ask sys-fs/fuse-exfat #exfat
-emerge --ask sys-fs/exfat-utils #exfat
+# emerge --ask sys-fs/ntfs3g #ntfs
+# emerge --ask sys-fs/fuse-exfat #exfat
+# emerge --ask sys-fs/exfat-utils #exfat
 ```
 
 ## 下载内核源码
@@ -354,44 +324,6 @@ make -j4 && make modules_install
 make install
 ```
 
-### nvidia
-
-```bash
-sudo emerge x11-drivers/nvidia-drivers
-```
-
-**注意**：如果安装后提示 warning（红色"\*"号提示）当前内核配置的“CONFIG_I2C_NVIDIA_GPU=y”这一项不符合要求，
-与 nvidia-drivers 冲突，需要按照提示将这一项内核配置禁用，并重新编译安装内核
-
-**注意** ：以后每次重新编译安装内核 kernel 后，均须要运行一遍“emerge @module-rebuild”，重新编译安装 nvidia 驱动模块加载到内核之中，否则 nvidia 驱动无法加载！！！
-
-```bash
-lsmod | grep nvidia
-
-sudo rmmod nvidia
-sudo  modprobe nvidia
-
-lsmod | grep nvidia
-
-
-sudo vim /etc/modules-load.d/nvidia.conf:
-nvidia
-
-sudo vim /etc/modprobe.d/nvidia-drm.conf：
-options nvidia-drm modeset=1
-
-
-sudo rc-update add modules boot
-
-sudo reboot   #重启系统
-```
-
-### xorg-server
-
-```bash
-sudo emerge x11-base/xorg-server
-```
-
 内核配置部分查看官网 handbook
 
 [menuconfig](https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation#Kernel_configuration_and_compilation)
@@ -425,27 +357,6 @@ echo dns_domain_lo=\"homenetwork\" >> /etc/conf.d/net
 192.168.0.6   benny.homenetwork benny
 ```
 
-## 修改密码强度
-
-查看两个配置
-
-/etc/pam.d/passwd
-
-/etc/pam.d/system-auth
-
-后者说明相关配置文件在 /etc/security/passwdqc.conf
-
-```bash
-min=disabled,24,11,8,7  => min=3,3,3,3,3
-max=40                  => max=8
-passphrase=8
-match=4
-similar=deny            => permit
-random=47
-enforce=everyone
-retry=3
-```
-
 ## 安装系统工具
 
 安装必要的系统日志工具和守护进程工具、文件索引工具、设备管理工具
@@ -468,6 +379,8 @@ emerge --oneshot sys-fs/eudev
 rc-update add udev sysinit
 
 rc-update add elogind boot
+
+emerge --ask sudo # 以后改成 doas
 ```
 
 ## 网络连接
@@ -518,6 +431,29 @@ grub-install --target=x86_64-efi --efi-directory=/boot # 注意 efi 文件夹位
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+## 修改密码强度
+
+查看两个配置
+
+/etc/pam.d/passwd
+
+/etc/pam.d/system-auth
+
+后者说明相关配置文件在 /etc/security/passwdqc.conf
+
+```bash
+min=disabled,24,11,8,7  => min=3,3,3,3,3
+max=40                  => max=8
+passphrase=8
+match=4
+similar=deny            => permit
+random=47
+enforce=everyone
+retry=3
+```
+
+passwd
+
 ## 配置用户
 
 日常用户组
@@ -532,20 +468,62 @@ grub-mkconfig -o /boot/grub/grub.cfg
 | wheel   | Be able to use su.                                                          |
 
 ```bash
-useradd -m -G users,wheel,audio,video,usb -s /bin/bash larry
-passwd larry
+useradd -m -G users,wheel,audio,video,usb -s /bin/bash bruce
+passwd bruce
 # wheel 用户组能够使用 sudo 的权限
 sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
 ```
-
-## 清理及重启
-
-`rm /stage3-*.tar.*`
 
 ## 检查
 
 1. `/boot` 下是否有内核文件生成
 2. `/etc/fstab` 文件内容是否有误
+
+## 清理及重启
+
+`rm /stage3-*.tar.*`
+umount 挂载点
+`reboot`
+
+## 显卡驱动及 xorg-server
+
+### nvidia
+
+```bash
+sudo emerge x11-drivers/nvidia-drivers
+```
+
+**注意**：如果安装后提示 warning（红色"\*"号提示）当前内核配置的“CONFIG_I2C_NVIDIA_GPU=y”这一项不符合要求，
+与 nvidia-drivers 冲突，需要按照提示将这一项内核配置禁用，并重新编译安装内核
+
+**注意** ：以后每次重新编译安装内核 kernel 后，均须要运行一遍“emerge @module-rebuild”，重新编译安装 nvidia 驱动模块加载到内核之中，否则 nvidia 驱动无法加载！！！
+
+```bash
+lsmod | grep nvidia
+
+sudo rmmod nvidia
+sudo  modprobe nvidia
+
+lsmod | grep nvidia
+
+
+sudo vim /etc/modules-load.d/nvidia.conf:
+nvidia
+
+sudo vim /etc/modprobe.d/nvidia-drm.conf：
+options nvidia-drm modeset=1
+
+
+sudo rc-update add modules boot
+
+sudo reboot   #重启系统
+```
+
+### xorg-server
+
+```bash
+sudo emerge x11-base/xorg-server
+```
 
 ## 参考链接
 
