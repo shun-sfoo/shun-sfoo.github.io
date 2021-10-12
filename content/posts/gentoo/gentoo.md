@@ -90,7 +90,7 @@ NEO_VIDEO="(nvidia) vulkan vdpau vaapi"
 # pluseaudio与alsa基本一致， oss太过古老
 NEO_AUDIO="jack libsamplerate alsa -pulseaudio -oss"
 
-NEO_COMPILE="lto pgo ccache (sudo) (dosa) minizip openmp"
+NEO_COMPILE="lto pgo ccache minizip openmp"
 
 # nftables防火墙可以取代了iptables
 NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
@@ -380,7 +380,16 @@ rc-update add udev sysinit
 
 rc-update add elogind boot
 
-emerge --ask sudo # 以后改成 doas
+```
+
+## 权限控制
+
+使用 doas 取代 sudo
+
+```bash
+emerge --ask doas
+vim /etc/doas.conf
+permit nopass :wheel # wheel组用户不用输入密码
 ```
 
 ## 网络连接
@@ -411,7 +420,7 @@ emerge -av iwd #wifi
 rc-update add iwd default
 ```
 
-### NOTE iwd and netifrc
+### NOTE: iwd and netifrc
 
 gentoo iwd wiki 提到的 netifrc 用不能共存的说法
 配置一个就禁用另一个。
@@ -470,8 +479,6 @@ passwd
 ```bash
 useradd -m -G users,wheel,audio,video,usb -s /bin/bash bruce
 passwd bruce
-# wheel 用户组能够使用 sudo 的权限
-sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
 ```
 
 ## 检查
