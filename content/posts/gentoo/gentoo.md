@@ -85,7 +85,7 @@ ACCEPT_KEYWORDS="~amd64"
 
 # 括号表示根据情况选装
 # vdpau vaapi 安装视频播放器需要
-NEO_VIDEO="(nvidia) vulkan vdpau vaapi"
+NEO_VIDEO="(-)nvidia vulkan vdpau vaapi"
 
 # pluseaudio与alsa基本一致， oss太过古老
 NEO_AUDIO="jack libsamplerate alsa -pulseaudio -oss"
@@ -265,7 +265,7 @@ blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后
 
 ```conf
 /dev/sda1 /boot  vfat  defaults                                                          0 0
-/dev/sda3 /      btrfs default,subvol=@                                                  0 1
+/dev/sda3 /      btrfs defaults,subvol=@                                                 0 1
 /dev/sdb1 /home  btrfs defaults,subvol=@home                                             0 2
 tmpfs     /tmp   tmpfs rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
 ```
@@ -273,7 +273,7 @@ tmpfs     /tmp   tmpfs rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G      
 由于没有经常更换硬盘的需求,使用分区名就可以了。
 对文件系统优化的感知不强，目前就用默认配置
 内存 tmpfs(/tmp 目录)的大小，2G 内存设为 1G、4G 内存设为 2G、8G 内存可设为 4-6G、16G 内存可设为 10-13G
-根分区/不建议设置 discard 参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
+根分区/不建议设置 discard 参数，你得记得每个星期定期执行一遍"doas fstrim -v /"命令来优化根分区/
 discard 和 fstrim 都是专门针对 SSD 固态硬盘的优化，并且你的 SSD 必须确保支持 TRIM；
 否则在不支持 TRIM 的 SSD 上盲目使用 discard 和 fstrim 优化很可能会有数据丢失的风险，2017 年以后的 SSD 基本上都支持 TRIM 了。
 
@@ -304,7 +304,7 @@ ls -l /usr/src/linux
 emerge --ask sys-apps/pciutils # lspci
 emerge --ask sys-kernel/genkernel
 cd /usr/src/linux
-emerge --ask sys-kernel/linux-firmware # 一些额外固件，wifi等
+# linux-firmware  一些额外固件，wifi等 包含在了 genkernel中
 ```
 
 ## 使用默认配置
@@ -331,7 +331,6 @@ make install
 ### 生成 initramfs
 
 ```bash
-emerge --ask sys-kernel/genkernel
 genkernel --install --kernel-config=/path/to/used/kernel.config initramfs
 ls /boot/initramfs*
 ```
@@ -380,6 +379,8 @@ rc-update add udev sysinit
 
 rc-update add elogind boot
 
+emerge dev-vcs/git
+emerge app-shells/zsh
 ```
 
 ## 权限控制
@@ -448,7 +449,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 /etc/pam.d/system-auth
 
-后者说明相关配置文件在 /etc/security/passwdqc.conf
+后者说明相关配置文件在 `vim /etc/security/passwdqc.conf`
 
 ```bash
 min=disabled,24,11,8,7  => min=3,3,3,3,3
@@ -494,10 +495,18 @@ umount 挂载点
 
 ## 显卡驱动及 xorg-server
 
+### intel
+
+```bash
+doas emerge x11-base/xorg-drivers
+```
+
+已包含了 xorg-server
+
 ### nvidia
 
 ```bash
-sudo emerge x11-drivers/nvidia-drivers
+doas emerge x11-drivers/nvidia-drivers
 ```
 
 **注意**：如果安装后提示 warning（红色"\*"号提示）当前内核配置的“CONFIG_I2C_NVIDIA_GPU=y”这一项不符合要求，
@@ -508,28 +517,28 @@ sudo emerge x11-drivers/nvidia-drivers
 ```bash
 lsmod | grep nvidia
 
-sudo rmmod nvidia
-sudo  modprobe nvidia
+doas rmmod nvidia
+doas  modprobe nvidia
 
 lsmod | grep nvidia
 
 
-sudo vim /etc/modules-load.d/nvidia.conf:
+doas vim /etc/modules-load.d/nvidia.conf:
 nvidia
 
-sudo vim /etc/modprobe.d/nvidia-drm.conf：
+doas vim /etc/modprobe.d/nvidia-drm.conf：
 options nvidia-drm modeset=1
 
 
-sudo rc-update add modules boot
+doas rc-update add modules boot
 
-sudo reboot   #重启系统
+doas reboot   #重启系统
 ```
 
 ### xorg-server
 
 ```bash
-sudo emerge x11-base/xorg-server
+doas emerge x11-base/xorg-server
 ```
 
 ## 参考链接
