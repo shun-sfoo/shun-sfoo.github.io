@@ -406,12 +406,14 @@ vim /etc/conf.d/net
 # 设置动态分配
 config_enp3s0="dhcp"
 
-cd /etc/init.d
-ln -s net.lo net.enp3s0
-rc-update add net.enp3s0 default
+# 貌似不用以下步骤也可以正确 dhcp 和连接网络
+# 如果使用 emerge -c 删除了 dhcpd 需要手动下载 net-misc/dhcpd
+# cd /etc/init.d
+# ln -s net.lo net.enp3s0
+# rc-update add net.enp3s0 default
 
 # 重新启动
-rc-service net.enp3s0 restart
+# rc-service net.enp3s0 restart
 ```
 
 ### wifi iwd
@@ -540,6 +542,45 @@ doas reboot   #重启系统
 ```bash
 doas emerge x11-base/xorg-server
 ```
+
+### nftables 设置
+
+也可不设置
+
+```bash
+doas nft flush ruleset
+doas nft add table inet filter
+doas nft add chain inet filter input { type filter hook input priority 0 \; policy drop \; }
+doas nft add chain inet filter forward { type filter hook forward priority 0 \; policy drop \; }
+doas nft add chain inet filter output { type filter hook output priority 0 \; policy accept \; }
+doas nft add rule inet filter input iif lo accept
+doas nft add rule inet filter input ct state related,established accept
+doas nft add rule inet filter input ct state invalid drop
+
+doas nft add rule inet filter input tcp dport 8080 accept  #开放本机8080/tcp端口
+doas nft add rule inet filter input udp dport 8080 accept  #开放本机8080/udp端口
+
+doas nft add rule inet filter input ssh dport accept # ssh
+```
+
+```bash
+doas /etc/init.d/nftables save
+doas /etc/init.d/nftables start
+doas /etc/init.d/nftables reload
+doas /etc/init.d/nftables list
+doas rc-update add nftables default
+```
+
+### 音视频软件
+
+```bash
+media-sound/jack2
+media-sound/alsa-utils
+media-sound/cmus
+media-video/ffmpeg
+```
+
+[a simple example](https://gist.github.com/dseg/3e0c4842b0c868e79c527f9f566de636)
 
 ## 参考链接
 
