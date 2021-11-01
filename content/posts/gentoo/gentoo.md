@@ -64,7 +64,11 @@ FCFLAGS="${COMMON_FLAGS}"
 FFLAGS="${COMMON_FLAGS}"
 MAKEOPTS="-j4"
 
-# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
+# i7-7700
+# CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sse sse2 sse3 sse4_1 sse4_2 ssse3"
+
+# thinpad e480 i5-8250U
+# CPU_FLAGS_X86="avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sse sse2 sse3 sse4_1 sse4_2 ssse3"
 # cpu参数用cpuid2cpuflags命令看，这里先不用管，暂时注释掉，后面再来配置
 
 # 注意核心数
@@ -96,7 +100,8 @@ NEO_COMPILE="lto pgo ccache minizip openmp"
 NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
 
 # elogind 取代了 consolekit
-NEO_DESKTOP="elogind -bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk"
+# policykit -> spidemoney -> rust 编译rust极大增加编译时间 使用 rust-bin 就好
+NEO_DESKTOP="elogind -policykit -bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk dbus blkid"
 
 USE="${NEO_VIDEO} ${NEO_AUDIO} ${NOE_COMPLE} ${NEO_NET} ${NEO_DESKTOP}"
 
@@ -389,6 +394,7 @@ rc-update add elogind boot
 
 emerge dev-vcs/git
 emerge app-shells/zsh
+emerge app-portage/gentoolkit
 ```
 
 ## 权限控制
@@ -587,6 +593,12 @@ media-sound/alsa-utils
 media-sound/cmus
 media-video/ffmpeg
 ```
+
+### rust
+
+使用 `/usr/bin/rustup-init-gentoo` 进行系统配置
+下载 `rust-bin`
+alacritty bat zoxide starship fd riggrep exa
 
 [a simple example](https://gist.github.com/dseg/3e0c4842b0c868e79c527f9f566de636)
 
