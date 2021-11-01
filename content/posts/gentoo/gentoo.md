@@ -119,8 +119,8 @@ GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo/"
 GRUB_PLATFORMS="efi-64"
 # UEFI 64位系统引导必须项
 
-# QEMU_SOFTMMU_TARGETS="alpha aarch64 arm i386 mips mips64 mips64el mipsel ppc ppc64 s390x sh4 sh4eb sparc sparc64 x86_64"
-# QEMU_USER_TARGETS="alpha aarch64 arm armeb i386 mips mipsel ppc ppc64 ppc64abi32 s390x sh4 sh4eb sparc sparc32plus sparc64 x86_64"
+QEMU_SOFTMMU_TARGETS="arm aarch64 x86_64"
+QEMU_USER_TARGETS="arm armeb aarch64 x86_64"
 # 虚拟机
 
 #FEATURES="ccache"
@@ -205,6 +205,14 @@ cpuid2cpuflags
 ```
 
 make.conf 中启用 `CPU_FLAGS_X86`
+
+### 编译安装最新版 gcc
+
+```bash
+emerge -av --oneshot gcc
+eselect gcc list
+eselect gcc set X
+```
 
 ### ccache 设置
 
