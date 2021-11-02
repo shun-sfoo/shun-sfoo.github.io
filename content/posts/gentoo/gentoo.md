@@ -62,7 +62,7 @@ CFLAGS="${COMMON_FLAGS}"
 CXXFLAGS="${COMMON_FLAGS}"
 FCFLAGS="${COMMON_FLAGS}"
 FFLAGS="${COMMON_FLAGS}"
-MAKEOPTS="-j4"
+MAKEOPTS="-j8"
 
 # i7-7700
 # CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sse sse2 sse3 sse4_1 sse4_2 ssse3"
@@ -196,6 +196,11 @@ websync 会将数据库同步到 24 小时之内，`emerge --sync` 会同步到 
 ```bash
 eselect profile list
 eselect profile set X
+gcc --version
+env-update
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+gcc --version
 ```
 
 选择默认就可以了。
@@ -243,6 +248,16 @@ make.conf 中启用 ccache
 ## 更新系统
 
 `emerge --ask --verbose --update --deep --newuse @world`
+
+### python 3.10 循环依赖
+
+解决方法忽略 3.9 以上的版本
+
+```bash
+mkdir package.mask
+vim package.mask/pyhon
+>=dev-lang/python-3.10
+```
 
 ## 配置时区
 
