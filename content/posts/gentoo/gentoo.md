@@ -196,11 +196,6 @@ websync 会将数据库同步到 24 小时之内，`emerge --sync` 会同步到 
 ```bash
 eselect profile list
 eselect profile set X
-gcc --version
-env-update
-source /etc/profile
-export PS1="(chroot) ${PS1}"
-gcc --version
 ```
 
 选择默认就可以了。
@@ -219,9 +214,14 @@ make.conf 中启用 `CPU_FLAGS_X86`
 ### 编译安装最新版 gcc
 
 ```bash
-emerge -av --oneshot gcc
+emerge -av gcc
 eselect gcc list
 eselect gcc set X
+gcc --version
+env-update
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+gcc --version
 ```
 
 ### ccache 设置
