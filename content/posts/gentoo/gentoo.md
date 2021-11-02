@@ -133,6 +133,20 @@ QEMU_USER_TARGETS="arm armeb aarch64 x86_64"
 #此处先注释掉,配置完ccache后再去掉注释
 ```
 
+### gcc 打开 lto pgo 优化
+
+```bash
+vim /mnt/gentoo/etc/portage/package.use/gcc
+sys-devel/gcc pgo lto
+```
+
+### elogind 关闭 policykit
+
+```bash
+vim /mnt/gentoo/etc/portage/package.use/elogind
+sys-auth/elogind -policykit
+```
+
 ## 配置源镜像
 
 ```bash
@@ -348,7 +362,7 @@ make menuconfig
 load 1.config
 # nvidia驱动禁用 nouveau
 save as .config
-make -j4 && make modules_install
+make -j8 && make modules_install
 make install
 ```
 
