@@ -306,10 +306,10 @@ blkid >> /etc/fstab    #将输出结果追加到fstab配置文件末尾，然后
 ### btrfs
 
 ```conf
-/dev/sda1 /boot  vfat  defaults                                                          0 0
-/dev/sda3 /      btrfs defaults,subvol=@                                                 0 1
-/dev/sdb1 /home  btrfs defaults,subvol=@home                                             0 2
-tmpfs     /tmp   tmpfs rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
+UUID="..." /boot  vfat  defaults                                                          0 0
+UUID="..." /      btrfs defaults                                                          0 1
+UUID="..." /home  btrfs defaults,compress=zstd                                            0 2
+tmpfs      /tmp   tmpfs rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G               0 0
 ```
 
 由于没有经常更换硬盘的需求,使用分区名就可以了。
@@ -614,6 +614,8 @@ doas /etc/init.d/nftables list
 doas rc-update add nftables default
 ```
 
+[a simple example](https://gist.github.com/dseg/3e0c4842b0c868e79c527f9f566de636)
+
 ### 音视频软件
 
 ```bash
@@ -628,8 +630,6 @@ media-video/ffmpeg
 使用 `/usr/bin/rustup-init-gentoo` 进行系统配置
 下载 `rust-bin`
 alacritty bat zoxide starship fd riggrep exa
-
-[a simple example](https://gist.github.com/dseg/3e0c4842b0c868e79c527f9f566de636)
 
 ## 参考链接
 
