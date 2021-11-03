@@ -443,7 +443,8 @@ permit nopass :wheel # wheel组用户不用输入密码
 ### 有线 netifrc
 
 ```bash
-emerge net-misc/netifrc
+emerge net-misc/netifrc net-misc/dhcp
+
 vim /etc/conf.d/net
 
 # 设置动态分配
@@ -451,12 +452,12 @@ config_enp3s0="dhcp"
 
 # 貌似不用以下步骤也可以正确 dhcp 和连接网络
 # 如果使用 emerge -c 删除了 dhcpd 需要手动下载 net-misc/dhcpd
-# cd /etc/init.d
-# ln -s net.lo net.enp3s0
-# rc-update add net.enp3s0 default
+cd /etc/init.d
+ln -s net.lo net.enp3s0
+rc-update add net.enp3s0 default
 
 # 重新启动
-# rc-service net.enp3s0 restart
+rc-service net.enp3s0 restart
 ```
 
 ### wifi iwd
