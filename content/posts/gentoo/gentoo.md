@@ -315,7 +315,7 @@ tmpfs      /tmp   tmpfs rw,nosuid,noatime,nodev,relatime,mode=1777,size=10G     
 由于没有经常更换硬盘的需求,使用分区名就可以了。
 对文件系统优化的感知不强，目前就用默认配置
 内存 tmpfs(/tmp 目录)的大小，2G 内存设为 1G、4G 内存设为 2G、8G 内存可设为 4-6G、16G 内存可设为 10-13G
-根分区/不建议设置 discard 参数，你得记得每个星期定期执行一遍"doas fstrim -v /"命令来优化根分区/
+根分区/不建议设置 discard 参数，你得记得每个星期定期执行一遍"sudo fstrim -v /"命令来优化根分区/
 discard 和 fstrim 都是专门针对 SSD 固态硬盘的优化，并且你的 SSD 必须确保支持 TRIM；
 否则在不支持 TRIM 的 SSD 上盲目使用 discard 和 fstrim 优化很可能会有数据丢失的风险，2017 年以后的 SSD 基本上都支持 TRIM 了。
 
@@ -428,12 +428,11 @@ emerge app-portage/gentoolkit
 
 ## 权限控制
 
-使用 doas 取代 sudo
+sudo
 
 ```bash
-emerge --ask doas
-vim /etc/doas.conf
-permit nopass :wheel # wheel组用户不用输入密码
+emerge --ask sudo
+vim /etc/sudoers
 ```
 
 ## 网络连接
@@ -451,7 +450,6 @@ vim /etc/conf.d/net
 config_enp3s0="dhcp"
 
 # 貌似不用以下步骤也可以正确 dhcp 和连接网络
-# 如果使用 emerge -c 删除了 dhcpd 需要手动下载 net-misc/dhcpd
 cd /etc/init.d
 ln -s net.lo net.enp3s0
 rc-update add net.enp3s0 default
@@ -544,7 +542,7 @@ umount 挂载点
 ### intel
 
 ```bash
-doas emerge x11-base/xorg-drivers
+sudo emerge x11-base/xorg-drivers
 ```
 
 已包含了 xorg-server
@@ -552,7 +550,7 @@ doas emerge x11-base/xorg-drivers
 ### nvidia
 
 ```bash
-doas emerge x11-drivers/nvidia-drivers
+sudo emerge x11-drivers/nvidia-drivers
 ```
 
 **注意**：如果安装后提示 warning（红色"\*"号提示）当前内核配置的“CONFIG_I2C_NVIDIA_GPU=y”这一项不符合要求，
@@ -563,28 +561,28 @@ doas emerge x11-drivers/nvidia-drivers
 ```bash
 lsmod | grep nvidia
 
-doas rmmod nvidia
-doas  modprobe nvidia
+sudo rmmod nvidia
+sudo  modprobe nvidia
 
 lsmod | grep nvidia
 
 
-doas vim /etc/modules-load.d/nvidia.conf:
+sudo vim /etc/modules-load.d/nvidia.conf:
 nvidia
 
-doas vim /etc/modprobe.d/nvidia-drm.conf：
+sudo vim /etc/modprobe.d/nvidia-drm.conf：
 options nvidia-drm modeset=1
 
 
-doas rc-update add modules boot
+sudo rc-update add modules boot
 
-doas reboot   #重启系统
+sudo reboot   #重启系统
 ```
 
 ### xorg-server
 
 ```bash
-doas emerge x11-base/xorg-server
+sudo emerge x11-base/xorg-server
 ```
 
 ### nftables 设置
@@ -592,27 +590,27 @@ doas emerge x11-base/xorg-server
 也可不设置
 
 ```bash
-doas nft flush ruleset
-doas nft add table inet filter
-doas nft add chain inet filter input { type filter hook input priority 0 \; policy drop \; }
-doas nft add chain inet filter forward { type filter hook forward priority 0 \; policy drop \; }
-doas nft add chain inet filter output { type filter hook output priority 0 \; policy accept \; }
-doas nft add rule inet filter input iif lo accept
-doas nft add rule inet filter input ct state related,established accept
-doas nft add rule inet filter input ct state invalid drop
+sudo nft flush ruleset
+sudo nft add table inet filter
+sudo nft add chain inet filter input { type filter hook input priority 0 \; policy drop \; }
+sudo nft add chain inet filter forward { type filter hook forward priority 0 \; policy drop \; }
+sudo nft add chain inet filter output { type filter hook output priority 0 \; policy accept \; }
+sudo nft add rule inet filter input iif lo accept
+sudo nft add rule inet filter input ct state related,established accept
+sudo nft add rule inet filter input ct state invalid drop
 
-doas nft add rule inet filter input tcp dport 8080 accept  #开放本机8080/tcp端口
-doas nft add rule inet filter input udp dport 8080 accept  #开放本机8080/udp端口
+sudo nft add rule inet filter input tcp dport 8080 accept  #开放本机8080/tcp端口
+sudo nft add rule inet filter input udp dport 8080 accept  #开放本机8080/udp端口
 
-doas nft add rule inet filter input ssh dport accept # ssh
+sudo nft add rule inet filter input ssh dport accept # ssh
 ```
 
 ```bash
-doas /etc/init.d/nftables save
-doas /etc/init.d/nftables start
-doas /etc/init.d/nftables reload
-doas /etc/init.d/nftables list
-doas rc-update add nftables default
+sudo /etc/init.d/nftables save
+sudo /etc/init.d/nftables start
+sudo /etc/init.d/nftables reload
+sudo /etc/init.d/nftables list
+sudo rc-update add nftables default
 ```
 
 [a simple example](https://gist.github.com/dseg/3e0c4842b0c868e79c527f9f566de636)
@@ -624,6 +622,19 @@ media-sound/jack2
 media-sound/alsa-utils
 media-sound/cmus
 media-video/ffmpeg
+```
+
+### 容器
+
+使用 podman 取代 docker
+
+```bash
+# vim /etc/portage/package.use/podman
+app-emulation/podman btrfs
+
+# It is recommended to use app-emulation/crun as the OCI runtime provider
+emerge --ask --oneshot app-emulation/crun app-emulation/podman
+emerge --ask app-emulation/podman
 ```
 
 ### rust
