@@ -94,7 +94,7 @@ NEO_VIDEO="(-)nvidia vulkan vdpau vaapi"
 # pluseaudio与alsa基本一致， oss太过古老
 NEO_AUDIO="jack libsamplerate alsa -pulseaudio -oss"
 
-NEO_COMPILE="lto pgo ccache minizip openmp"
+NEO_COMPILE="ccache minizip openmp"
 
 # nftables防火墙可以取代了iptables
 NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
