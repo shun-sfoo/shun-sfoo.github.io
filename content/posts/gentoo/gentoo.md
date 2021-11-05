@@ -579,6 +579,45 @@ sudo rc-update add modules boot
 sudo reboot   #重启系统
 ```
 
+#### 关于 nvidia 的设置
+
+从最后设置成功的步骤反过来试下到底那些步骤是必要的
+
+1. gentoo wiki 中的 nvidia 的设置
+
+```bash
+# /etc/X11/xorg.conf.d/nvidia.conf
+Section "Device"
+   Identifier  "nvidia"
+   Driver      "nvidia"
+EndSection
+```
+
+2. 下载 polkit (不希望是这一步)
+
+3. 永久禁用 nouveau 驱动模块（nvidia 非官方开源驱动) 这一步貌似必要
+
+```bash
+touch /etc/modprobe.d/blacklist.conf
+
+vim /etc/modprobe.d/blacklist.conf：
+blacklist nouveau
+blacklist lbm-nouveau
+options nouveau modeset=0
+```
+
+4. 禁用 CONFIG_I2C_NVIDIA_GPU
+
+5. 增加到模块中
+
+```bash
+sudo vim /etc/modules-load.d/nvidia.conf:
+nvidia
+
+sudo vim /etc/modprobe.d/nvidia-drm.conf：
+options nvidia-drm modeset=1
+```
+
 ### xorg-server
 
 ```bash
