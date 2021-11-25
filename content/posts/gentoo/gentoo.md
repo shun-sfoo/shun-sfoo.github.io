@@ -101,7 +101,7 @@ NEO_NET="-iptables nftables netifrc (-)wifi -networkmanage -dhcpcd"
 
 # elogind 取代了 consolekit
 # policykit -> spidemoney -> rust 编译rust极大增加编译时间 使用 rust-bin 就好
-NEO_DESKTOP="elogind -policykit -bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk dbus blkid"
+NEO_DESKTOP="-bindist -consolekit -gnome-shell -gnome -gnome-keyring -kde -systemd (-)X (-)wayland (-)bluetooth cjk dbus blkid"
 
 USE="${NEO_VIDEO} ${NEO_AUDIO} ${NOE_COMPLE} ${NEO_NET} ${NEO_DESKTOP}"
 
@@ -676,11 +676,29 @@ emerge --ask --oneshot app-emulation/crun app-emulation/podman
 emerge --ask app-emulation/podman
 ```
 
+## language
+
+`emerge app-eselect/eselect-repository`
+
 ### rust
 
-使用 `/usr/bin/rustup-init-gentoo` 进行系统配置
-下载 `rust-bin`
-alacritty bat zoxide starship fd riggrep exa
+```bash
+eselect repository enable guru
+emaint sync -r guru
+vim /etc/portage/package.use/rust-bin
+dev-lang/rust-bin rls
+emerge rust-bin
+emerge rust-analyzer-bin
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+emerge alacritty bat starship fd riggrep exa
+```
+
+### haskell
+
+```bash
+eselect repository enable haskell
+emerge xmonad xmobar
+```
 
 ## 参考链接
 
