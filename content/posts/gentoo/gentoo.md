@@ -48,7 +48,7 @@ mkdir -p /mnt/gentoo/boot/efi
 
 ```bash
 cd /mnt/gentoo/
-wget http://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-20210630T214504Z.tar.xz
+wget http://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64-openrc/stage3-amd64-openrc-20211128T170532Z.tar.xz
 tar vxpf stage3-amd64-20210630T214504Z.tar.xz
 ```
 
