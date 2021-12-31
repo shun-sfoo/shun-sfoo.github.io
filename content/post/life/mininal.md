@@ -221,6 +221,6 @@ ssh generator key
 
 `ssh-keygen -t rsa -C "youremail@example.com" `
 
-git push
+git tocken
 
 `git remote set-url origin https://github.com/shun-sfoo/xxxx.git`
