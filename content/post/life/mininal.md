@@ -216,3 +216,11 @@ rust
 拉取子项目
 
 `git clone --recurse-submodules https://github.com/chaconinc/MainProject`
+
+ssh generator key
+
+`ssh-keygen -t rsa -C "youremail@example.com" `
+
+git push
+
+`git remote set-url origin https://github.com/shun-sfoo/xxxx.git`
