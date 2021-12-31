@@ -1,12 +1,12 @@
 ---
 title: '极简开发环境的搭建'
 date: 2021-12-29T11:11:41+08:00
-draft: true
+draft: false
 ---
 
 ## 杀手级应用
 
-gcc gdb qemu docker
+gcc gdb qemu docker tmux
 
 ### archlinux 安装
 
@@ -141,6 +141,19 @@ systemctl enable systemd-networkd.service
 systemctl start  systemd-resolved.service
 systemctl enable  systemd-resolved.service
 ```
+## 不确定是不是因为上述网络设置的原因
+科学上网后如果出现
+```bash
+OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection github:443
+# 解决方法，为git设置代理
+git config --global http.proxy=127.0.0.1:7890
+git config --global https.proxy=127.0.0.1:7890
+# 取消设置
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+# 查看所有git配置
+git config --global -l
+```
 
 ### iwd dhcp 功能
 
@@ -164,3 +177,11 @@ NameResolvingService=systemd
 
 `usermod -aG wheel,users,storage,power,lp,adm,optical neo`
 ````
+
+### docker
+
+`gpasswd -a user docker`
+
+### yarn
+
+`yarn global add prettier pyright lua-fmt-fork`
