@@ -1,3 +1,3 @@
 [submodule "themes/LoveIt"]
-	path = themes/LoveIt
-	url = https://github.com/shun-sfoo/LoveIt.git
+	path = themes/even
+	url = https://github.com/olOwOlo/hugo-theme-even
