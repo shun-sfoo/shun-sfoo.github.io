@@ -132,20 +132,30 @@ umount /mnt
 reboot
 ```
 
-有线连接使用 system-networkd 的 dhcp 功能
+有线连接
+
+`ip link set $device up`
+
+使用 system-networkd 配置网络
 
 ```bash
 /etc/systemd/network/20-wired.network
 [Match]
 Name=enp3s0
 
+# dhcp 设置
 [Network]
 DHCP=yes
 
+# 设置静态ip地址（推荐）
+
+[Network]
+Address=192.168.1.23/24
+Gateway=192.168.1.1
+DNS=192.168.1.1 8.8.8.8 114.114.114.114
+
 systemctl start systemd-networkd.service
 systemctl enable systemd-networkd.service
-systemctl start  systemd-resolved.service
-systemctl enable  systemd-resolved.service
 ```
 
 iwd dhcp 功能
