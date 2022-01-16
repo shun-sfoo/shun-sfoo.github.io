@@ -1,5 +1,5 @@
 ---
-title: 'Haskell环境及xmonad wm'
+title: 'Haskell环境配置'
 date: 2022-01-16T10:27:06+08:00
 draft: false
 ---
@@ -31,7 +31,11 @@ secure: False
 
 1. 使用科大源安装 GHCup 本体
 
-`curl --proto '=https' --tlsv1.2 -sSf https://mirrors.ustc.edu.cn/ghcup/sh/bootstrap-haskell | BOOTSTRAP_HASKELL_YAML=https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-0.0.6.yaml sh`
+```bash
+curl --proto '=https' --tlsv1.2 -sSf \
+https://mirrors.ustc.edu.cn/ghcup/sh/bootstrap-haskell \
+| BOOTSTRAP_HASKELL_YAML=https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-0.0.6.yaml sh
+```
 
 这里一路回车先不安装 hls 与 stack，等配置好源之后在用 ghcup tui 工具安装
 
