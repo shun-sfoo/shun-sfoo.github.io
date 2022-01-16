@@ -12,8 +12,6 @@ gcc gdb qemu docker tmux ssh
 
 ### archlinux installation
 
-linux 选择 archlinux 作为服务器，mac 远程连接
-
 无线连接
 
 ```bash
@@ -223,14 +221,16 @@ rust
 
 ### 常用命令
 
-拉取子项目
-
-`git clone --recurse-submodules https://github.com/chaconinc/MainProject`
-
 ssh generator key
 
 `ssh-keygen -t rsa -C "youremail@example.com" `
 
-git tocken
+git 使用 ssh 拉取代码
 
-`git remote set-url origin https://github.com/shun-sfoo/xxxx.git`
+拉取子项目
+
+`git clone --recurse-submodules git@github.com:shun-sfoo/xmonad.git`
+
+### fcitx5
+
+`pacman -S fcitx5-im fcitx5-rime`
