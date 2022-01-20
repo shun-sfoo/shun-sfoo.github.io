@@ -22,8 +22,8 @@ cradle:
 
 ```config
 repository mirrors.ustc.edu.cn
-url: https://mirrors.ustc.edu.cn/hackage/
-secure: False
+  url: https://mirrors.ustc.edu.cn/hackage/
+  secure: False
 ```
 
 这是因为 GHCup 在安装 Cabal 时会进行初始化（会下载一个 100MB 的文件），
@@ -45,7 +45,7 @@ https://mirrors.ustc.edu.cn/ghcup/sh/bootstrap-haskell \
 
 ```config
 url-source:
-OwnSource: https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-0.0.6.yaml
+    OwnSource: https://mirrors.ustc.edu.cn/ghcup/ghcup-metadata/ghcup-0.0.6.yaml
 ```
 
 3. 配置 Stack 科大源
@@ -94,16 +94,17 @@ xorg-apps
 xorg-xinit
 xorg-xmessage
 xorg-xsetroot
-libx11 libxft libxinerama libxrandr libxss
+libx11 libxft libxinerama libxrandr libxss libnotify
 pkgconf
 picom
+feh
 alsa-utils
 xscreensaver
 scort
 trayer # 作为托盘工具
 mpd
 g++ gcc gmp make ncurses realpath xz-utils
-noto-fonts noto-fonts-emoji
+ttf-firacode noto-fonts noto-fonts-emoji
 firefox-developer-edition
 ```
 
@@ -122,7 +123,7 @@ stack install --flag xmobar:all_extensions
 已经配置好了，初始化配置参考官方教程，不同的是需要将 xmonad xmonad-contrib 作为子模块
 
 ```bash
-git clone git@github.com:shun-sfoo/xmonad.git
+git clone --recurse-submodules git@github.com:shun-sfoo/xmonad.git
 cd xmonad
 stack install
 ```
