@@ -4,13 +4,7 @@ date: 2021-12-29T11:11:41+08:00
 draft: false
 ---
 
-由追求完美的环境过渡到实用为主，快即实用。
-
-## 杀手级应用
-
-gcc gdb qemu docker tmux ssh
-
-### archlinux installation
+## archlinux installation
 
 无线连接
 
@@ -44,7 +38,7 @@ cfdisk -z 磁盘
 
 ```bash
 mkfs.vfat /dev/sda1
-mkfs.xfs -f /dev/sda3
+mkfs.btrfs -f /dev/sda3
 mkswap /dev/sda2
 ```
 
@@ -53,7 +47,7 @@ mkswap /dev/sda2
 ```bash
 mount /dev/sda3 /mnt
 mkdir -p /mnt/boot/efi
-mount /dev/vda1 /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi
 swapon /dev/sda2
 lsblk -f ## 查看分区情况
 ```
@@ -121,15 +115,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 passwd
 ```
 
-重启
-
-```bash
-exit
-umount /mnt/boot/efi
-umount /mnt
-reboot
-```
-
 有线连接
 
 `ip link set $device up`
@@ -181,6 +166,15 @@ NameResolvingService=systemd
 docker
 
 `gpasswd -a user docker`
+
+重启
+
+```bash
+exit
+umount /mnt/boot/efi
+umount /mnt
+reboot
+```
 
 格式化工具
 
