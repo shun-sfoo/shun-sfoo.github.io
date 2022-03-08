@@ -178,7 +178,7 @@ reboot
 
 格式化工具
 
-`yarn global add prettier pyright lua-fmt-fork`
+`yarn global add prettier pyright`
 
 ### bugfix
 
@@ -228,3 +228,14 @@ git 使用 ssh 拉取代码
 ### fcitx5
 
 `pacman -S fcitx5-im fcitx5-rime`
+
+### node
+
+yarn 使用国内镜像
+
+```bash
+yarn global add yrm
+yrm ls
+yrm use taobao
+yrm test taobao
+```
