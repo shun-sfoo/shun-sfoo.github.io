@@ -16,6 +16,15 @@ station *device* get-networks
 station *device* connect SSID
 ```
 
+```bash
+# 旧设备无线连接
+ip link set $device_name up
+iwlist $device_name scan |grep ESSID
+wpa_passphrase $net_ssid $password > $net.config
+wpa_supplicant -c $net.config -i $device_name
+pacman -S wireless-tools wpa_supplicant
+```
+
 更新系统时间
 
 `timedatectl set-ntp true`
