@@ -172,9 +172,16 @@ NameResolvingService=systemd
 
 `usermod -aG wheel,users,storage,power,lp,adm,optical neo`
 
-docker
+无需密码
 
-`gpasswd -a user docker`
+`vim /etc/sudoers`
+
+ssh
+
+```bash
+pacman -S openssh
+systemctl enable sshd
+```
 
 重启
 
@@ -184,10 +191,6 @@ umount /mnt/boot/efi
 umount /mnt
 reboot
 ```
-
-格式化工具
-
-`yarn global add prettier pyright`
 
 ### bugfix
 
@@ -234,11 +237,15 @@ git 使用 ssh 拉取代码
 
 `git clone --recurse-submodules git@github.com:shun-sfoo/xmonad.git`
 
-### fcitx5
+### 常用工具
+
+in the futrue user wayland native
+waybar wayfire ...
+now uses sway as wm
+
+fcitx5
 
 `pacman -S fcitx5-im fcitx5-rime`
-
-### node
 
 yarn 使用国内镜像
 
@@ -247,4 +254,22 @@ yarn global add yrm
 yrm ls
 yrm use taobao
 yrm test taobao
+```
+
+格式化工具
+
+`yarn global add prettier pyright`
+
+docker
+
+```bash
+sudo gpasswd -a user docker
+sudo systemctl enable docker
+```
+
+vnc tools (support wayland)
+
+```bash
+sudo pacman -S remmina
+sudo pacman -S libvncserver
 ```
