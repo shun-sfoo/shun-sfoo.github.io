@@ -56,6 +56,8 @@ mkswap /dev/sda2
 ```bash
 mount /dev/sda3 /mnt
 mkdir -p /mnt/boot/efi
+# `systemd-boot prefer to /boot` mkdir -p /mnt/boot
+# https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points
 mount /dev/sda1 /mnt/boot/efi
 swapon /dev/sda2
 lsblk -f ## 查看分区情况
@@ -122,6 +124,22 @@ grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 # 输入密码
 passwd
+```
+
+systemd-boot (recommend)
+
+```bash
+bootctl install
+systemctl enable systemd-boot-update.service
+# config `esp means /boot`
+vim esp/loader/loader.conf
+# https://wiki.archlinux.org/title/Systemd-boot#Configuration
+# enable nvidia-drm
+vim /boot/loader/entries/arch.conf
+options nvidia-drm.modeset=1
+# if need early loading need add nvidia nvidia_modeset nvidia_uvm nvidia_drm
+# and archhook
+# https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting
 ```
 
 有线连接
@@ -273,3 +291,6 @@ vnc tools (support wayland)
 sudo pacman -S remmina
 sudo pacman -S libvncserver
 ```
+
+aur-helper
+paru
