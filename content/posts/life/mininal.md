@@ -48,17 +48,22 @@ cfdisk -z 磁盘
 ```bash
 mkfs.vfat /dev/sda1
 mkfs.btrfs -f /dev/sda3
+# if have another disk mkfs.btrfs -f /dev/sdb1
 mkswap /dev/sda2
 ```
 
 挂载
 
+systemd-boot
+
+[systemd-boot](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points)
+
 ```bash
 mount /dev/sda3 /mnt
-mkdir -p /mnt/boot/efi
-# `systemd-boot prefer to /boot` mkdir -p /mnt/boot
-# https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points
-mount /dev/sda1 /mnt/boot/efi
+mkdir -p /mnt/boot
+# mkdir -p /mnt/home
+mount /dev/sda1 /mnt/boot
+# mount /dev/sdb1 /mnt/home
 swapon /dev/sda2
 lsblk -f ## 查看分区情况
 ```
@@ -118,28 +123,38 @@ archlinux
 
 启动管理
 
-```bash
-pacman -S grub efibootmgr efivar intel-ucode (iwd)
-grub-install /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
-# 输入密码
-passwd
-```
-
 systemd-boot (recommend)
 
 ```bash
 bootctl install
 systemctl enable systemd-boot-update.service
-# config `esp means /boot`
-vim esp/loader/loader.conf
-# https://wiki.archlinux.org/title/Systemd-boot#Configuration
-# enable nvidia-drm
+```
+
+configuration loader.conf
+
+[systemd-boot configuration](https://wiki.archlinux.org/title/Systemd-boot#Configuration)
+
+```bash
+vim /boot/loader/loader.conf
+default 	arch.conf
+#timeout 3
+console-mode 	max
+editor 		no
+```
+
+configuration entries
+
+[nvidia-drm](https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting)
+
+```bash
 vim /boot/loader/entries/arch.conf
-options nvidia-drm.modeset=1
-# if need early loading need add nvidia nvidia_modeset nvidia_uvm nvidia_drm
-# and archhook
-# https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting
+title	Arch Linux
+linux	/vmlinuz-linux
+initrd	/intel-ucode.img
+initrd	/initramfs-linux.img
+options	root=/dev/sda3 rw 
+# enable nvidia-drm 
+# options	root=/dev/sda3 rw nvidia-drm.modeset=1
 ```
 
 有线连接
