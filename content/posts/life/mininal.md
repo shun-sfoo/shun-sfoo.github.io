@@ -142,6 +142,50 @@ console-mode 	max
 editor 		no
 ```
 
+[kms](https://wiki.archlinux.org/title/Kernel_mode_setting)
+
+early loading nvidia
+
+```bash
+vim /etc/mkinitcpio.conf
+MODULES=(i915? nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+mkinitcpio -p linux
+```
+
+To use GBM as a wayland backend
+[wayland](https://wiki.archlinux.org/title/wayland#Requirements)
+
+```bash
+vim .pam_enviroment
+# or should edit in  ~/.config/environment.d/envvars.conf
+# [Wayland_environment](https://wiki.archlinux.org/title/Environment_variables#Wayland_environment)
+# need to checkin
+GBM_BACKEND=nvidia-drm
+__GLX_VENDOR_LIBRARY_NAME=nvidia
+```
+
+pacman hook
+
+```bash
+/etc/pacman.d/hooks/nvidia.hook
+
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+# Change the linux part above and in the Exec line if a different kernel is used
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+```
+
 configuration entries
 
 [nvidia-drm](https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting)
@@ -152,8 +196,8 @@ title	Arch Linux
 linux	/vmlinuz-linux
 initrd	/intel-ucode.img
 initrd	/initramfs-linux.img
-options	root=/dev/sda3 rw 
-# enable nvidia-drm 
+options	root=/dev/sda3 rw
+# enable nvidia-drm
 # options	root=/dev/sda3 rw nvidia-drm.modeset=1
 ```
 
