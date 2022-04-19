@@ -54,8 +54,6 @@ mkswap /dev/sda2
 
 挂载
 
-systemd-boot
-
 [systemd-boot](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points)
 
 ```bash
@@ -70,7 +68,7 @@ lsblk -f ## 查看分区情况
 
 安装系统
 
-`pacstrap /mnt linux linux-firmware linux-headers base base-devel neovim git zsh`
+`pacstrap /mnt linux linux-firmware linux-headers base base-devel neovim git zsh btrfs-progs`
 
 生成文件系统的表文件
 
@@ -83,6 +81,7 @@ cat /mnt/etc/fstab
 
 ```bash
 arch-chroot /mnt
+passwd
 ```
 
 设置时区
@@ -128,6 +127,7 @@ systemd-boot (recommend)
 ```bash
 bootctl install
 systemctl enable systemd-boot-update.service
+pacman -S intel-ucode
 ```
 
 configuration loader.conf
@@ -136,59 +136,13 @@ configuration loader.conf
 
 ```bash
 vim /boot/loader/loader.conf
-default 	arch.conf
 #timeout 3
+default 	arch.conf
 console-mode 	max
 editor 		no
 ```
 
-[kms](https://wiki.archlinux.org/title/Kernel_mode_setting)
-
-early loading nvidia
-
-```bash
-vim /etc/mkinitcpio.conf
-MODULES=(i915? nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-mkinitcpio -p linux
-```
-
-To use GBM as a wayland backend
-[wayland](https://wiki.archlinux.org/title/wayland#Requirements)
-
-```bash
-vim .pam_enviroment
-# or should edit in  ~/.config/environment.d/envvars.conf
-# [Wayland_environment](https://wiki.archlinux.org/title/Environment_variables#Wayland_environment)
-# need to checkin
-GBM_BACKEND=nvidia-drm
-__GLX_VENDOR_LIBRARY_NAME=nvidia
-```
-
-pacman hook
-
-```bash
-/etc/pacman.d/hooks/nvidia.hook
-
-[Trigger]
-Operation=Install
-Operation=Upgrade
-Operation=Remove
-Type=Package
-Target=nvidia
-Target=linux
-# Change the linux part above and in the Exec line if a different kernel is used
-
-[Action]
-Description=Update Nvidia module in initcpio
-Depends=mkinitcpio
-When=PostTransaction
-NeedsTargets
-Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
-```
-
 configuration entries
-
-[nvidia-drm](https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting)
 
 ```bash
 vim /boot/loader/entries/arch.conf
@@ -223,8 +177,8 @@ Address=192.168.1.23/24
 Gateway=192.168.1.1
 DNS=192.168.1.1 8.8.8.8 114.114.114.114
 
-systemctl start systemd-networkd.service
 systemctl enable systemd-networkd.service
+systemctl enable systemd-resolved.service
 ```
 
 iwd dhcp 功能
@@ -267,6 +221,56 @@ exit
 umount /mnt/boot/efi
 umount /mnt
 reboot
+```
+
+### nvidia
+
+early loading nvidia
+
+[kms](https://wiki.archlinux.org/title/Kernel_mode_setting)
+
+```bash
+vim /etc/mkinitcpio.conf
+MODULES=(i915? nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+mkinitcpio -p linux
+```
+
+To use GBM as a wayland backend
+
+[wayland](https://wiki.archlinux.org/title/wayland#Requirements)
+
+[nvidia-drm](https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting)
+
+[Wayland_environment](https://wiki.archlinux.org/title/Environment_variables#Wayland_environment)
+
+```bash
+vim .pam_enviroment
+# or should edit in  ~/.config/environment.d/envvars.conf
+# need to checkin
+GBM_BACKEND=nvidia-drm
+__GLX_VENDOR_LIBRARY_NAME=nvidia
+```
+
+pacman hook
+
+```bash
+/etc/pacman.d/hooks/nvidia.hook
+
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+# Change the linux part above and in the Exec line if a different kernel is used
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
 ```
 
 ### bugfix
@@ -352,4 +356,10 @@ sudo pacman -S libvncserver
 ```
 
 aur-helper
-paru
+
+```bash
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+```
