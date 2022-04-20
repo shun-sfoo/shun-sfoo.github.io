@@ -108,7 +108,7 @@ LANG=en_US.UTF-8
 
 ```bash
 # vim /etc/hostname
-archlinux
+arch
 ```
 
 生成对应的 hosts
@@ -117,7 +117,7 @@ archlinux
 # vim /etc/hosts
 127.0.0.1 localhost
 ::1 localhost
-127.0.1.1 archlinux.localdomain archlinux
+127.0.1.1 arch.localdomain arch
 ```
 
 启动管理
@@ -153,6 +153,7 @@ initrd	/initramfs-linux.img
 options	root=/dev/sda3 rw
 # enable nvidia-drm
 # options	root=/dev/sda3 rw nvidia-drm.modeset=1
+# if occur [i915 drm error] add `i915.modset=0 nouveau.modeset=0`
 ```
 
 有线连接
@@ -340,6 +341,7 @@ yrm test taobao
 格式化工具
 
 `yarn global add prettier pyright`
+`pacman -S stylua`
 
 docker
 
@@ -363,3 +365,7 @@ git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
 ```
+
+download 
+
+transmission
