@@ -1,8 +1,15 @@
----
-title: '极简开发环境的搭建'
-date: 2021-12-29T11:11:41+08:00
-draft: false
----
++++
+title = "Arch Installation"
+date = "2021-12-29T11:11:41+08:00"
+author = "shun-sfoo"
+authorTwitter = "" #do not include @
+cover = ""
+tags = ["linux", "arch"]
+keywords = ["arch", "tutorial"]
+description = "systemd 提供了引导工具和网络连接及dhcpd, 使用系统自带可以免除安装grub等工具,减少外部依赖."
+showFullContent = false
+readingTime = true
++++
 
 ## archlinux installation
 
@@ -66,6 +73,12 @@ swapon /dev/sda2
 lsblk -f ## 查看分区情况
 ```
 
+choose mirror site
+
+`reflector`
+
+move tsinghua ustc mirro to the top
+
 安装系统
 
 `pacstrap /mnt linux linux-firmware linux-headers base base-devel neovim git zsh btrfs-progs`
@@ -120,9 +133,9 @@ arch
 127.0.1.1 arch.localdomain arch
 ```
 
-启动管理
+引导管理
 
-systemd-boot (recommend)
+systemd-boot
 
 ```bash
 bootctl install
@@ -223,149 +236,3 @@ umount /mnt/boot/efi
 umount /mnt
 reboot
 ```
-
-### nvidia
-
-early loading nvidia
-
-[kms](https://wiki.archlinux.org/title/Kernel_mode_setting)
-
-```bash
-vim /etc/mkinitcpio.conf
-MODULES=(i915? nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-mkinitcpio -p linux
-```
-
-To use GBM as a wayland backend
-
-[wayland](https://wiki.archlinux.org/title/wayland#Requirements)
-
-[nvidia-drm](https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting)
-
-[Wayland_environment](https://wiki.archlinux.org/title/Environment_variables#Wayland_environment)
-
-```bash
-vim .pam_enviroment
-# or should edit in  ~/.config/environment.d/envvars.conf
-# need to checkin
-GBM_BACKEND=nvidia-drm
-__GLX_VENDOR_LIBRARY_NAME=nvidia
-```
-
-pacman hook
-
-```bash
-/etc/pacman.d/hooks/nvidia.hook
-
-[Trigger]
-Operation=Install
-Operation=Upgrade
-Operation=Remove
-Type=Package
-Target=nvidia
-Target=linux
-# Change the linux part above and in the Exec line if a different kernel is used
-
-[Action]
-Description=Update Nvidia module in initcpio
-Depends=mkinitcpio
-When=PostTransaction
-NeedsTargets
-Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
-```
-
-### bugfix
-
-如果出现 `OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection github:443`
-
-不确定是不是因为上述网络设置的原因
-
-```bash
-# 解决方法，为git设置代理
-git config --global http.proxy=127.0.0.1:7890
-git config --global https.proxy=127.0.0.1:7890
-# 取消设置
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-# 查看所有git配置
-git config --global -l
-```
-
-### 环境设置
-
-python: pyenv
-
-```bash
-curl https://pyenv.run | bash
-
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
-```
-
-rust
-
-`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
-
-### 常用命令
-
-ssh generator key
-
-`ssh-keygen -t rsa -C "youremail@example.com" `
-
-git 使用 ssh 拉取代码
-
-拉取子项目
-
-`git clone --recurse-submodules git@github.com:shun-sfoo/xmonad.git`
-
-### 常用工具
-
-in the futrue user wayland native
-waybar wayfire ...
-now uses sway as wm
-
-fcitx5
-
-`pacman -S fcitx5-im fcitx5-rime`
-
-yarn 使用国内镜像
-
-```bash
-yarn global add yrm
-yrm ls
-yrm use taobao
-yrm test taobao
-```
-
-格式化工具
-
-`yarn global add prettier pyright`
-`pacman -S stylua`
-
-docker
-
-```bash
-sudo gpasswd -a user docker
-sudo systemctl enable docker
-```
-
-vnc tools (support wayland)
-
-```bash
-sudo pacman -S remmina
-sudo pacman -S libvncserver
-```
-
-aur-helper
-
-```bash
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-```
-
-download 
-
-transmission
