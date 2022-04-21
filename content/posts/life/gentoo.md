@@ -1,10 +1,15 @@
----
-title: 'Gentoo'
-date: 2021-08-22T18:03:26+08:00
-draft: false
----
-
-# Gentoo 安装
++++
+title = "Gentoo 安装"
+date = "2021-08-22T18:03:26+08:00"
+author = "shun-sfoo"
+authorTwitter = "" #do not include @
+cover = ""
+tags = ["linux", "gentoo"]
+keywords = ["gentoo", "tutorial"]
+description = "gentoo 安装"
+showFullContent = false
+readingTime = true
++++
 
 ## 磁盘分区
 

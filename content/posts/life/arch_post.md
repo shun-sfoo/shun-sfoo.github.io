@@ -140,6 +140,7 @@ paru swaylock-effects-git
 pacman -S waybar
 pacman -S swaybg
 pacman -S swayidle
+pacman -S mako
 ```
 
 ## git
