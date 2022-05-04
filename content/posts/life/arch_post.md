@@ -96,6 +96,14 @@ NeedsTargets
 Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
 ```
 
+## terminal
+
+kitty
+
+- [x] kitty `c and python opengl termial`
+- [x] vivid `LSCOLOR`
+- [x] imagemagick `operator picture`
+
 ## Wayland
 
 `sudo pacman -S wayland`
