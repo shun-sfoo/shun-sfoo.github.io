@@ -145,9 +145,11 @@ WLR_RENDERER=gles2
 paru wayfire-git
 paru wlr-randr-git # output display info
 paru swaylock-effects-git
-pacman -S waybar
+# pacman -S waybar
+pacman -S wofi
 pacman -S swaybg
 pacman -S swayidle
+pacman -S wl-clipboard
 pacman -S mako
 ```
 
@@ -234,6 +236,32 @@ sudo systemctl enable docker
 
 `sudo pacman -S transmission`
 
-### Fcitx5
+### zathura
 
-`sudo pacman -S fcitx5 fcitx5-rime`
+`paru zathura`
+
+usage
+
+- [x] `a` page-fit
+
+- [x] `s` width-fit
+
+- [x] `C-r` invert color
+
+### lsp
+
+`paru lua-language-server`
+
+### llvm
+
+`paru clang llvm lldb`
+
+### chrome
+
+`paru google-chrome-stable`
+
+configuration `chrome-flags.conf` enable wayland
+
+- [ ] Fcitx5
+
+transfrom to chrome and don't need fcitx5. There a input plugin named `google input tools`.
