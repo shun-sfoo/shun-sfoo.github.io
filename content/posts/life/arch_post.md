@@ -153,6 +153,25 @@ pacman -S wl-clipboard
 pacman -S mako
 ```
 
+### Electron
+
+```bash
+vim  ~/.config/electron-flags.conf
+--enable-features=UseOzonePlatform
+--ozone-platform=wayland
+```
+
+#### if electron don't work
+
+like vscode, obsidian
+
+for example:
+
+```bash
+vim /usr/share/applications/obsidian.desktop
+Exec=/usr/bin/obsidian %U --enable-features=UseOzonePlatform --ozone-platform=wayland
+```
+
 ## git
 
 ### ssh
@@ -236,7 +255,7 @@ sudo systemctl enable docker
 
 `sudo pacman -S transmission`
 
-### zathura
+### Zathura
 
 `paru zathura`
 
@@ -256,12 +275,30 @@ usage
 
 `paru clang llvm lldb`
 
-### chrome
+### Fcitx5
+
+`sudo pacman -S fcitx5 fcitx5-rime fcitx5-gtk`
+
+### Chrome
 
 `paru google-chrome-stable`
 
 configuration `chrome-flags.conf` enable wayland
 
-- [ ] Fcitx5
+#### develop chromium
 
-transfrom to chrome and don't need fcitx5. There a input plugin named `google input tools`.
+notice
+
+(build)[https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md]
+
+`gn gen out/Default --export-compile-commands`
+
+```make
+.PHONY: run
+run:
+	LANGUAGE=zh ./out/Default/chrome --ozone-platform-hint=auto
+```
+
+### Obsidian
+
+`sudo pacman -S obsidian`
