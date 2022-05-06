@@ -161,17 +161,6 @@ vim  ~/.config/electron-flags.conf
 --ozone-platform=wayland
 ```
 
-#### if electron don't work
-
-like vscode, obsidian
-
-for example:
-
-```bash
-vim /usr/share/applications/obsidian.desktop
-Exec=/usr/bin/obsidian %U --enable-features=UseOzonePlatform --ozone-platform=wayland
-```
-
 ## git
 
 ### ssh
@@ -302,3 +291,9 @@ run:
 ### Obsidian
 
 `sudo pacman -S obsidian`
+
+(electron per user)[ttps://wiki.archlinux.org/title/Wayland#Per_user]
+
+if wayland is not work, consider link the obsidian `electron<version>-flags.conf`
+
+`ln -s ~/.config/electron-flags.conf ~/.config/electron17-flags.conf`
