@@ -228,6 +228,7 @@ yrm test taobao
 consider use podman
 
 ```bash
+sudo pacman -S docker docker-compose
 sudo gpasswd -a user docker
 sudo systemctl enable docker
 ```
