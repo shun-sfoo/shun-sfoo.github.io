@@ -13,7 +13,7 @@ readingTime = true
 
 ## Cli
 
-`sudo pacman -S exa bat starship zoxide mcfly zsh-autosuggestions ripgrep stylua rust-analyzer`
+`sudo pacman -S exa bat starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighting ripgrep stylua rust-analyzer`
 
 ## AUR Helper
 
