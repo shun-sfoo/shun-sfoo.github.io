@@ -141,10 +141,23 @@ WLR_RENDERER=gles2
 
 ### Apps
 
+wayfire dependency
+
 ```bash
-paru wayfire-git
+sudo pacman -S cairo pango doctest freetype2 glm libdrm libevdev libglvnd  \
+  libinput libjpeg libpng libxkbcommon libxml2 pixman polkit pkgconf seatd \
+  xcb-util-errors xcb-util-renderutil xcb-util-wm xorg-xwayland wayland wayland-protocols
+
+sudo pacman -S glslang meson ninja cmake vulkan-headers
+
+sudo pacman -S wlroots doxygen nlohmann-json xorg-xeyes
+```
+
+```bash
+# if wayfire is out of update use wayfire-git instead of
+paru wayfire
 paru wlr-randr-git # output display info
-paru swaylock-effects-git
+# paru swaylock-effects-git
 # pacman -S waybar
 pacman -S wofi
 pacman -S swaybg
@@ -279,7 +292,7 @@ configuration `chrome-flags.conf` enable wayland
 
 notice
 
-(build)[https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md]
+[build](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md)
 
 `gn gen out/Default --export-compile-commands`
 
@@ -298,3 +311,9 @@ run:
 if wayland is not work, consider link the obsidian `electron<version>-flags.conf`
 
 `ln -s ~/.config/electron-flags.conf ~/.config/electron17-flags.conf`
+
+### Soundes
+
+`paru alsa-utils`
+
+`usage: alsamixer`
