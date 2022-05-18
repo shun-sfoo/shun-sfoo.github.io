@@ -81,7 +81,7 @@ move tsinghua ustc mirro to the top
 
 安装系统
 
-`pacstrap /mnt linux linux-firmware linux-headers base base-devel neovim git zsh btrfs-progs`
+`pacstrap /mnt linux linux-firmware linux-headers base base-devel neovim git zsh btrfs-progs exfatprog ntfs-3g`
 
 生成文件系统的表文件
 
