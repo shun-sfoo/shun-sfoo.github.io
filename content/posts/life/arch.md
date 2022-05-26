@@ -54,9 +54,8 @@ cfdisk -z 磁盘
 
 ```bash
 mkfs.vfat /dev/sda1
-mkfs.btrfs -f /dev/sda3
+mkfs.btrfs -f /dev/sda2
 # if have another disk mkfs.btrfs -f /dev/sdb1
-mkswap /dev/sda2
 ```
 
 挂载
@@ -64,12 +63,11 @@ mkswap /dev/sda2
 [systemd-boot](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points)
 
 ```bash
-mount /dev/sda3 /mnt
+mount /dev/sda2 /mnt
 mkdir -p /mnt/boot
 # mkdir -p /mnt/home
 mount /dev/sda1 /mnt/boot
 # mount /dev/sdb1 /mnt/home
-swapon /dev/sda2
 lsblk -f ## 查看分区情况
 ```
 
@@ -81,7 +79,7 @@ move tsinghua ustc mirro to the top
 
 安装系统
 
-`pacstrap /mnt linux linux-firmware linux-headers base base-devel neovim git zsh btrfs-progs exfatprog ntfs-3g`
+`pacstrap /mnt linux linux-firmware linux-headers base neovim git zsh btrfs-progs`
 
 生成文件系统的表文件
 
@@ -163,7 +161,7 @@ title	Arch Linux
 linux	/vmlinuz-linux
 initrd	/intel-ucode.img
 initrd	/initramfs-linux.img
-options	root=/dev/sda3 rw
+options	root=/dev/sda2 rw
 # enable nvidia-drm
 # options	root=/dev/sda3 rw nvidia-drm.modeset=1
 # if occur [i915 drm error] add `i915.modset=0 nouveau.modeset=0`

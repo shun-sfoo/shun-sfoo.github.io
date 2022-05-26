@@ -11,9 +11,38 @@ showFullContent = false
 readingTime = true
 +++
 
+## Change Shell
+
+```bash
+chsh -s $(which zsh)
+zsh
+```
+
 ## Cli
 
-`sudo pacman -S exa bat starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighting ripgrep stylua rust-analyzer`
+Rust
+
+```bash
+sudo pacman -S exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid
+```
+
+zsh plugins
+
+```bash
+sudo pacman -S zsh-autosuggestions zsh-syntax-highlighting
+```
+
+HDD
+
+```bash
+sudo pacman -S exfatprogs ntfs-3g
+```
+
+audio and video
+
+```bash
+sudo pacamn -S alsa-utils mpv ranger imagemagick
+```
 
 ## AUR Helper
 
@@ -28,74 +57,6 @@ makepkg -si
 # uncomment BottomUp
 ```
 
-## Graphics driver
-
-### Intel
-
-`sudo pacman -S mesa vulkan-intel`
-
-#### Bug Fix
-
-`sudo dmesg |rg i915`
-
-if there has error `i915 [drm] ERROR` meanings intel drm failed.
-it may appear in the machine which has tow graphics cards like `intel + nvidia`
-
-to resolve it by edit `/boot/loader/entries/arch.conf`
-add the options `i915.modeset=0 nouveau.modeset=0`
-
-[Systemd-boot Configuration](https://wiki.archlinux.org/title/Systemd-boot#Configuration)
-
-[Disabling_modesetting](https://wiki.archlinux.org/title/kernel_mode_setting#Disabling_modesetting)
-
-### Nvidia
-
-`sudo pacman -S nvidia`
-
-#### KMS
-
-in order to enable **Wayland** in nvidia must enable nvidia kms
-
-[KMS](https://wiki.archlinux.org/title/Kernel_mode_setting)
-
-edit `/boot/loader/entries/arch.conf`
-
-add options `nvidia-drm.modeset=1`
-
-#### Early KMS start
-
-[Early_KMS_start](https://wiki.archlinux.org/title/kernel_mode_setting#Early_KMS_start)
-
-[nvidia-drm](https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting)
-
-```bash
-sudo vim /etc/mkinitcpio.conf
-MODULES=(i915? nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-sudo mkinitcpio -p linux
-```
-
-pacman hook
-
-```bash
-/etc/pacman.d/hooks/nvidia.hook
-
-[Trigger]
-Operation=Install
-Operation=Upgrade
-Operation=Remove
-Type=Package
-Target=nvidia
-Target=linux
-# Change the linux part above and in the Exec line if a different kernel is used
-
-[Action]
-Description=Update Nvidia module in initcpio
-Depends=mkinitcpio
-When=PostTransaction
-NeedsTargets
-Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
-```
-
 ## terminal
 
 kitty
@@ -103,76 +64,6 @@ kitty
 - [x] kitty `c and python opengl termial`
 - [x] vivid `LSCOLOR`
 - [x] imagemagick `operator picture`
-
-## Wayland
-
-`sudo pacman -S wayland`
-
-### Nvidia GBM
-
-To use GBM as a wayland backend
-
-[wayland](https://wiki.archlinux.org/title/wayland#Requirements)
-
-[Wayland_environment](https://wiki.archlinux.org/title/Environment_variables#Wayland_environment)
-
-```bash
-vim .pam_enviroment
-# or should edit in  ~/.config/environment.d/envvars.conf
-# TODO need to check
-GBM_BACKEND=nvidia-drm
-__GLX_VENDOR_LIBRARY_NAME=nvidia
-```
-
-### Firefox
-
-```bash
-vim .pam_enviroment
-MOZ_ENABLE_WAYLAND=1
-```
-
-### Renderer
-
-```bash
-vim .pam_enviroment
-## in the future may use vulkan
-WLR_RENDERER=gles2
-```
-
-### Apps
-
-wayfire dependency
-
-```bash
-sudo pacman -S cairo pango doctest freetype2 glm libdrm libevdev libglvnd  \
-  libinput libjpeg libpng libxkbcommon libxml2 pixman polkit pkgconf seatd \
-  xcb-util-errors xcb-util-renderutil xcb-util-wm xorg-xwayland wayland wayland-protocols
-
-sudo pacman -S glslang meson ninja cmake vulkan-headers
-
-sudo pacman -S wlroots doxygen nlohmann-json xorg-xeyes
-```
-
-```bash
-# if wayfire is out of update use wayfire-git instead of
-paru wayfire
-paru wlr-randr-git # output display info
-# paru swaylock-effects-git
-# pacman -S waybar
-pacman -S wofi
-pacman -S swaybg
-pacman -S swayidle
-pacman -S wl-clipboard
-pacman -S mako
-```
-
-### Electron
-
-```bash
-vim  ~/.config/electron-flags.conf
---enable-features=UseOzonePlatform
---ozone-platform=wayland
-```
 
 ## git
 
@@ -219,15 +110,15 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 ```
 
-### rust
+### Rust
 
 `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
-### node
+### Node
 
 `sudo pacman -S nodejs npm yarn`
 
-#### yarn use taobao mirror
+#### Yarn Choose Mirror
 
 ```bash
 yarn global add yrm
@@ -235,6 +126,10 @@ yrm ls
 yrm use taobao
 yrm test taobao
 ```
+
+#### Yarn tools
+
+`yarn global add prettier pyright`
 
 ### Docker
 
@@ -246,21 +141,20 @@ sudo gpasswd -a user docker
 sudo systemctl enable docker
 ```
 
-### Format Tools
-
-`yarn global add prettier pyright`
-
 ### Vnc
 
 `sudo pacman -S libvncserver remmina`
 
 ### BtTorrent
 
-`sudo pacman -S transmission`
+```bash
+sudo pacman -S transmission-cli
+transmission-daemon --auth --username arch --password linux --port 9091 --allowed "127.0.0.1"
+```
 
 ### Zathura
 
-`paru zathura`
+`sudo pacman -S zathura-pdf-mupdf`
 
 usage
 
@@ -272,11 +166,11 @@ usage
 
 ### lsp
 
-`paru lua-language-server`
+`sud pacman -S lua-language-server`
 
 ### llvm
 
-`paru clang llvm lldb`
+`sudo pacman -S clang llvm lldb`
 
 ### Fcitx5
 
@@ -288,32 +182,12 @@ usage
 
 configuration `chrome-flags.conf` enable wayland
 
-#### develop chromium
-
-notice
-
-[build](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md)
-
-`gn gen out/Default --export-compile-commands`
-
-```make
-.PHONY: run
-run:
-	LANGUAGE=zh ./out/Default/chrome --ozone-platform-hint=auto
-```
-
 ### Obsidian
 
 `sudo pacman -S obsidian`
 
-(electron per user)[ttps://wiki.archlinux.org/title/Wayland#Per_user]
+[ArchWiki:Electron Per User](ttps://wiki.archlinux.org/title/Wayland#Per_user)
 
 if wayland is not work, consider link the obsidian `electron<version>-flags.conf`
 
 `ln -s ~/.config/electron-flags.conf ~/.config/electron17-flags.conf`
-
-### Soundes
-
-`paru alsa-utils`
-
-`usage: alsamixer`
