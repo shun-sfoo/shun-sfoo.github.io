@@ -13,6 +13,16 @@ readingTime = false
 
 ## ToolChains
 
+## static compile
+
+`rustup target add x86_64-unknown-linux-musl`
+
+if use openssl crate must add `vendored` features
+
+`cargo add openssl --features "vendored"`
+
+[vendored](https://docs.rs/openssl/latest/openssl/#vendored)
+
 ### cargo-edit
 
 `cargo install cargo-edit`
