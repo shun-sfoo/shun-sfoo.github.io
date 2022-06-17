@@ -65,6 +65,18 @@ kitty
 - [x] vivid `LSCOLOR`
 - [x] imagemagick `operator picture`
 
+## keychron keyboard
+
+[apple keyboard](https://wiki.archlinux.org/title/Apple_Keyboard)
+
+```bash
+sudo vim /etc/modprobe.d/hid_apple.conf
+
+options hid_apple fnmode=2
+```
+
+`sudo mkinitcpio -P`
+
 ## git
 
 ### ssh
