@@ -6,19 +6,25 @@ draft: false
 
 ## build gimp
 
-### install dependencies
-
-`git clone https://aur.archlinux.org/gimp-develop-git.git`
-
-to see the dependencies
+run `./autogen.sh` show the dependencies
 
 ```bash
-sudo pacman -S lcms2 libwmf icu enchant libgexiv2 librsvg desktop-file-utils libexif libart-lgpl dbus-glib gtk-doc poppler-glib  \
-poppler-data openexr mypaint-brushes1 babl gegl cairo appstream-glib gobject-introspection intltool alsa-lib libxslt  \
-glib-networking ghostscript libxpm webkit2gtk libheif libwebp libmng iso-codes aalib zlib gjs python-gobject \
-luajit meson xorg-server-xvfb
+make
+# ERROR: if it error python module giscanner not found
+# https://archlinux.org/packages/extra/x86_64/gobject-introspection/files/
+# the python file in /usr/bin
+# reboot could save the problem
+# if not `export PATH="/usr/bin:$PATH"`
+sudo make install
 ```
 
-### TODO
+## remove
 
-learn the meson build process
+```bash
+make clean
+make distclean
+```
+
+## README
+
+more information read the INSTALL.in in source
