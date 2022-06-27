@@ -186,8 +186,8 @@ sudo pacman -S fennel fnlfmt racket-minimal
 ```
 
 ```bash
-raco pkg install xrepl
-raco pkg install xrepl-lib
+# `xrepl` will install a hugo lot of dependencies and now I don't need it
+# if need  xrepl  install racket better
 raco pkg install sicp
 # fmt tools use by raco fmt -i <file>
 raco pkg install fmt
