@@ -181,7 +181,9 @@ usage
 
 ### lsp
 
-`sud pacman -S lua-language-server`
+```bash
+sudo pacman -S lua-language-server fennel fnlfmt
+```
 
 ### llvm
 
