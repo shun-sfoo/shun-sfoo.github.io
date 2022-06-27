@@ -179,10 +179,18 @@ usage
 
 - [x] `C-r` invert color
 
+### lambda
+
+```bash
+sudo pacman -S fennel fnlfmt racket
+```
+
+racket install sicp plugin
+
 ### lsp
 
 ```bash
-sudo pacman -S lua-language-server fennel fnlfmt
+sudo pacman -S lua-language-server
 ```
 
 ### llvm
