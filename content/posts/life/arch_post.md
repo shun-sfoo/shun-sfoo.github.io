@@ -182,10 +182,22 @@ usage
 ### lambda
 
 ```bash
-sudo pacman -S fennel fnlfmt racket
+sudo pacman -S fennel fnlfmt racket-minimal
 ```
 
-racket install sicp plugin
+```bash
+raco pkg install xrepl
+raco pkg install xrepl-lib
+raco pkg install sicp
+# fmt tools use by raco fmt -i <file>
+raco pkg install fmt
+```
+
+[xrepl](https://marvinsblog.net/post/2021-03-10-racket-xrepl/)
+
+[vim in racket](https://docs.racket-lang.org/guide/Vim.html)
+
+I have to use `set filetype=racket` in the racket file.
 
 ### lsp
 
