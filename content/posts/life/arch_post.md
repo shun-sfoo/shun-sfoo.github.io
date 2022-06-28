@@ -182,12 +182,13 @@ usage
 ### lambda
 
 ```bash
-sudo pacman -S fennel fnlfmt racket-minimal
+# prefer to install racket , racket-minimal need a lot of packages
+# alternate choice is chicken, but it's  sicp eggs not use in current version
+sudo pacman -S fennel fnlfmt racket
 ```
 
 ```bash
-# `xrepl` will install a hugo lot of dependencies and now I don't need it
-# if need  xrepl  install racket better
+# racket included xrepl
 raco pkg install sicp
 # fmt tools use by raco fmt -i <file>
 raco pkg install fmt
@@ -198,6 +199,14 @@ raco pkg install fmt
 [vim in racket](https://docs.racket-lang.org/guide/Vim.html)
 
 I have to use `set filetype=racket` in the racket file.
+
+`vim :h lisp lispword`
+
+And could find the lisp config in [vim-racket](https://github.com/wlangstroth/vim-racket) plugin
+
+like `rg lisp` in the plugins dir
+
+In my neovim setting I solved the **colorscheme** and **indent** by simply setting.
 
 ### lsp
 
