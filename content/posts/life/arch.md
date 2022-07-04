@@ -230,7 +230,8 @@ systemctl enable sshd
 
 ```bash
 exit
-umount /mnt/boot/efi
+umount /mnt/boot
+# umount /mnt/home
 umount /mnt
 reboot
 ```

@@ -97,13 +97,7 @@ Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /
 wayfire dependency
 
 ```bash
-sudo pacman -S cairo pango doctest freetype2 glm libdrm libevdev libglvnd  \
-  libinput libjpeg libpng libxkbcommon libxml2 pixman polkit pkgconf seatd \
-  xcb-util-errors xcb-util-renderutil xcb-util-wm xorg-xwayland wayland wayland-protocols
-
-sudo pacman -S glslang meson ninja cmake vulkan-headers
-
-sudo pacman -S wlroots doxygen nlohmann-json xorg-xeyes
+sudo pacman -S polkit
 ```
 
 ```bash

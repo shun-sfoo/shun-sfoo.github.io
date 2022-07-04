@@ -18,6 +18,13 @@ chsh -s $(which zsh)
 zsh
 ```
 
+## User directories
+
+```bash
+sudo pacman -S xdg-user-dirs
+xdg-user-dirs-update
+```
+
 ## Cli
 
 Rust
