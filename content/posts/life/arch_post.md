@@ -25,6 +25,22 @@ sudo pacman -S xdg-user-dirs
 xdg-user-dirs-update
 ```
 
+## Nerd Fonts
+
+```bash
+sudo pacman -S ttf-nerd-fonts-symbols
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
+```
+
+[kitty fonts](https://sw.kovidgoyal.net/kitty/conf/#conf-kitty-fonts)
+
+[how to set](https://www.reddit.com/r/KittyTerminal/comments/r5hssh/kitty_nerd_fonts/)
+
+[Glyph](https://github.com/ryanoasis/nerd-fonts/wiki/Glyph-Sets-and-Code-Points)
+
+In kitty you can config the symbol fonts by code point
+So need not install addition nerd fonts.
+
 ## Cli
 
 Rust
