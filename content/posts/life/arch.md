@@ -54,7 +54,9 @@ cfdisk -z 磁盘
 
 ```bash
 mkfs.vfat /dev/sda1
-mkfs.btrfs -f /dev/sda2
+# mkfs.btrfs -f /dev/sda2
+mkfs.ext4 /dev/sda2
+# mkfs.ext4 /dev/sdb1
 # if have another disk mkfs.btrfs -f /dev/sdb1
 ```
 
@@ -71,15 +73,21 @@ mount /dev/sda1 /mnt/boot
 lsblk -f ## 查看分区情况
 ```
 
+uncomment pacman.conf ParallelDownloads 
+
 choose mirror site
 
 `reflector`
 
-move tsinghua ustc mirro to the top
+move ustc tsinghua or aliyun mirror to the top
 
 安装系统
 
-`pacstrap /mnt linux linux-firmware linux-headers base neovim git zsh btrfs-progs`
+pacman -Sy
+
+`pacstrap /mnt archlinux-keyring linux linux-firmware linux-headers base neovim git zsh sudo`
+
+btrfs-progs
 
 生成文件系统的表文件
 
