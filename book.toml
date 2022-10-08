@@ -1,24 +1,35 @@
 [book]
 authors = ["shun-sfoo"]
 language = "en"
-multilingual = false
 src = "src"
 title = "shun-sfoo Tech blog"
 
+[rust]
+edition = "2018"
+
 [output.html]
+default-theme = "rust"
+preferred-dark-theme = "coal"
 mathjax-support = true
+copy-fonts = true
 no-section-label = true
-git-repository-url = "https://github.com/shun-sfoo/shun-sfoo.github.io"
+git-repository-url = "https://github.com/shun-sfoo"
 git-repository-icon = "fa-github"
 
+
+[output.html.print]
+enable = false    # include support for printable output
+
 [output.html.fold]
-enable = false
+enable = true
 level = 0
 
 [output.html.playground]
 editable = false
-copy-js = true
+copyable = true
+copy-js = false
 line-numbers = false
+runnable = true
 
 [output.html.search]
 enable = true
