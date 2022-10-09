@@ -1,8 +1,12 @@
 ## ToolChains
 
-## static compile
+## cross compile
+
+### static compile
 
 `rustup target add x86_64-unknown-linux-musl`
+
+### openssl (deprecated)
 
 if use openssl crate must add `vendored` features
 
@@ -10,7 +14,21 @@ if use openssl crate must add `vendored` features
 
 [vendored](https://docs.rs/openssl/latest/openssl/#vendored)
 
-### cargo-edit
+### Use Rustls
+
+first in archlinux should `sudo pacman -S --needed musl`
+
+and then when add a crate choose the `rustls` features instead of `nativtls` or `openssl`
+
+### linux to windows 10
+
+1. rustup toolchain install stable-x86_64-pc-windows-gnu (need to check is necessary)
+
+2. rustup target add x86_64-pc-windows-gnu
+
+3. sudo pacman -S mingw-w64-gcc
+
+## cargo-edit
 
 `cargo install cargo-edit`
 

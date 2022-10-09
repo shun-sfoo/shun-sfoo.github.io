@@ -66,14 +66,15 @@ git config --global -l
 
 ```bash
 sudo pacman --need -S \
-kitty `# favorite terminal` \
+kitty jq`# favorite terminal` \
+musl `# cros compile` \
 lua-language-server typescript-language-server rust-analyzer `# lsp` \
 prettier  `# formatter`  \
 clang llvm lldb `# c tools`  \
 fcitx5 fcitx5-rime fcitx5-gtk `# fcitx` \
-exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid `# rust cli`  \
+exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid mdbook `# rust cli`  \
 zsh-autosuggestions zsh-syntax-highlighting `# zsh plugins` \
-alsa-utils mpv ranger imagemagick `# audio and video`
+alsa-utils mpv ranger imagemagick cmus `# audio and video`
 ```
 
 HDD
@@ -186,6 +187,8 @@ Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /
 
 ### python
 
+if not write python scirpt recomment use the system python
+
 pyenv
 
 ```bash
@@ -268,7 +271,8 @@ options hid_apple fnmode=2
 
 ```bash
 sudo pacman -S transmission-cli
-transmission-daemon --auth --username arch --password linux --port 9091 --allowed "127.0.0.1"
+transmission-daemon --auth --username arch --password linux \
+--port 9091 --allowed "127.0.0.1"
 ```
 
 ### lambda
@@ -318,23 +322,28 @@ if wayland is not work, consider link the obsidian `electron<version>-flags.conf
 
 ### gimp
 
-run `./autogen.sh` show the dependencies
+**before build read INSTALL.in and meson.make**
+
+`sudo pacman -S mypaint-brushes1`
+
+mypaint-brushes use the 1 version not default(2)
+
+gimp now use meson build
+By default meson install in `/usr/local/bin` and the shared library is `/usr/local/lib`
+and the enviroment path don't include. so if build by defalut it occur error.
+There has two way to solved:
+
+1. `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib` not recomment
+2. set meson `prefix =/usr` . I choose the way.
+   In detail: edit the meson.make and comment the `prefix=$(home)/.local`, and
+   we only have the `prefix=/usr`, that's we want. `./meson.make` and cd \_build
+   run `meson configure` and we see the directories section prefix is `/usr`.
+   Then install it.
 
 ```bash
-make
 # ERROR: if it error python module giscanner not found
 # https://archlinux.org/packages/extra/x86_64/gobject-introspection/files/
 # the python file in /usr/bin
 # reboot could save the problem
 # if not `export PATH="/usr/bin:$PATH"`
-sudo make install
 ```
-
-#### remove
-
-```bash
-make clean
-make distclean
-```
-
-more information read the INSTALL.in in source
