@@ -66,7 +66,7 @@ git config --global -l
 
 ```bash
 sudo pacman --need -S \
-kitty jq`# favorite terminal` \
+kitty jq yt-dlp gtk4 glade`# favorite terminal` \
 musl `# cros compile` \
 lua-language-server typescript-language-server rust-analyzer `# lsp` \
 prettier  `# formatter`  \
