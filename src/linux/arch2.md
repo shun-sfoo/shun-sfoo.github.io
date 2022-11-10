@@ -70,7 +70,7 @@ kitty jq yt-dlp gtk4 glade`# favorite terminal` \
 musl `# cros compile` \
 lua-language-server typescript-language-server rust-analyzer `# lsp` \
 prettier  `# formatter`  \
-clang llvm lldb `# c tools`  \
+clang llvm lldb cmake meson ninja gdb valgrind`# c tools`  \
 fcitx5 fcitx5-rime fcitx5-gtk `# fcitx` \
 exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid mdbook `# rust cli`  \
 zsh-autosuggestions zsh-syntax-highlighting `# zsh plugins` \
@@ -110,7 +110,7 @@ add the options `i915.modeset=0 nouveau.modeset=0`
 [Disabling_modesetting](https://wiki.archlinux.org/title/kernel_mode_setting#Disabling_modesetting)
 
 ```bash
-pacman -S wayland polkit
+pacman -S wayland polkit wlroots glm
 # Graphics driver
 sudo pacman -S mesa vulkan-intel # intel
 sudo pacman -S nvidia
