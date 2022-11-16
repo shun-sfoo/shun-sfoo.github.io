@@ -70,8 +70,8 @@ kitty jq yt-dlp gtk4 glade`# favorite terminal` \
 musl `# cros compile` \
 lua-language-server typescript-language-server rust-analyzer `# lsp` \
 prettier  `# formatter`  \
-clang llvm lldb cmake meson ninja gdb valgrind`# c tools`  \
-fcitx5 fcitx5-rime fcitx5-gtk `# fcitx` \
+clang llvm lldb cmake meson ninja gdb valgrind `# c tools`  \
+fcitx5 fcitx5-rime fcitx5-gtk rime-double-pinyin `# fcitx` \
 exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid mdbook `# rust cli`  \
 zsh-autosuggestions zsh-syntax-highlighting `# zsh plugins` \
 alsa-utils mpv ranger imagemagick cmus `# audio and video`
