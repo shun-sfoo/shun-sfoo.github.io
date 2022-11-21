@@ -275,6 +275,12 @@ transmission-daemon --auth --username arch --password linux \
 --port 9091 --allowed "127.0.0.1"
 ```
 
+### Android
+
+```bash
+sudo pacman -S gmtp
+```
+
 ### lambda
 
 ```bash
