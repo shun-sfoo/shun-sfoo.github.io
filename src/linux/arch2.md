@@ -66,7 +66,7 @@ git config --global -l
 
 ```bash
 sudo pacman --need -S \
-kitty jq yt-dlp gtk4 glade`# favorite terminal` \
+kitty jq yt-dlp gtk4 glade p7zip`# favorite terminal` \
 musl `# cros compile` \
 lua-language-server typescript-language-server rust-analyzer `# lsp` \
 prettier  `# formatter`  \
@@ -74,7 +74,9 @@ clang llvm lldb cmake meson ninja gdb valgrind `# c tools`  \
 fcitx5 fcitx5-rime fcitx5-gtk rime-double-pinyin `# fcitx` \
 exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid mdbook `# rust cli`  \
 zsh-autosuggestions zsh-syntax-highlighting `# zsh plugins` \
-alsa-utils mpv ranger imagemagick cmus `# audio and video`
+alsa-utils mpv ranger imagemagick cmus `# audio and video`  \
+gmtp scrcpy `# android` \
+net-tools bind tcpdump inetutils wget `# net tools`
 ```
 
 HDD
@@ -110,7 +112,7 @@ add the options `i915.modeset=0 nouveau.modeset=0`
 [Disabling_modesetting](https://wiki.archlinux.org/title/kernel_mode_setting#Disabling_modesetting)
 
 ```bash
-pacman -S wayland polkit wlroots glm
+pacman -S wayland polkit wlroots glm grim slurp
 # Graphics driver
 sudo pacman -S mesa vulkan-intel # intel
 sudo pacman -S nvidia
@@ -266,20 +268,6 @@ options hid_apple fnmode=2
 ### Vnc
 
 `sudo pacman -S libvncserver remmina`
-
-### BtTorrent
-
-```bash
-sudo pacman -S transmission-cli
-transmission-daemon --auth --username arch --password linux \
---port 9091 --allowed "127.0.0.1"
-```
-
-### Android
-
-```bash
-sudo pacman -S gmtp
-```
 
 ### lambda
 
