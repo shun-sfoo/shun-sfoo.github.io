@@ -76,7 +76,7 @@ exa bat starship zoxide mcfly ripgrep stylua rust-analyzer vivid mdbook `# rust 
 zsh-autosuggestions zsh-syntax-highlighting `# zsh plugins` \
 alsa-utils mpv ranger imagemagick cmus `# audio and video`  \
 gmtp scrcpy `# android` \
-net-tools bind tcpdump inetutils wget `# net tools`
+net-tools bind tcpdump inetutils wget lsof`# net tools`
 ```
 
 HDD
