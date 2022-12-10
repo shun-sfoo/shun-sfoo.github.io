@@ -66,7 +66,7 @@ git config --global -l
 
 ```bash
 sudo pacman --need -S \
-kitty jq yt-dlp gtk4 glade p7zip`# favorite terminal` \
+kitty jq yt-dlp gtk4 glade p7zip git clash htop btop`# favorite terminal` \
 musl `# cros compile` \
 lua-language-server typescript-language-server rust-analyzer `# lsp` \
 prettier  `# formatter`  \
@@ -112,7 +112,7 @@ add the options `i915.modeset=0 nouveau.modeset=0`
 [Disabling_modesetting](https://wiki.archlinux.org/title/kernel_mode_setting#Disabling_modesetting)
 
 ```bash
-pacman -S wayland polkit wlroots glm grim slurp
+sudo pacman -S wayland polkit wlroots glm grim slurp
 # Graphics driver
 sudo pacman -S mesa vulkan-intel # intel
 sudo pacman -S nvidia
@@ -120,9 +120,9 @@ paru wayfire
 paru wlr-randr-git # output display info
 # paru swaylock-effects-git
 # pacman -S waybar
-pacman -S wofi swaybg wl-clipboard
+sudo pacman -S wofi swaybg wl-clipboard
 # pacman -S swayidle
-pacman -S mako #notify
+sudo pacman -S mako #notify
 ```
 
 ### Nvidia GBM

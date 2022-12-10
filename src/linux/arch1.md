@@ -41,7 +41,9 @@ cfdisk -z 磁盘
 
 ```bash
 mkfs.vfat /dev/sda1
-mkfs.ext4 /dev/sda2
+mkswap /dev/sda2
+swapon /dev/sda2
+mkfs.ext4 /dev/sda3
 # mkfs.ext4 /dev/sdb1
 # mkfs.btrfs -f /dev/sda2
 # if have another disk mkfs.btrfs -f /dev/sdb1
@@ -52,7 +54,7 @@ mkfs.ext4 /dev/sda2
 [systemd-boot](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points)
 
 ```bash
-mount /dev/sda2 /mnt
+mount /dev/sda3 /mnt
 mkdir -p /mnt/boot
 # mkdir -p /mnt/home
 mount /dev/sda1 /mnt/boot
@@ -64,7 +66,7 @@ lsblk -f ## 查看分区情况
 
 ```bash
 # uncomment /etc/pacman.conf ParallelDownloads
-reflector --country china >> /etc/pacman.d/mirrorlist
+reflector --country china > /etc/pacman.d/mirrorlist
 pacman -Sy
 pacman -S archlinux-keyring
 pacstrap /mnt linux linux-firmware linux-headers base
@@ -83,6 +85,7 @@ cat /mnt/etc/fstab
 ```bash
 arch-chroot /mnt
 passwd
+alias vim=nvim
 pacman -S sudo neovim
 ```
 
@@ -153,7 +156,7 @@ title	Arch Linux
 linux	/vmlinuz-linux
 initrd	/intel-ucode.img
 initrd	/initramfs-linux.img
-options	root=/dev/sda2 rw
+options	root=/dev/sda3 rw
 # enable nvidia-drm
 # options	root=/dev/sda3 rw nvidia-drm.modeset=1
 # if occur [i915 drm error] add `i915.modeset=0 nouveau.modeset=0`
@@ -166,7 +169,7 @@ options	root=/dev/sda2 rw
 使用 system-networkd 配置网络
 
 ```bash
-/etc/systemd/network/20-wired.network
+vim /etc/systemd/network/20-wired.network
 [Match]
 Name=enp3s0
 
