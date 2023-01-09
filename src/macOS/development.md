@@ -3,6 +3,21 @@
 macOS下一直没有一个好的包管理，即使windows也有scoop可以用，这种情况下可以转换一下思路，
 不再追求所有平台有相同的体验，而是根据当前平台的特点,打造相对舒适的环境。
 
+## 包管理
+macports
+
+下载macports包，安装前断网，安装完成后修改镜像源`vim /opt/local/etc/macports/sources.conf`，
+```bash
+sudo port -v selfupdate # 更新
+port deps emacs-mac-app
+sudo port install emacs-mac-app
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+port installed
+port outdated
+port info emacs-mac-app
+sudo port upgrade outdated
+```
+
 ## 终端
 
 直接使用iterm2，bye kitty.
