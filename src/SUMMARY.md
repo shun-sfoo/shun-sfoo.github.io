@@ -48,3 +48,4 @@
   - [summary](./Rust/summary.md)
 - [chromium](./chromium/intro.md)
   - [update-engine](./chromium/update_engine.md)
+- [简历](./profile/skill.md)
