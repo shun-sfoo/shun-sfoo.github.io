@@ -1,4 +1,5 @@
 # Summary
+[Introduction](README.md)
 
 - [数据结构](./data-struct/intro.md)
   - [数组](./data-struct/array.md)
@@ -15,8 +16,7 @@
   - [dbus](./linux/dbus.md)
   - [zsh_1 variable](./linux/zsh-01.md)
   - [openwrt 作为旁路由](./linux/openwrt.md)
-  - [arch part1](./linux/arch1.md)
-  - [arch part2](./linux/arch2.md)
+  - [arch简明安装教程](./linux/arch.md)
   - [gentoo 安装简化流程](./linux/gentoo.md)
   - [haskell](./linux/haskell.md)
 - [neovim](./neovim/intro.md)

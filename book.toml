@@ -9,7 +9,8 @@ edition = "2021"
 
 [output.html]
 default-theme = "rust"
-preferred-dark-theme = "coal"
+# preferred-dark-theme = "coal"
+preferred-light-theme = "light"
 mathjax-support = true
 copy-fonts = true
 no-section-label = true
