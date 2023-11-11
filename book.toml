@@ -8,7 +8,7 @@ title = "shun-sfoo Tech blog"
 edition = "2021"
 
 [output.html]
-default-theme = "rust"
+# default-theme = "rust"
 # preferred-dark-theme = "coal"
 preferred-light-theme = "light"
 mathjax-support = true

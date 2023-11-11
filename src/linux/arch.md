@@ -1,14 +1,27 @@
 # archlinux 安装简明教程
 
-我打算把教程分为三个部分，
+该教程分为三个部分：
 
-1. 第一部分使用 archinst 脚本快速安装， 这部分的有效性通过虚拟机中安装 arch 得到验证.
-2. 第二部分为手动挡，根据 arch installation 的步骤， 和我选择的一些工具组成。
-3. 第三部分为驱动， 图形框架，音频，和常用工具的安装。
+1. 第一部分使用 archinstall 脚本快速安装， 这部分的有效性通过虚拟机中安装 arch 得到验证.
+2. 第二部分为网络, 驱动，图形框架，音频，和常用工具的安装。
+3. 第三部分为手动挡，根据 arch installation 的步骤， 和我选择的一些工具组成。
 
 ## 第一部分：使用 archinstall 快速安装
 
-待通过虚拟机验证后补充完整。
+注意虚拟机安装archlinux时，bios选项选择 uefi, 使用默认的bios时没有网络连接，原因待查.但不重要
+
+- mirror region: 选择 china 同vim一样`/` 可以用来搜索
+- Disk configuration: 选择 use a best-effort default partitiion layout ,格式选择ext4
+- user account: as superuser
+- profile: 选择minimal
+  其中 profile 的desktop环境也是开箱即用
+  hyprland 包含了： dunst kitty dolphin wofi qt5-wayland qt6-wayland xdg-desktop-portal-hyprland 基本是开箱即用了
+
+- Audio: 选择 pipwire
+- Additional packages: git neovim zsh
+- TimeZone：选择 Asia/Shanghai
+- NetWork configuration : 先选择copy 确实是不是systemd-networkd 方式,通过/etc/下的配置确认.
+- kernels: 试试 linux-zen
 
 ## 第二部分：archlinux installation 安装步骤
 
@@ -354,7 +367,8 @@ makepkg -si
 ```
 
 ### wayland
-目前打算选择使用hyprland，wayfire为以前的记录
+
+目前打算选择使用 ~~hyprland~~ (kde-desktop)，wayfire为以前的记录
 
 `sudo dmesg |rg i915`
 
