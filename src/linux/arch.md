@@ -20,8 +20,128 @@
 - Audio: 选择 pipwire
 - Additional packages: git neovim zsh
 - TimeZone：选择 Asia/Shanghai
-- NetWork configuration : 先选择copy 确实是不是systemd-networkd 方式,通过/etc/下的配置确认.
+- NetWork configuration : 先选择copy 确实是不是systemd-networkd 方式,通过/etc/下的配置确认. 以确认是使用的systemd-network
 - kernels: 试试 linux-zen
+
+## 第二部分： 系统配置
+
+通过 archinstall 安装了 hyprland 后，有了基本的环境，但是还需要做一些配置。
+
+第二部分的目的是可以保证做到可以写博客。
+
+为了达到这个目的，首先需要chrome, 而chrome 需要 aur helper 我选择是 paru。
+
+另一方面是有写的工具，这需要 neovim 的配置， 而同步配置需要配置git环境。
+
+首先把 base 切换成 zsh
+
+```bash
+ssh-keygen -t rsa -C "ganymede0915@gmail.com"
+```
+
+```bash
+chsh -s $(which zsh)
+zsh
+```
+
+切换后先使用默认配置，但环境都准备好了只有再同步dotfiles中的
+
+### 字体
+
+```bash
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-nerd-fonts-symbols
+```
+
+### 网络
+
+使用 systemd-network 设置网络，因为虚拟机需要用到桥接方式，那么直接创建桥接网络
+[archwiki 的相关章节](https://wiki.archlinux.org/title/Systemd-networkd#Network_bridge_with_DHCP)
+
+具体步骤：
+
+1.  通过netdev 单元文件创建桥接网络
+
+```bash
+/etc/systemd/network/mybridge.netdev
+[NetDev]
+Name=br0
+Kind=bridge
+```
+
+2. 绑定网卡到桥接网络
+
+```bash
+/etc/systemd/network/10_bind.network
+[Match]
+Name=en*
+
+[Network]
+Bridge=br0
+```
+
+3. 桥接网络
+
+```bash
+/etc/systemd/network/mybridge.network
+[Match]
+Name=br0
+
+# 此处是动态分配
+[Network]
+DHCP=ipv4
+# 建议通过分配静态IP的方式
+[Network]
+DNS=192.168.1.254 # 8.8.8.8 114.114.114.114 这里的设置待判断
+Address=192.168.1.123/24
+Gateway=192.168.1.254
+```
+
+archwiki 中提到 `systemd-resolved is required if DNS entries are specified in .network files.`
+
+因此要同时启用 systemd-networkd 和 systemd-resolved
+
+### 输入法
+
+fctix5 集合
+
+```bash
+sudo pacman -S  fcitx5 fcitx5-rime fcitx5-gtk rime-double-pinyin
+```
+
+说明 fcitx5-gtk 是在用于 gtk 环境中的显示输入框。 具体的配置文件在我的dotfiles中 待补充在文档中说明
+另外需要在 hyprland 中配置 exec-once fcitx5
+
+### Rust and Python
+
+rust 与 python 特殊之处在于，一般不用系统自带的，需要另外配置环境
+
+rust:
+
+```bash
+`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+```
+
+python:
+
+```bash
+curl https://pyenv.run | bash
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+```
+
+### Aur Helpr
+
+```bash
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+# sudo nvim /etc/pacman.conf
+# uncomment Color
+# sudo nvim /etc/paru.conf
+# uncomment BottomUp
+```
 
 ## 第二部分：archlinux installation 安装步骤
 
