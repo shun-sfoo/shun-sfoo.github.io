@@ -19,6 +19,7 @@
 
 - [linux](./linux/intro.md)
   - [archlinux 简明安装教程](./linux/arch.md)
+  - [hyprland 安装](./linux/hyprland.md)
   - [显卡直通](./linux/pci_passthrough_via_ovmf.md)
   - [vim](./linux/practical-vim.md)
   - [dbus](./linux/dbus.md)
@@ -26,6 +27,7 @@
   - [openwrt 作为旁路由](./linux/openwrt.md)
   - [gentoo 安装简化流程](./linux/gentoo.md)
   - [haskell](./linux/haskell.md)
+  - [archlinux 手动挡](./linux/arch_manual.md)
 - [neovim](./neovim/intro.md)
   - [package](./neovim/package.md)
 - [gentoo](./gentoo/intro.md)
