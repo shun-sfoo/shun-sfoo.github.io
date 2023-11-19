@@ -19,6 +19,8 @@
 - NetWork configuration : 选择手动设置成静态ip, 这种方式生成是 systemd-networkd 的配置(当然 copy 也是)
 - kernels: 选择 `linux-zen`
 
+这一部分会自动根据当前cpu和显卡下载驱动，并把对应的 ucode 放在 boot 中。
+
 ## 第二部分： 系统配置
 
 通过 archinstall 安装了基本的环境，但是还需要做一些配置。
@@ -72,7 +74,7 @@ sudo apt install starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighti
 nvim 的 mason 可以下载很多开发工具, 因此只需要把下载一些 mason 用到的工具
 
 ```bash
-sudo apt install unzip nodejs npm
+sudo apt install unzip nodejs npm cmake ninja
 ```
 
 其他工具
