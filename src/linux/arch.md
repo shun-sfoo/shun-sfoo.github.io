@@ -74,13 +74,13 @@ sudo apt install starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighti
 nvim 的 mason 可以下载很多开发工具, 因此只需要把下载一些 mason 用到的工具
 
 ```bash
-sudo apt install unzip nodejs npm cmake ninja
+sudo apt install unzip nodejs npm cmake ninja fd wget ripgrep gdb bc
 ```
 
 其他工具
 
 ```bash
-sudo pacman -S btop htop neofetch openssh
+sudo pacman -S btop htop neofetch openssh wl-clipboard ranger
 ```
 
 sudo systemctl enable sshd
@@ -96,6 +96,18 @@ sudo pacman -S  fcitx5 fcitx5-rime fcitx5-gtk fcitx5-configtool rime-double-piny
 说明 fcitx5-gtk 是在用于 gtk 环境中的显示输入框。
 
 开机运行通过 hyprland 中配置 exec-once fcitx5
+
+### 音视频
+
+```bash
+sudo pacman -S mpd mpc mpv
+```
+
+1. 使用 `mpd` 先配置音乐，pipewire， mpd生成 database , 如果有端口问题可以kill mpd.socket services
+2. `mpc update` `mpc listall |mpc add`
+3. `mpc play` `mpc next` `mpc pause`
+
+如果 mpc playlist 中有未识别的在字符，可以通过 `kid3` 调整 `id tag`
 
 ### Rust and Python
 
