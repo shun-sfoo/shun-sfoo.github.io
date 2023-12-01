@@ -19,6 +19,7 @@
 
 - [linux](./linux/intro.md)
   - [archlinux 简明安装教程](./linux/arch.md)
+  - [GObject](./linux/GObject.md)
   - [hyprland 安装](./linux/hyprland.md)
   - [显卡直通](./linux/pci_passthrough_via_ovmf.md)
   - [vim](./linux/practical-vim.md)
