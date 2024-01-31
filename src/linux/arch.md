@@ -74,13 +74,13 @@ sudo apt install starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighti
 nvim 的 mason 可以下载很多开发工具, 因此只需要把下载一些 mason 用到的工具
 
 ```bash
-sudo apt install unzip nodejs npm cmake ninja fd wget ripgrep gdb bc
+sudo apt install unzip nodejs npm cmake ninja fd wget ripgrep gdb bc valgrind
 ```
 
 其他工具
 
 ```bash
-sudo pacman -S btop htop neofetch openssh wl-clipboard ranger
+sudo pacman -S btop htop neofetch openssh wl-clipboard ranger libmtp android-file-transfer
 ```
 
 sudo systemctl enable sshd
@@ -100,7 +100,7 @@ sudo pacman -S  fcitx5 fcitx5-rime fcitx5-gtk fcitx5-configtool rime-double-piny
 ### 音视频
 
 ```bash
-sudo pacman -S mpd mpc mpv
+sudo pacman -S mpd mpc mpv wf-recorder
 ```
 
 1. 使用 `mpd` 先配置音乐，pipewire， mpd生成 database , 如果有端口问题可以kill mpd.socket services
@@ -128,6 +128,22 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 ```
+
+
+### VSCODE In Wayland
+[link1](https://bbs.archlinux.org/viewtopic.php?id=286537)
+
+EDIT: setting "window.titleBarStyle": "custom" in ~/.config/Code/User/settings.json does seem to mostly resolve.
+
+and `.config/code-flags.conf`
+ 
+```config
+--enable-features=WaylandWindowDecorations
+--ozone-platform-hint=auto
+```
+
+
+
 
 ### Aur Helpr
 
