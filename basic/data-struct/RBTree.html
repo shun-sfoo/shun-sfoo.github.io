@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>红黑树 - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item expanded "><a href="../../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item expanded "><a href="../../basic/data-struct/RBTree.html" class="active">红黑树</a></li><li class="chapter-item "><a href="../../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item "><a href="../../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item "><a href="../../linux/GObject.html">GObject</a></li><li class="chapter-item "><a href="../../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item "><a href="../../linux/pci_passthrough_via_ovmf.html">显卡直通</a></li><li class="chapter-item "><a href="../../linux/practical-vim.html">vim</a></li><li class="chapter-item "><a href="../../linux/dbus.html">dbus</a></li><li class="chapter-item "><a href="../../linux/zsh-01.html">zsh_1 variable</a></li><li class="chapter-item "><a href="../../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../neovim/package.html">package</a></li></ol></li><li class="chapter-item "><a href="../../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../gentoo/gentoo.html">安装</a></li><li class="chapter-item "><a href="../../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../../gentoo/fstab.html">fstab</a></li><li class="chapter-item "><a href="../../gentoo/core.html">内核配置</a></li><li class="chapter-item "><a href="../../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../../Rust/base.html">base</a></li><li class="chapter-item "><a href="../../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="红黑树性质"><a class="header" href="#红黑树性质">红黑树性质</a></h1>
+<p>结合 2-3 树理解</p>
+<ol>
+<li>每个节点或者是红色的，或者是黑色的</li>
+<li>根节点是黑色的</li>
+<li>每一个叶子节点（最后的空节点） 是黑色的</li>
+<li>如果一个节点是红色的，那么他的孩子节点都是黑色的</li>
+<li>从任意一个节点到叶子节点，经过的黑色节点是一样的</li>
+</ol>
+<h2 id="2-3-树"><a class="header" href="#2-3-树">2-3 树</a></h2>
+<p>有助于理解红黑树和 B 类树</p>
+<h2 id="性质"><a class="header" href="#性质">性质</a></h2>
+<p>满足二分搜索树的基本性质
+节点可以存放一个元素或者两个元素
+每个节点有 2 个孩子(2 节点)或者 3 个孩子(3 节点)
+2-3 树是一颗绝对平衡的树</p>
+<h2 id="2-3-树增加节点"><a class="header" href="#2-3-树增加节点">2-3 树增加节点</a></h2>
+<p>新添加节点不会添加到空节点上</p>
+<pre><code>[37] -&gt; [42] = [37][42]
+
+-----------------------------------------------------
+[12] -&gt; [37][42] = [12][37][42] = [37]
+                                  /    \
+                                [12]   [42]
+
+-----------------------------------------------------
+
+[18] -&gt; [37]   =        [37]
+        /  \         /       \
+     [12]  [42]   [12][18]    [42]
+
+-----------------------------------------------------
+
+[6]  -&gt;    [37]          =        [37]     =    [37]   =     [12][37]
+         /       \              /      \        /   \          / |   \
+      [12][18]    [42]    [6][12][18]   [42]   [12] [42]    [6] [18] [42]
+                                               /  \
+                                             [6]  [18]
+
+-----------------------------------------------------
+
+</code></pre>
+<h2 id="红黑树和-2-3-树"><a class="header" href="#红黑树和-2-3-树">红黑树和 2-3 树</a></h2>
+<p>相等性，红黑树可以看作 2-3 树
+当有三节点时左侧节点作为孩子节点标红表示 2-3 树中两个节点并列
+所有的红色节点都是左倾斜的(或者实现右倾斜的版本)
+<img src="../static/Java/BR-23.png" alt="BRTree" />
+<img src="../static/Java/BR-23-1.png" alt="BRTree1" /></p>
+<p>添加节点默认为红色: 2-3 树中新添加节点总是先融合</p>
+<p>红黑树是保持“黑平衡”的二叉树
+严格意义上，不是平衡二叉树 最大高度： <code>2logn</code> o(logn)</p>
+<h2 id="红黑树添加新元素"><a class="header" href="#红黑树添加新元素">红黑树添加新元素</a></h2>
+<ul>
+<li>2-3 树中添加一个新元素</li>
+<li>添加进 2 节点，形成一个 3 节点</li>
+<li>添加进 3 节点，暂时形成一个 4 节点</li>
+<li>永远添加红色节点</li>
+<li>根节点为黑色节点</li>
+</ul>
+<p><img src="../static/Java/BRTree_ADD.png" alt="ADD" /></p>
+<p>图中流程可以总结为： <strong>流程想象对应 2-3 树的变换</strong></p>
+<ol>
+<li>如果节点右孩子为红色而左孩子不为红色（都为红只需要颜色翻转）进行左旋转操作，
+换上去节点的颜色为旋转节点的颜色，旋转节点颜色变成红色, 返回换上去的节点。
+(对应 2 节点插入到右边和 3 节点插入到中间的情况)</li>
+</ol>
+<pre><code class="language-java">//   node                     x
+//  /   \     左旋转         /  \
+// T1   x   ---------&gt;   node   T3
+//     / \              /   \
+//    T2 T3            T1   T2
+private Node leftRotate(Node node) {
+
+    Node x = node.right;
+
+    // 左旋转
+    node.right = x.left;
+    x.left = node;
+
+    x.color = node.color;
+    node.color = RED;
+
+    return x;
+}
+</code></pre>
+<ol start="2">
+<li>如果左孩子为红色并且左孩子的左孩子也为红色进行右旋转操作。
+换上去节点的颜色为旋转节点的颜色，旋转节点颜色变成红色。</li>
+</ol>
+<pre><code class="language-java">//     node                   x
+//    /   \     右旋转       /  \
+//   x    T2   -------&gt;   y   node
+//  / \                       /  \
+// y  T1                     T1  T2
+private Node rightRotate(Node node) {
+
+    Node x = node.left;
+
+    // 右旋转
+    node.left = x.right;
+    x.right = node;
+
+    x.color = node.color;
+    node.color = RED;
+
+    return x;
+}
+</code></pre>
+<ol start="3">
+<li>如果节点的左右孩子都为红色节点进行颜色翻转。</li>
+</ol>
+<pre><code class="language-java">// 颜色翻转
+private void flipColors(Node node) {
+    node.color = RED;
+    node.left.color = BLACK;
+    node.right.color = BLACK;
+}
+</code></pre>
+<p>三个过程并不是互斥的。</p>
+<h3 id="rbtree-数据结构"><a class="header" href="#rbtree-数据结构">RBTree 数据结构</a></h3>
+<pre><code class="language-java">public class RBTree&lt;K extends Comparable&lt;K&gt;, V&gt; {
+
+    private static final boolean RED = true;
+    private static final boolean BLACK = false;
+
+    private class Node {
+        public K key;
+        public V value;
+        public Node left, right;
+        public boolean color;
+
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+            left = null;
+            right = null;
+            color = RED;
+        }
+    }
+
+    private Node root;
+    private int size;
+
+    public RBTree() {
+        root = null;
+        size = 0;
+    }
+
+}
+</code></pre>
+<h3 id="辅助方法-isred-getnode"><a class="header" href="#辅助方法-isred-getnode">辅助方法 isRed() getNode()</a></h3>
+<pre><code class="language-java">// 判断节点node的颜色
+private boolean isRed(Node node) {
+    // 所有叶子节点为黑色
+    if (node == null)
+        return BLACK;
+    return node.color;
+}
+
+// getNode 方法作为实现 contains set get 方法的辅助函数
+private Node getNode(Node node, K key) {
+  if (node == null)
+    return null;
+  if (key.compareTo(node.key) &gt; 0) {
+    return getNode(node.right, key);
+  }else if (key.compareTo(node.key) &lt; 0 ) {
+    return getNode(node.left, key);
+  }else {
+    return node;
+  }
+}
+</code></pre>
+<h3 id="add"><a class="header" href="#add">add()</a></h3>
+<pre><code class="language-java">// 向红黑树中添加新的元素(key, value)
+public void add(K key, V value) {
+    root = add(root, key, value);
+    root.color = BLACK; // 最终根节点为黑色节点
+}
+
+// 向以node为根的红黑树中插入元素(key, value)，递归算法
+// 返回插入新节点后红黑树的根
+private Node add(Node node, K key, V value) {
+
+    if (node == null) {
+        size++;
+        return new Node(key, value); // 默认插入红色节点
+    }
+
+    if (key.compareTo(node.key) &lt; 0)
+        node.left = add(node.left, key, value);
+    else if (key.compareTo(node.key) &gt; 0)
+        node.right = add(node.right, key, value);
+    else // key.compareTo(node.key) == 0
+        node.value = value;
+
+    if (isRed(node.right) &amp;&amp; !isRed(node.left))
+        node = leftRotate(node);
+
+    if (isRed(node.left) &amp;&amp; isRed(node.left.left))
+        node = rightRotate(node);
+
+    if (isRed(node.left) &amp;&amp; isRed(node.right))
+        flipColors(node);
+
+    return node;
+}
+</code></pre>
+<h2 id="todo-右倾红黑树-splay-tree-伸展树"><a class="header" href="#todo-右倾红黑树-splay-tree-伸展树">TODO 右倾红黑树 Splay Tree （伸展树）</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../basic/data-struct/bst.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../basic/data-struct/segmentTree.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../basic/data-struct/bst.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../basic/data-struct/segmentTree.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
