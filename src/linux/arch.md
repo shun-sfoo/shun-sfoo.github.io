@@ -10,22 +10,60 @@
 注意虚拟机安装archlinux时，bios选项选择 uefi, 使用默认的bios时没有网络连接，原因待查.但不重要
 
 - mirror region: 选择 china 同vim一样`/` 可以用来搜索
-- Disk configuration: 选择 use a best-effort default partitiion layout ,格式选择ext4
+- Disk configuration: 选择 use a best-effort default partition layout ,格式选择btrfs
 - user account: as superuser
 - profile: 选择 `minimal`
-- Audio: 选择 `pipwire`
+- Audio: 选择 `no`
 - Additional packages: `git neovim zsh`
-- TimeZone：选择 `Asia/Shanghai`
 - NetWork configuration : 选择手动设置成静态ip, 这种方式生成是 systemd-networkd 的配置(当然 copy 也是)
-- kernels: 选择 `linux-zen`
+- kernels: 选择 `linux`
 
-这一部分会自动根据当前cpu和显卡下载驱动，并把对应的 ucode 放在 boot 中。
+这一部分会自动根据当前cpu下载驱动，并把对应的 ucode 放在 boot 中。
 
 ## 第二部分： 系统配置
 
+设置时区
+
+```bash
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+hwclock --systohc
+```
+
 通过 archinstall 安装了基本的环境，但是还需要做一些配置。
 
-第二部分的目的是可以保证做到可以写博客。 其中 windows manager 是作为独立篇章 Hyprland
+第二部分的目的是可以保证做到可以写博客。
+
+amd: `sudo pacman -S mesa vulkan-radeon`
+
+audio 根据hyprland文档中指出选择pipewire 和  WirePlumber  (archlinux wiki 中指出  PipeWire Media Session已经被弃用 任何时候都不要选择)
+
+`sudo pacman -S pipewire wireplumber`
+
+另外把pipewire作为其他组件的后端需要下载 
+
+`pipewire-alsa`  提供所有使用 alsa api的应用
+
+`pipewire-audio` 代替 pulse-audio 和 pulse-bluetooth
+
+`pipwire-jack`  jack支持
+
+使用eww作为status bar 需要下载
+
+`gtk-layer-shell ` 和 `gtk3`
+
+hyprland 组件
+
+xdg-desktop-portal-hyprland
+
+qt5-wayland 
+
+qt6-wayland
+
+hyprland
+
+总结下载
+
+`sudo pacman -S --need mesa vulkan-radeon  pipewire wireplumber pipewire-alsa  pipewire-audio pipwire-jack gtk-layer-shell gtk3 xdg-desktop-portal-hyprland  qt5-wayland qt6-wayland`
 
 为了达到这个目的:
 
@@ -68,7 +106,7 @@ sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-nerd-fonts-symbols
 终端工具
 
 ```bash
-sudo apt install starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighting
+sudo pacman -S --need install starship zoxide mcfly zsh-autosuggestions zsh-syntax-highlighting
 ```
 
 nvim 的 mason 可以下载很多开发工具, 因此只需要把下载一些 mason 用到的工具
