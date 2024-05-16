@@ -1,0 +1,1035 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GObject - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item "><a href="../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item "><a href="../basic/data-struct/RBTree.html">红黑树</a></li><li class="chapter-item "><a href="../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item expanded "><a href="../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item expanded "><a href="../linux/GObject.html" class="active">GObject</a></li><li class="chapter-item "><a href="../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item "><a href="../linux/pci_passthrough_via_ovmf.html">显卡直通</a></li><li class="chapter-item "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item "><a href="../linux/dbus.html">dbus</a></li><li class="chapter-item "><a href="../linux/zsh-01.html">zsh_1 variable</a></li><li class="chapter-item "><a href="../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../neovim/package.html">package</a></li></ol></li><li class="chapter-item "><a href="../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gentoo/gentoo.html">安装</a></li><li class="chapter-item "><a href="../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../gentoo/fstab.html">fstab</a></li><li class="chapter-item "><a href="../gentoo/core.html">内核配置</a></li><li class="chapter-item "><a href="../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../Rust/base.html">base</a></li><li class="chapter-item "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="gobject"><a class="header" href="#gobject">GObject</a></h1>
+<p>本教程翻译自 <a href="https://toshiocp.github.io/Gobject-tutorial/index.html">GObject tutorial</a></p>
+<p>final类型的定义是不包含任何子类，包含子类的类型被称为可派生类型(derivable)。</p>
+<h2 id="类与实例"><a class="header" href="#类与实例">类与实例</a></h2>
+<p>GObject 实例被 <code>g_object_new</code> 创建。 GObject 不仅有实例(instance)还有类(class)。</p>
+<ul>
+<li>一个 GObject 类在第一次调用 <code>g_object_new</code> 时被创建。并且只存在一个 GObject 类。</li>
+<li>GObject 实例在每一次 <code>g_object_new</code> 被调用时创建。所以，两个或更多的 GObject 实例能同时存在。</li>
+</ul>
+<p>在大的语义中来看，GObject 对象意味着包含了类和实例。在窄的语义中，GObject 是一个 C 结构体的定义</p>
+<pre><code class="language-c">typedef struct _GObject  GObject;
+struct  _GObject
+{
+  GTypeInstance  g_type_instance;
+
+  /*&lt; private &gt;*/
+  guint          ref_count;  /* (atomic) */
+  GData         *qdata;
+};
+</code></pre>
+<p><code>g_object_new</code> 函数分配 <code>GObject-sized</code> 大小的内存， 初始化内存并返回该内存的指针。这片内存就是GObject实例。</p>
+<p>同样，GObject 类内存被 <code>g_object_new</code> 分配并且他的结构被GObjectClass定义。</p>
+<pre><code class="language-c">#include &lt;glib-object.h&gt;
+
+int
+main (int argc, char **argv) {
+  GObject *instance1, *instance2;
+  GObjectClass *class1, *class2;
+
+  instance1 = g_object_new (G_TYPE_OBJECT, NULL);
+  instance2 = g_object_new (G_TYPE_OBJECT, NULL);
+  g_print ("The address of instance1 is %p\n", instance1); // 0x55895eaf7ad0
+  g_print ("The address of instance2 is %p\n", instance2); // 0x55895eaf7af0
+
+  class1 = G_OBJECT_GET_CLASS (instance1);
+  class2 = G_OBJECT_GET_CLASS (instance2);
+  g_print ("The address of the class of instance1 is %p\n", class1); // 0x55895eaf7880
+  g_print ("The address of the class of instance2 is %p\n", class2); // 0x55895eaf7880
+
+  g_object_unref (instance1);
+  g_object_unref (instance2);
+
+  return 0;
+}
+</code></pre>
+<ul>
+<li><code>G_TYPE_OBJECT</code> 是Gobject 的类型。这个类型有别与 C 语言中的 char 或 int 这些类型。他是 GObject 系统中的基石 <em>类型系统</em> 。
+每一个数据类型像是 GObject 这样的都必须注册到类型系统中。 类型系统有一系列函数用于注册。如果这些注册函数中的一个被调用， 类型系统就会决定这个对象的 GType 类型的类型值并把他返回给调用者。GType 可能是一个 <code>unsigned long</code> 整数类型这取决于硬件。<code>g_object_new</code> 分配 <code>GObject-sized</code> 大小的内存并返回内存的首地址。</li>
+<li><code>G_OBJECT_GET_CLASS</code> 返回其参数的类的指针。</li>
+<li><code>g_object_unref</code> 摧毁实例并释放内存。</li>
+</ul>
+<h3 id="引用计数"><a class="header" href="#引用计数">引用计数</a></h3>
+<p>GObject 实例拥有其内存。当它创建时被系统分配。如果他们不被使用，其内存应该被释放。然而，我们如何决定它是否无用？GObject 系统
+提供了引用计数来解决这个问题。</p>
+<p>一个实例被创建了并被其他实例或者主程序使用。这意味着实例被引用了。如果实例被 A 和 B 引用，那么他的引用数就是2。这个数字就被称为引用计数。让我们设想这样一个场景:</p>
+<ul>
+<li>A 调用 <code>g_object_new</code> 拥有一个实例 G。 一个引用指向G， 所以引用计数是1。</li>
+<li>B 也需要使用G。 B 调用 <code>g_object_ref</code> 增加了一个引用计数。现在引用计数是2。</li>
+<li>A 不再使用G。 A 调用 <code>g_object_unref</code> 减少一个引用计数。 现在引用计数是1。</li>
+<li>B 不再使用G。 B 调用 <code>g_object_unref</code> 减少一个引用计数。 现在引用计数是0。</li>
+<li>因为引用计数是0了。 G知道没有对象引用它了。G 开启最终流程，G不可见并且内存被释放。</li>
+</ul>
+<h2 id="类型系统和注册流程"><a class="header" href="#类型系统和注册流程">类型系统和注册流程</a></h2>
+<p>GObject 是一个基本对象。我们通常不使用 GObject 本身。由于 GObject 非常简单，使用他不足以应付多数场景。所以，我们通常使用GObject的子类(descenddant object)， 像是很多的 GtkWidget 类型。可以说这个可衍生性是 GObject 最重要的特性。</p>
+<p>这一节会描述如何定义一个 GObject 的子对象。</p>
+<h3 id="命名约定"><a class="header" href="#命名约定">命名约定</a></h3>
+<p>这节的例子是一个代表实数的对象。在 C 语言是 dobule 类型来代表实数。</p>
+<p>第一步要了解命名约定。一个对象的名称由命名空间和名称组成。比如说 <code>GObject</code> 由命名空间 <code>G</code> 和名称 <code>object</code> 组成。
+<code>GtkWidget</code>是由命名空间 <code>Gtk</code> 和名称 <code>Widget</code> 组成。我们用命名空间 <code>T</code> 和名称 <code>Double</code> 来命名我们新对象。</p>
+<p><code>TDouble</code> 是一个对象名。它是GObject的子类, 代表着实数并且他的数字的类型是double。它有一些有用的函数。</p>
+<h3 id="定义-tdoubleclass-和-tdouble"><a class="header" href="#定义-tdoubleclass-和-tdouble">定义 TDoubleClass 和 TDouble</a></h3>
+<p>当我们说到类型，它可能是类型系统中的类型，也可能是C语言中的类型。比如： GObject 是系统类型中的类型名称。char, int 或者 double
+是 C 语言类型。当我们在上下文中对类型的定义很明确时，我们直接使用类型。但如果模糊，我们就会称呼为C 类型，或者类型系统中的类型。</p>
+<p>TDouble 对象有类和实例。这个类的C类型是 TDoubleClass。他的结构如下:</p>
+<pre><code class="language-c">typedef struct _TDoubleClass TDoubleClass;
+struct _TDoubleClass {
+  GObjectClass parent_class;
+};
+</code></pre>
+<pre><code class="language-c">typedef struct _TDoubleClass TDoubleClass;
+struct _TDoubleClass {
+  GObjectClass parent_class;
+};
+</code></pre>
+<p><code>_TDoubleClass</code>是一个C结构标签名， <code>TDoubleClass</code> 是 <code>struct _TDoubleClass</code>。 <code>TDoubleClass</code> 是新创建的 C 类型。</p>
+<ul>
+<li>用 typedef 去定义一个类类型。</li>
+<li>第一个成员必须是父类的类结构。</li>
+</ul>
+<p>TDoubleClass 没有他自己的成员。</p>
+<p>TDouble 的实例的 C 类型是TDouble</p>
+<pre><code class="language-c">typedef struct _TDouble TDouble;
+struct _TDouble {
+  GObject parent;
+  double value;
+};
+</code></pre>
+<p>这和类型的结构相似。</p>
+<ul>
+<li>用 typedef 去定义一个实例类型</li>
+<li>结构体的第一个成员必须是父类实例的结构体。</li>
+</ul>
+<p>TDouble 有他自己的成员，"value"。他是TDouble实例的值。要始终保持这种代码约定。</p>
+<h2 id="创建gobject子类的过程"><a class="header" href="#创建gobject子类的过程">创建GObject子类的过程</a></h2>
+<p>TDouble 类型的创建过程与创建 GObject 类型类似。</p>
+<ol>
+<li>注册 TDouble 类型到类型系统</li>
+<li>类型系统为 TDoubleClass 和 TDouble 分配内存。</li>
+<li>初始化 TDoubleClass.</li>
+<li>初始化 TDouble。</li>
+</ol>
+<h3 id="注册"><a class="header" href="#注册">注册</a></h3>
+<p>通常注册通过像 <code>G_DECLARE_FINAL_TYPE</code> 和 <code>G_DEFINE_TYPE</code> 这种合适的宏完成。
+在glib 2.70之后对 final 类型类使用 <code>G_DEFINE_FINAL_TYPE</code> 来取代 <code>G_DEFINE_TYPE</code>。
+所以，不需要关注注册详情。在这个教程中重点是理解GObject 类型系统。所以第一步是展示不带宏的注册。</p>
+<p>类型分为静态和动态两种。即使所有实例被销毁后静态类型也不会销毁他的类(class)。 在最后一个实例销毁后动态类型会销毁他的类。
+静态对象的子类也是静态的。 <code>g_type_register_static</code> 会注册一个静态类型对象。 <code>gtype.h</code> 中的源码</p>
+<pre><code class="language-c">GType
+g_type_register_static (GType           parent_type,
+                        const gchar     *type_name,
+                        const GTypeInfo *info,
+                        GTypeFlags      flags);
+</code></pre>
+<p>他的参数如下：</p>
+<ul>
+<li>parent_type: 父类型</li>
+<li>type_name: 类型的名称。比如： "TDouble"</li>
+<li>info: 类型信息。 GTypeInfo 结构后面会解释</li>
+<li>flags: 标志。如果这个类型是抽象类型或者抽象值类型，就设置标志。否则设置为0。</li>
+</ul>
+<p>由于类型系统维护类型的父子关系。<code>g_type_register_static</code> 有一个父类型参数。并且类型系统也保存了类型的信息。在注册之后 <code>g_type_register_static</code> 返回新对象的类型。</p>
+<p><code>GTypeInfo</code> 结构如下定义:</p>
+<pre><code class="language-c">typedef struct _GTypeInfo  GTypeInfo;
+
+struct _GTypeInfo
+{
+  /* interface types, classed types, instantiated types */
+  guint16                class_size;
+
+  GBaseInitFunc          base_init;
+  GBaseFinalizeFunc      base_finalize;
+
+  /* interface types, classed types, instantiated types */
+  GClassInitFunc         class_init;
+  GClassFinalizeFunc     class_finalize;
+  gconstpointer          class_data;
+
+  /* instantiated types */
+  guint16                instance_size;
+  guint16                n_preallocs;
+  GInstanceInitFunc      instance_init;
+
+  /* value handling */
+  const GTypeValueTable  *value_table;
+};
+</code></pre>
+<p>这个结构需要在注册前创建</p>
+<ul>
+<li>class_size: 类的大小。比如： TDouble 的类大小是 <code>sizeof(TDoubleClass)</code>。</li>
+<li>base_init, base_finalize: 动态成员的初始化和终结过程。在大多数情况下他们不是必须的，设置成 NULL.</li>
+<li><code>class_init</code>: 初始化类的静态成员。把类的初始化函数赋值给 <code>class_init</code> 成员。通常约定，名称是 <code>&lt;namespace&gt;_&lt;name&gt;_class_init</code>，比如:<code>t_double_class_init</code></li>
+<li>class_finalize: 类的终结流程，由于GObject子类的类型是静态的，他不需要finalize函数。把 NULL 赋值给 <code>class_finalize</code> 成员。</li>
+<li>class_data: 用户提供给 <code>init/finalize</code> 函数的数据。通常赋值 NULL。</li>
+<li>instance_size: 实例的大小，比如： TDouble 的实例大小是 <code>sizeof(TDouble)</code>.</li>
+<li>n_preallocs: 这个可以忽略，用于旧版本的glib</li>
+<li><code>instance_init</code>: 初始化实例成员。把实例初始化函数赋值给 <code>instance_init</code> 成员。按照约定，他的名称是 <code>&lt;namespace&gt;_&lt;name&gt;_init</code> ,比如说：<code>t_double_init</code>。</li>
+<li>value_table: 这只对基本类型有用。如果类型是GObject的子类，就赋值为NULL.</li>
+</ul>
+<p>这些信息被类型系统持有，在类创建和销毁时调用。类大小和实例大小信息用来给类和实例分配内存。类和实例初始化函数在类或实例创建时调用。</p>
+<pre><code class="language-c">#include &lt;glib-object.h&gt;
+
+#define T_TYPE_DOUBLE  (t_double_get_type ())
+
+typedef struct _TDouble TDouble;
+struct _TDouble {
+  GObject parent;
+  double value;
+};
+
+typedef struct _TDoubleClass TDoubleClass;
+struct _TDoubleClass {
+  GObjectClass parent_class;
+};
+
+static void
+t_double_class_init (TDoubleClass *class) {
+}
+
+static void
+t_double_init (TDouble *self) {
+}
+
+GType
+t_double_get_type (void) {
+  static GType type = 0;
+  GTypeInfo info;
+
+  if (type == 0) {
+    info.class_size = sizeof (TDoubleClass);
+    info.base_init = NULL;
+    info.base_finalize = NULL;
+    info.class_init = (GClassInitFunc)  t_double_class_init;
+    info.class_finalize = NULL;
+    info.class_data = NULL;
+    info.instance_size = sizeof (TDouble);
+    info.n_preallocs = 0;
+    info.instance_init = (GInstanceInitFunc)  t_double_init;
+    info.value_table = NULL;
+    type = g_type_register_static (G_TYPE_OBJECT, "TDouble", &amp;info, 0);
+  }
+  return type;
+}
+
+int
+main (int argc, char **argv) {
+  GType dtype;
+  TDouble *d;
+
+  dtype = t_double_get_type (); /* or dtype = T_TYPE_DOUBLE */
+  if (dtype)
+    g_print ("Registration was a success. The type is %lx.\n", dtype);
+  else
+    g_print ("Registration failed.\n");
+
+  d = g_object_new (T_TYPE_DOUBLE, NULL);
+  if (d)
+    g_print ("Instantiation was a success. The instance address is %p.\n", d);
+  else
+    g_print ("Instantiation failed.\n");
+  g_object_unref (d); /* Releases the object d. */
+
+  return 0;
+}
+</code></pre>
+<ul>
+<li>16-22行：类的初始化函数和实例初始化函数。参数 <code>class</code> 指向类结构，参数 <code>self</code> 指向实例结构。他们什么都没做但是对于注册是必需的。</li>
+<li>24-43行：<code>t_double_get_type</code> 函数。这个函数返回 TDouble 对象的类型。函数的名称通常是 <code>&lt;name_space&gt;_&lt;name&gt;_get_type</code>。并且 <code>&lt;NAME_SPACE&gt;_TYPE_&lt;NAME&gt;</code> 形式的宏会把这个函数替换。第三行中。<code>T_TYPE_DOUBLE</code> 是一个被<code>t_double_get_type()</code>替换的宏。这个函数有一个静态变量 <code>type</code> 保存对象的类型。在第一次调用这个函数时,type是0。然后他调用 <code>g_type_register_static</code> 把对象注册到类型系统。在第二次和接下来的调用中，这个函数直接返回 <code>type</code>,由于静态变量 <code>type</code> 通过<code>g_type_register_static</code>被赋值成一个非零值并持有这个值。</li>
+<li>30-40行: 设置info结构体并调用 <code>g_type_register_static</code>。</li>
+<li>45-64行：主函数。获得TDouble对象的类型并展示他。函数 <code>g_object_new</code> 用于实例化对象。GObject API 手册说这个函数返回GObject实例的指针但他实际上返回 gpointer。 Gpointer 与 <code>void *</code> 一样可以赋值给任意类型的指针。所以表达式 <code>d = g_object_new (T_TYPE_DOUBLE, NULL); </code> 是正确的。如果 <code>g_object_new</code> 返回了 <code>GObject *</code> ,他就需要把返回的指针进行转换。在创建之后他展示了实例的地址。最后，通过函数 <code>g_object_unref</code> 释放并销毁实例。。</li>
+</ul>
+<h3 id="g_define_type-宏"><a class="header" href="#g_define_type-宏">G_DEFINE_TYPE 宏</a></h3>
+<p>上面的注册流程总是遵循相同的流程,因此他能被定义成 <code>G_DEFINE_TYPE</code> 这样的宏。</p>
+<p><code>G_DEFINE_TYPE</code> 做如下流程:</p>
+<ul>
+<li><strong>声明</strong>一个类初始化函数。他的名称是 <code>&lt;namespace&gt;_&lt;name&gt;_class_init</code>。比如：如果对象名称是 <code>TDouble</code>。他就是 <code>t_double_class_init</code>。这是个申明而不是定义，需要定义它。</li>
+<li><strong>声明</strong>一个实例初始化函数。他的名称是 <code>&lt;namespace&gt;_&lt;name&gt;_init</code>.比如：如果对象名称是 <code>TDouble</code>。他就是 <code>t_double_init</code>。这是个申明而不是定义，需要定义它。</li>
+<li><strong>定义</strong>一个静态变量指向他的父类。他的名称是 <code>&lt;namespace&gt;_&lt;name&gt;_parent_class</code>。比如： 如果对象名称是 <code>TDouble</code>，他就是<code>t_double_parent_class</code>。</li>
+<li><strong>定义</strong>一个 <code>&lt;namespace&gt;_&lt;name&gt;_get_type()</code> 函数，比如：如果对象名称是TDouble, 他就是<code>t_double_get_type</code>。跟上节一样，注册流程在这个函数中完成。</li>
+</ul>
+<p>用这个宏可以简化程序代码。</p>
+<pre><code class="language-c">#include &lt;glib-object.h&gt;
+
+#define T_TYPE_DOUBLE  (t_double_get_type ())
+
+typedef struct _TDouble TDouble;
+struct _TDouble {
+  GObject parent;
+  double value;
+};
+
+typedef struct _TDoubleClass TDoubleClass;
+struct _TDoubleClass {
+  GObjectClass parent_class;
+};
+
+G_DEFINE_TYPE (TDouble, t_double, G_TYPE_OBJECT)
+
+static void
+t_double_class_init (TDoubleClass *class) {
+}
+
+static void
+t_double_init (TDouble *self) {
+}
+
+int
+main (int argc, char **argv) {
+  GType dtype;
+  TDouble *d;
+
+  dtype = t_double_get_type (); /* or dtype = T_TYPE_DOUBLE */
+  if (dtype)
+    g_print ("Registration was a success. The type is %lx.\n", dtype);
+  else
+    g_print ("Registration failed.\n");
+
+  d = g_object_new (T_TYPE_DOUBLE, NULL);
+  if (d)
+    g_print ("Instantiation was a success. The instance address is %p.\n", d);
+  else
+    g_print ("Instantiation failed.\n");
+  g_object_unref (d);
+
+  return 0;
+}
+</code></pre>
+<p>由于 <code>G_DEFINE_TYPE</code> 可以从编写烦人的 <code>GTypeInfo</code> 和 <code>g_type_register_static</code> 这些代码中解放了。需要重点关注的是初始化函数的命名规范。在Glib 2.70之后对于 final 类型可以用 <code>G_DEFINE_FINAL_TYPE</code> 来取代 <code>G_DEFINE_TYPE</code>。</p>
+<h3 id="g_declare_final_type-宏"><a class="header" href="#g_declare_final_type-宏">G_DECLARE_FINAL_TYPE 宏</a></h3>
+<p>另一个有用的宏是 <code>G_DECLARE_FINAL_TYPE</code> 宏。这个宏用于 final 类型。一个final 类型没有任何子类。如果一个类型有子类，他就是一个可派生类型。</p>
+<p>如果你要定义一个可派生类型对象，使用 <code>G_DECLARE_DERIVABLE_TYPE</code> 来替换。然而大多数情况下只需要使用final类型。</p>
+<p><code>G_DECLARE_FINAL_TYPE</code> 做如下事情:</p>
+<ul>
+<li><strong>申明</strong> <code>&lt;name_space&gt;_&lt;name&gt;_get_type()</code> 函数。这仅仅是一个申明，你需要定义它。但是你可以用 <code>G_DEFINE_TYPE</code>,它的扩展包括该函数的定义。因此，实际上不用写定义。</li>
+<li>对象的 C 类型定义为结构体的typedef。比如：对象名称是 <code>TDouble</code> ,那么 <code>typedef struct _TDouble TDouble</code>将会包含在拓展中。但是你需要在使用宏 <code>G_DEFINE_TYPE</code> 之前定义结构体 <code>struct _TDboule</code>。</li>
+<li><code>&lt;NAMESPACE&gt;_&lt;NAME&gt;</code> 宏被定义。比如： 如果对象是 <code>TDouble</code> 这个宏就是<code>T_DOUBLE</code>。他会被拓展成一个函数用来把参数的指针强转成对象，比如：<code>T_DOUBLE(obj)</code> 会把 obj 强转成 <code>TDouble *</code>。</li>
+<li><code>&lt;NAMESPACE&gt;_IS_&lt;NAME&gt;</code> 宏被定义。 比如：对象是 <code>TDouble</code> 这个宏就是 <code>T_IS_DOUBLE</code>。他会被拓展成检查参数是不是TDouble实例的指针。如果参数直接是 TDouble 的子类就会返回true.</li>
+<li>类结构会被定义。final 类型对象不需要有自己的类结构成员。其定义类似于</li>
+</ul>
+<pre><code class="language-c">typedef struct _TDoubleClass TDoubleClass;
+struct _TDoubleClass {
+  GObjectClass parent_class;
+};
+
+</code></pre>
+<p>需要在 <code>G_DECLARE_FINAL_TYPE</code> 之前写对象类型的宏定义。如果类型是 TDouble ,那么</p>
+<pre><code class="language-c">#define T_TYPE_DOUBLE  (t_double_get_type ())
+</code></pre>
+<p>需要在 <code>G_DECLARE_FINAL_TYPE</code> 前被定义。</p>
+<p>对于下面代码，简单总结一下就是相较于原始版本
+<code>G_DEFINE_TYPE</code> 宏实现了 t_double_get_type() 函数的定义， <code>G_DECLARE_FINAL_TYPE</code> 宏实现了类的定义和一些有用的宏定义。</p>
+<p>自定义的宏放在最前，然后是 G_DECLARE_FINAL_TYPE， 最后是 G_DEFINE_TYPE。</p>
+<pre><code class="language-c">#include &lt;glib-object.h&gt;
+
+#define T_TYPE_DOUBLE  (t_double_get_type ())
+G_DECLARE_FINAL_TYPE (TDouble, t_double, T, DOUBLE, GObject)
+
+struct _TDouble {
+  GObject parent;
+  double value;
+};
+
+G_DEFINE_TYPE (TDouble, t_double, G_TYPE_OBJECT)
+
+static void
+t_double_class_init (TDoubleClass *class) {
+}
+
+static void
+t_double_init (TDouble *self) {
+}
+
+int
+main (int argc, char **argv) {
+  GType dtype;
+  TDouble *d;
+
+  dtype = t_double_get_type (); /* or dtype = T_TYPE_DOUBLE */
+  if (dtype)
+    g_print ("Registration was a success. The type is %lx.\n", dtype);
+  else
+    g_print ("Registration failed.\n");
+
+  d = g_object_new (T_TYPE_DOUBLE, NULL);
+  if (d)
+    g_print ("Instantiation was a success. The instance address is %p.\n", d);
+  else
+    g_print ("Instantiation failed.\n");
+
+  if (T_IS_DOUBLE (d))
+    g_print ("d is TDouble instance.\n");
+  else
+    g_print ("d is not TDouble instance.\n");
+
+  if (G_IS_OBJECT (d))
+    g_print ("d is GObject instance.\n");
+  else
+    g_print ("d is not GObject instance.\n");
+  g_object_unref (d);
+
+  return 0;
+}
+</code></pre>
+<h3 id="分离头文件和源码"><a class="header" href="#分离头文件和源码">分离头文件和源码</a></h3>
+<p>tdoule.h</p>
+<pre><code class="language-c">#pragma once
+
+#include &lt;glib-object.h&gt;
+
+#define T_TYPE_DOUBLE  (t_double_get_type ())
+G_DECLARE_FINAL_TYPE (TDouble, t_double, T, DOUBLE, GObject)
+
+gboolean
+t_double_get_value (TDouble *self, double *value);
+
+void
+t_double_set_value (TDouble *self, double value);
+
+TDouble *
+t_double_new (double value);
+</code></pre>
+<ul>
+<li>头文件是公共的，他对任何文件开放。头文件包含给出类型信息，转换和类型检查的宏和一些公共函数。</li>
+<li><code>T_TYPE_DOUBLE</code> 是公共的， <code>G_DECLARE_FINAL_TYPE</code> 拓展成公共定义</li>
+<li>8-12行是公共定义，用于设置和获取对象的值。他们被称为实例方法。用于面向对象语言。</li>
+<li>14-15行：对象实例化函数。</li>
+</ul>
+<p>tdouble.c</p>
+<pre><code class="language-c">#include "tdouble.h"
+
+struct _TDouble {
+  GObject parent;
+  double value;
+};
+
+G_DEFINE_TYPE (TDouble, t_double, G_TYPE_OBJECT)
+
+static void
+t_double_class_init (TDoubleClass *class) {
+}
+
+static void
+t_double_init (TDouble *self) {
+}
+
+gboolean
+t_double_get_value (TDouble *self, double *value) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), FALSE);
+
+  *value = self-&gt;value;
+  return TRUE;
+}
+
+void
+t_double_set_value (TDouble *self, double value) {
+  g_return_if_fail (T_IS_DOUBLE (self));
+
+  self-&gt;value = value;
+}
+
+TDouble *
+t_double_new (double value) {
+  TDouble *d;
+
+  d = g_object_new (T_TYPE_DOUBLE, NULL);
+  d-&gt;value = value;
+  return d;
+}
+</code></pre>
+<ul>
+<li>3-6行：申明实例结构。由于 <code>G_DECLARE_FINAL_TYPE</code> 宏定义拓展了 <code>typeder struct _TDouble TDouble</code>,结构体的标签名必须是<code>_TDouble</code>.</li>
+<li>10-16行： 类和实例的初始化函数。当前他们没有任何动作。</li>
+<li>18-24行： Getter. 参数 value 是指向double类型的指针。对象的 value 赋值给他。如果成功就返回 True。<code>g_return_val_if_fail</code> 函数是用来检查参数类型，如果 <code>self</code> 参数不是 TDouble 类型，他会输出错误并马上返回 False。这个函数报告给程序员错误，不应该用于运行时报错。函数 g_return_val_if_fail 不能静态类函数中使用，静态类函数是私有的，因为静态函数只能从同一个文件中的函数调用，调用者知道参数的类型。</li>
+<li>37行： 参数 <code>T_TYPE_DOUBLE</code> 扩展为函数 <code>t_double_get_type ()</code>。如果这是对t_double_get_type的第一次调用，则将执行类型注册。</li>
+</ul>
+<h2 id="信号"><a class="header" href="#信号">信号</a></h2>
+<p>信号提供对象间通信的一种手段。信号在一些事情发生或完成时发出。</p>
+<p>信号编程的步骤如下：</p>
+<ol>
+<li>注册一个信号。 信号属于对象，所以注册是在对象的类初始化函数中完成的。</li>
+<li>编写一个信号处理。当信息发出时信号处理函数被调用。</li>
+<li>关联信号和处理函数。信号通过 <code>g_connect_signal</code> 和他家族的函数连接到处理函数。</li>
+<li>发出信息</li>
+</ol>
+<p>步骤一和步骤四是在信号所属的对象上完成的。步骤三通常在对象之外完成。</p>
+<h3 id="信号注册"><a class="header" href="#信号注册">信号注册</a></h3>
+<p>在本章的例子是在 <code>division-by-zero</code> 发生时信号发出。首先需要确定名称，信号名称由字母数字，连接号， 下划线组成。第一个字符必须是字母。</p>
+<p>有四个函数去注册信号。这里是使用 <code>g_signal_new</code> 注册 "div-by-zero" 信号。</p>
+<pre><code class="language-c">guint
+g_signal_new (const gchar *signal_name,
+              GType itype,
+              GSignalFlags signal_flags,
+              guint class_offset,
+              GSignalAccumulator accumulator,
+              gpointer accu_data,
+              GSignalCMarshaller c_marshaller,
+              GType return_type,
+              guint n_params,
+              ...);
+</code></pre>
+<p>在 <code>tdouble.c</code> 中使用的参数解释</p>
+<pre><code class="language-c">t_double_signal =
+g_signal_new ("div-by-zero",
+              G_TYPE_FROM_CLASS (class),
+              G_SIGNAL_RUN_LAST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS,
+              0 /* class offset.Subclass cannot override the class handler (default handler). */,
+              NULL /* accumulator */,
+              NULL /* accumulator data */,
+              NULL /* C marshaller. g_cclosure_marshal_generic() will be used */,
+              G_TYPE_NONE /* return_type */,
+              0     /* n_params */
+              );
+</code></pre>
+<ul>
+<li><code>t_double_signal</code> 是一个静态guint 变量。guint 类型与 <code>unsigned int</code> 一样。它被设置为函数 g_signal_new 返回的信号 id。</li>
+<li>第二个参数是信号所属对象的类型(GType) , <code>G_TYPE_FROM_CLASS (class)</code> 返回类对应的类型。<code>class</code> 参数是指针指向对象的类型。</li>
+<li>第三个参数是信号标志。需要很多页来解释这个标志。所以，我现在就想把他们排除在外。上面的标志设置可以在许多情况下使用。</li>
+<li>返回值是 <code>G_TYPE_NONE</code> 意味着没有返回值</li>
+<li><code>n_params</code> 是参数的数量，这个信号没有参数所以设置为0</li>
+</ul>
+<p>这个函数位于类的初始化函数中(t_double_class_init)</p>
+<p>可以用另一个函数类似于<code>g_singal_newv</code>。</p>
+<h3 id="信号处理"><a class="header" href="#信号处理">信号处理</a></h3>
+<p>信号处理函数在信号发出时调用。他有两个参数。</p>
+<ul>
+<li>信号从属的实例</li>
+<li>一个指针，改指针指向给信号连接中的用户数据 (对应 n_params 及之后的)</li>
+</ul>
+<p>“div-by-zero" 信号不需要用户数据</p>
+<pre><code class="language-c">void div_by_zero_cb (TDouble *self, gpointer user_data) { ... ... ...}
+</code></pre>
+<p>第一个参数<code>self</code> 是信号发出的实例，可以省略第二个参数。</p>
+<pre><code class="language-c">void div_by_zero_cb (TDouble *self) { ... ... ...}
+</code></pre>
+<p>如果一个信号有参数，参数在实例和用户数据之间。比如：GtkApplication 中的 "window-added" 信号处理是：</p>
+<pre><code class="language-c">void window_added (GtkApplication* self, GtkWindow* window, gpointer user_data);
+</code></pre>
+<p>第二个参数 <code>window</code> 是信号的参数。这个 "window-added" 信号在应用一个新窗口被添加时调用。参数 <code>window</code> 指向新增加的window。</p>
+<p>"div-by-zero" 信号处理函数现在设置为展示错误信息。</p>
+<pre><code class="language-c">static void
+div_by_zero_cb (TDouble *self, gpointer user_data) {
+  g_print ("\nError: division by zero.\n\n");
+}
+</code></pre>
+<h3 id="信号连接"><a class="header" href="#信号连接">信号连接</a></h3>
+<p>信号和处理函数通过<code>g_signal_connect</code> 连接</p>
+<pre><code class="language-c">g_signal_connect (self, "div-by-zero", G_CALLBACK (div_by_zero_cb), NULL);
+</code></pre>
+<ul>
+<li><code>self</code> 是信号从属的实例</li>
+<li>第二个参数是信号名称</li>
+<li>第三个函数是信号的处理函数，他必须被强转成<code>G_CALLBACK</code></li>
+<li>最后一个参数是用户数据。这个信号不需要用户数据，所以设置为NULL.</li>
+</ul>
+<h3 id="信号发射"><a class="header" href="#信号发射">信号发射</a></h3>
+<p>信号在对象中发射。</p>
+<pre><code class="language-c">TDouble *
+t_double_div (TDouble *self, TDouble *other) {
+... ... ...
+  if ((! t_double_get_value (other, &amp;value)))
+    return NULL;
+  else if (value == 0) {
+    g_signal_emit (self, t_double_signal, 0);
+    return NULL;
+  }
+  return t_double_new (self-&gt;value / value);
+}
+</code></pre>
+<p>如果除数为0， 信号就会发射。<code>g_signal_emit</code> 有三个参数</p>
+<ul>
+<li>第一个参数发射信号的实例</li>
+<li>第二个参数是信号的id，信号id通过 g_signal_new 返回。</li>
+<li>第三个参数是详情。 "dev-by-zero" 没有详情，所以这个参数是0.</li>
+</ul>
+<h3 id="完整示例"><a class="header" href="#完整示例">完整示例</a></h3>
+<p>tdouble.h</p>
+<pre><code class="language-c">#pragma once
+
+#include &lt;glib-object.h&gt;
+
+#define T_TYPE_DOUBLE  (t_double_get_type ())
+G_DECLARE_FINAL_TYPE (TDouble, t_double, T, DOUBLE, GObject)
+
+/* getter and setter */
+gboolean
+t_double_get_value (TDouble *self, double *value);
+
+void
+t_double_set_value (TDouble *self, double value);
+
+/* arithmetic operator */
+/* These operators create a new instance and return a pointer to it. */
+TDouble *
+t_double_add (TDouble *self, TDouble *other);
+
+TDouble *
+t_double_sub (TDouble *self, TDouble *other);
+
+TDouble *
+t_double_mul (TDouble *self, TDouble *other);
+
+TDouble *
+t_double_div (TDouble *self, TDouble *other);
+
+TDouble *
+t_double_uminus (TDouble *self);
+
+/* create a new TDouble instance */
+TDouble *
+t_double_new (double value);
+</code></pre>
+<p>tdouble.h</p>
+<pre><code class="language-c">#include "tdouble.h"
+
+static guint t_double_signal;
+
+struct _TDouble {
+  GObject parent;
+  double value;
+};
+
+G_DEFINE_TYPE (TDouble, t_double, G_TYPE_OBJECT)
+
+static void
+t_double_class_init (TDoubleClass *class) {
+  t_double_signal = g_signal_new ("div-by-zero",
+                                 G_TYPE_FROM_CLASS (class),
+                                 G_SIGNAL_RUN_LAST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS,
+                                 0 /* class offset.Subclass cannot override the class handler (default handler). */,
+                                 NULL /* accumulator */,
+                                 NULL /* accumulator data */,
+                                 NULL /* C marshaller. g_cclosure_marshal_generic() will be used */,
+                                 G_TYPE_NONE /* return_type */,
+                                 0     /* n_params */
+                                 );
+}
+
+static void
+t_double_init (TDouble *self) {
+}
+
+/* getter and setter */
+gboolean
+t_double_get_value (TDouble *self, double *value) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), FALSE);
+
+  *value = self-&gt;value;
+  return TRUE;
+}
+
+void
+t_double_set_value (TDouble *self, double value) {
+  g_return_if_fail (T_IS_DOUBLE (self));
+
+  self-&gt;value = value;
+}
+
+/* arithmetic operator */
+/* These operators create a new instance and return a pointer to it. */
+#define t_double_binary_op(op) \
+  if (! t_double_get_value (other, &amp;value)) \
+    return NULL; \
+  return t_double_new (self-&gt;value op value);
+
+TDouble *
+t_double_add (TDouble *self, TDouble *other) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), NULL);
+  g_return_val_if_fail (T_IS_DOUBLE (other), NULL);
+  double value;
+
+  t_double_binary_op (+)
+}
+
+TDouble *
+t_double_sub (TDouble *self, TDouble *other) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), NULL);
+  g_return_val_if_fail (T_IS_DOUBLE (other), NULL);
+  double value;
+
+  t_double_binary_op (-)
+}
+
+TDouble *
+t_double_mul (TDouble *self, TDouble *other) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), NULL);
+  g_return_val_if_fail (T_IS_DOUBLE (other), NULL);
+  double value;
+
+  t_double_binary_op (*)
+}
+
+TDouble *
+t_double_div (TDouble *self, TDouble *other) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), NULL);
+  g_return_val_if_fail (T_IS_DOUBLE (other), NULL);
+  double value;
+
+  if ((! t_double_get_value (other, &amp;value)))
+    return NULL;
+  else if (value == 0) {
+    g_signal_emit (self, t_double_signal, 0);
+    return NULL;
+  }
+  return t_double_new (self-&gt;value / value);
+}
+TDouble *
+t_double_uminus (TDouble *self) {
+  g_return_val_if_fail (T_IS_DOUBLE (self), NULL);
+
+  return t_double_new (-self-&gt;value);
+}
+
+TDouble *
+t_double_new (double value) {
+  TDouble *d;
+
+  d = g_object_new (T_TYPE_DOUBLE, NULL);
+  d-&gt;value = value;
+  return d;
+}
+</code></pre>
+<p>main.c</p>
+<pre><code class="language-c">#include &lt;glib-object.h&gt;
+#include "tdouble.h"
+
+static void
+div_by_zero_cb (TDouble *self, gpointer user_data) {
+  g_printerr ("\nError: division by zero.\n\n");
+}
+
+static void
+t_print (char *op, TDouble *d1, TDouble *d2, TDouble *d3) {
+  double v1, v2, v3;
+
+  if (! t_double_get_value (d1, &amp;v1))
+    return;
+  if (! t_double_get_value (d2, &amp;v2))
+    return;
+  if (! t_double_get_value (d3, &amp;v3))
+    return;
+
+  g_print ("%lf %s %lf = %lf\n", v1, op, v2, v3);
+}
+
+int
+main (int argc, char **argv) {
+  TDouble *d1, *d2, *d3;
+  double v1, v3;
+
+  d1 = t_double_new (10.0);
+  d2 = t_double_new (20.0);
+  if ((d3 = t_double_add (d1, d2)) != NULL) {
+    t_print ("+", d1, d2, d3);
+    g_object_unref (d3);
+  }
+
+  if ((d3 = t_double_sub (d1, d2)) != NULL) {
+    t_print ("-", d1, d2, d3);
+    g_object_unref (d3);
+  }
+
+  if ((d3 = t_double_mul (d1, d2)) != NULL) {
+    t_print ("*", d1, d2, d3);
+    g_object_unref (d3);
+  }
+
+  if ((d3 = t_double_div (d1, d2)) != NULL) {
+    t_print ("/", d1, d2, d3);
+    g_object_unref (d3);
+  }
+
+  g_signal_connect (d1, "div-by-zero", G_CALLBACK (div_by_zero_cb), NULL);
+  t_double_set_value (d2, 0.0);
+  if ((d3 = t_double_div (d1, d2)) != NULL) {
+    t_print ("/", d1, d2, d3);
+    g_object_unref (d3);
+  }
+
+  if ((d3 = t_double_uminus (d1)) != NULL &amp;&amp; (t_double_get_value (d1, &amp;v1)) &amp;&amp; (t_double_get_value (d3, &amp;v3))) {
+    g_print ("-%lf = %lf\n", v1, v3);
+    g_object_unref (d3);
+  }
+
+  g_object_unref (d1);
+  g_object_unref (d2);
+
+  return 0;
+}
+</code></pre>
+<h3 id="默认信号处理"><a class="header" href="#默认信号处理">默认信号处理</a></h3>
+<p>你可能觉得在main.c设置错误信息很奇怪。实际上，错误发生在 <code>tdouble.c</code> 中。所以这个信息应该在 <code>tdouble.c</code> 中管理。
+GObject 系统有一个默认的信号处理可以在对象中设置。也被称为默认处理器和对象方法处理器。可以通过 <code>g_signal_new_class_handler</code> 设置。</p>
+<pre><code class="language-c">guint
+g_signal_new_class_handler (const gchar *signal_name,
+                            GType itype,
+                            GSignalFlags signal_flags,
+                            GCallback class_handler, /*default signal handler */
+                            GSignalAccumulator accumulator,
+                            gpointer accu_data,
+                            GSignalCMarshaller c_marshaller,
+                            GType return_type,
+                            guint n_params,
+                            ...);
+
+</code></pre>
+<p>与 <code>g_signal_new</code> 的区别在第四个参数。<code>g_signal_new</code> 使用类结构中函数指针的偏移量设置一个默认处理程序。 如果一个对象是可派生的，他拥有自己的类区域，因此你可以通过 <code>g_signal_new</code> 设置一个默认处理函数。但一个 final 类型没有他的类区域(指 TDoubleClass 只有父类成员， 没有其他成员)， 所以不可能通过 g_signal_new 设置默认处理函数。所以我们需要<code>g_signal_new_class_handler</code>。</p>
+<p>在 <code>tdouble.c</code> 文件中这样修改。 <code>div_by_zero_default_cb</code> 被添加，并且用 <code>g_signal_new_class_handler</code> 替换 <code>g_signal_new</code>。默认信号处理程序没有用户数据参数。当用户连接他们的信号处理函数和信号时, user_data 参数在 g_signal_connect 家族函数中设置。默认信号处理函数被他们的实例管理，而不是用户，所以没有提供
+用户数据作为参数。</p>
+<pre><code class="language-c">static void
+div_by_zero_default_cb (TDouble *self) {
+  g_printerr ("\nError: division by zero.\n\n");
+}
+
+static void
+t_double_class_init (TDoubleClass *class) {
+  t_double_signal =
+  g_signal_new_class_handler ("div-by-zero",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS,
+                              G_CALLBACK (div_by_zero_default_cb),
+                              NULL /* accumulator */,
+                              NULL /* accumulator data */,
+                              NULL /* C marshaller */,
+                              G_TYPE_NONE /* return_type */,
+                              0     /* n_params */
+                              );
+}
+</code></pre>
+<p>如果你想通过用户提供处理函数依然可以通过使用 <code>g_signal_connect</code> 。</p>
+<p>如果你想要在默认处理器之后调用你的处理器可以使用 <code>g_signal_connect_after</code> 来限定先后关系。</p>
+<h3 id="信号标志"><a class="header" href="#信号标志">信号标志</a></h3>
+<p>符号标志是用来决定处理函数的顺序的。</p>
+<ul>
+<li>G_SIGNAL_RUN_FIRST: 默认处理器在其他任何用户提供的处理器之前。</li>
+<li>G_SIGNAL_RUN_LAST: 默认处理器在任何普通处理器之后（不能通过 <code>g_signal_connect_after</code> 来连接)。</li>
+<li>G_SIGNAL_RUN_CLEANUP: 默认处理器在任何用户提供的处理器之后。</li>
+</ul>
+<p><code>G_SIGNAL_RUN_LAST</code> 在大多数情况下倾向使用。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../linux/arch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../linux/hyprland.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../linux/arch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../linux/hyprland.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>内核配置 - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item "><a href="../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item "><a href="../basic/data-struct/RBTree.html">红黑树</a></li><li class="chapter-item "><a href="../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item "><a href="../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item "><a href="../linux/GObject.html">GObject</a></li><li class="chapter-item "><a href="../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item "><a href="../linux/pci_passthrough_via_ovmf.html">显卡直通</a></li><li class="chapter-item "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item "><a href="../linux/dbus.html">dbus</a></li><li class="chapter-item "><a href="../linux/zsh-01.html">zsh_1 variable</a></li><li class="chapter-item "><a href="../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../neovim/package.html">package</a></li></ol></li><li class="chapter-item expanded "><a href="../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gentoo/gentoo.html">安装</a></li><li class="chapter-item "><a href="../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../gentoo/fstab.html">fstab</a></li><li class="chapter-item expanded "><a href="../gentoo/core.html" class="active">内核配置</a></li><li class="chapter-item "><a href="../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../Rust/base.html">base</a></li><li class="chapter-item "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="内核的配置"><a class="header" href="#内核的配置">内核的配置</a></h1>
+<h2 id="将微码编进内核"><a class="header" href="#将微码编进内核">将微码编进内核</a></h2>
+<pre><code class="language-bash">emerge --ask sys-firmware/intel-microcode sys-apps/iucode_tool
+#下载速度慢 需要科学上网，微码的部分可先跳过
+iucode_tool -S
+iucode_tool -S -l /lib/firmware/intel-ucode/*
+# 识别处理器签名并查找相应microcode文件名,其为“06-9e-0d”这样的编号格式，选择最末尾的那个（最新的）
+# 建议把找到的结果用手机拍照下来，然后设置编译内核（make menuconfig）的时候
+</code></pre>
+<pre><code class="language-bash">make menuconfig 中
+Device Driver:
+    Generic Driver Options:
+         Firmware loader:
+             Build name firmware blobs into the kernel binary
+
+输入“intel-ucode/06-9e-0d”这样的编号格式，将微码文件直接编译进内核。
+</code></pre>
+<p>确保 emerge intel-microcode 之前就得在 已经在 make.conf 中设置好了
+<code>MICROCODE_SIGNATURES="-S"</code></p>
+<p>配置内核时开启</p>
+<pre><code class="language-bash">CONFIG_MICROCODE=y
+CONFIG_MICROCODE_INTEL=y
+</code></pre>
+<h2 id="永久禁用-nouveau"><a class="header" href="#永久禁用-nouveau">永久禁用 nouveau</a></h2>
+<pre><code class="language-bash">vim  /etc/modprobe.d/blacklist.conf：
+blacklist nouveau
+blacklist lbm-nouveau
+options nouveau modeset=0
+</code></pre>
+<p>即便在编译内核前就已经设置内核禁用 Nouveau 驱动了，</p>
+<p>但是内核安装时还是会默认把 nouveau 驱动作为内核模块自动加载。</p>
+<p>启用了 nouveau 驱动模块的内核会出现各式各样的莫名其妙的数不清的问题，所以为了避免以后出现这些问题，</p>
+<p>从现在就开始永久禁用 nouveau 模块！这是很多教程包括 gentoo wiki 上都不曾提到过的大问题，</p>
+<p>也是让很多人遭坑的关键地方。</p>
+<p>禁用 Nouveau 驱动</p>
+<p><code>CONFIG_I2C_NVIDIA_GPU</code> 禁用</p>
+<h4 id="jack-低延迟实时音频组件"><a class="header" href="#jack-低延迟实时音频组件">jack 低延迟实时音频组件</a></h4>
+<p>支持 jack 低延迟实时音频组件（Jack-Audio-Connection-Kit），需要修改<code>vim .config</code>，手动设置</p>
+<pre><code class="language-bash"># jack
+CONFIG_CGROUPS=y
+CONFIG_CGROUP_SCHED=y
+CONFIG_RT_GROUP_SCHED=y
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../gentoo/fstab.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../gentoo/driver.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../gentoo/fstab.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../gentoo/driver.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

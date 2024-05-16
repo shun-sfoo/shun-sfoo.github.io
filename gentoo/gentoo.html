@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>安装 - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item "><a href="../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item "><a href="../basic/data-struct/RBTree.html">红黑树</a></li><li class="chapter-item "><a href="../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item "><a href="../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item "><a href="../linux/GObject.html">GObject</a></li><li class="chapter-item "><a href="../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item "><a href="../linux/pci_passthrough_via_ovmf.html">显卡直通</a></li><li class="chapter-item "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item "><a href="../linux/dbus.html">dbus</a></li><li class="chapter-item "><a href="../linux/zsh-01.html">zsh_1 variable</a></li><li class="chapter-item "><a href="../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../neovim/package.html">package</a></li></ol></li><li class="chapter-item expanded "><a href="../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../gentoo/gentoo.html" class="active">安装</a></li><li class="chapter-item "><a href="../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../gentoo/fstab.html">fstab</a></li><li class="chapter-item "><a href="../gentoo/core.html">内核配置</a></li><li class="chapter-item "><a href="../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../Rust/base.html">base</a></li><li class="chapter-item "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="gentoo-安装"><a class="header" href="#gentoo-安装">Gentoo 安装</a></h1>
+<h2 id="磁盘分区"><a class="header" href="#磁盘分区">磁盘分区</a></h2>
+<p>使用 sfdisk -z <code>磁盘名称</code> (<code>-z</code> 选项可以选择文件类型 gpt)</p>
+<p>一块硬盘通常分成三个分区</p>
+<ul>
+<li><code>/boot</code> 作为引导</li>
+<li><code>/</code> 根目录</li>
+<li><code>swap</code> 交换分区</li>
+</ul>
+<p>有多余的硬盘考虑挂载到 (wiki 中的建议)</p>
+<ul>
+<li><code>/home</code> 多用户</li>
+<li><code>/opt</code> 游戏服务软件</li>
+<li><code>/var</code> 邮件服务器</li>
+</ul>
+<p>形式： GPT + UEFI</p>
+<div class="table-wrapper"><table><thead><tr><th>类型</th><th>大小</th><th>挂载点</th><th>格式化</th></tr></thead><tbody>
+<tr><td>EFI</td><td>256M</td><td>/mnt/gentoo/boot</td><td>mkfs.vfat</td></tr>
+<tr><td>xfs</td><td>free space</td><td>/mnt/gentoo</td><td>mkfs.xfs</td></tr>
+<tr><td>xfs</td><td>free space</td><td>/ment/gentoo/home</td><td>mkfs.xfs</td></tr>
+<tr><td>swap</td><td>16G</td><td>swap</td><td>mkswap swapon</td></tr>
+</tbody></table>
+</div>
+<p>目前来说的理解是 <code>/boot</code> 是必要的, 一般设置为 256M 格式化是 vfat ，</p>
+<p><code>/boot/efi</code> 是挂载在/boot 下 对应多系统的，</p>
+<p>如果系统中有 windows 那么不用格式化它，直接挂载到 efi 上</p>
+<pre><code class="language-bash">mkdir -p /mnt/gentoo/boot
+mkdir -p /mnt/gentoo/boot/efi
+</code></pre>
+<h2 id="下载镜像"><a class="header" href="#下载镜像">下载镜像</a></h2>
+<p>建议去中科大的镜像站下载 stage3。(ustc)</p>
+<pre><code class="language-bash">cd /mnt/gentoo/
+wget http://mirrors.ustc.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-20210630T214504Z.tar.xz
+tar vxpf stage3-amd64-20210630T214504Z.tar.xz
+</code></pre>
+<h2 id="配置编译选项"><a class="header" href="#配置编译选项">配置编译选项</a></h2>
+<p>为了控制页面长度，配置示例单独放在文件中。</p>
+<p><a href="./make-conf.html#default">一份直接 copy 的配置</a></p>
+<h2 id="配置源镜像"><a class="header" href="#配置源镜像">配置源镜像</a></h2>
+<pre><code class="language-bash">mkdir -p /mnt/gentoo/etc/portage/repos.conf
+vim /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+
+[gentoo]
+location = /usr/portage
+sync-type = rsync
+sync-uri = rsync://rsync.mirrors.ustc.edu.cn/gentoo-portage/
+auto-sync = yes
+</code></pre>
+<h2 id="chroot"><a class="header" href="#chroot">chroot</a></h2>
+<p>了解下什么是 Chroot。以现在的安装为例，目前运行的软件和内核是 LiveUSB 提供的，</p>
+<p>根目录是 LiveUSB 的，而 Gentoo 系统的根目录在 /mnt/gentoo/ ，也没有直接运行的能力，</p>
+<p>因为运行环境也不是 Gentoo 系统的，可以通过 Chroot 一系列操作，实现从 LiveUSB 转移到 Gentoo 系统下。</p>
+<h3 id="复制-dns-到-gentoo-系统下"><a class="header" href="#复制-dns-到-gentoo-系统下">复制 DNS 到 Gentoo 系统下：</a></h3>
+<p><code>cp --dereference /etc/resolv.conf /mnt/gentoo/etc/</code></p>
+<h3 id="挂载必要文件系统"><a class="header" href="#挂载必要文件系统">挂载必要文件系统：</a></h3>
+<pre><code class="language-bash">mount -t proc /proc /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+# mount --make-rslave /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+# mount --make-rslave /mnt/gentoo/dev
+</code></pre>
+<p><strong>注意</strong> <code>--make-rslave</code> 操作是安装 systemd 支持时所需要的，所以这里注释掉</p>
+<h3 id="进入-chroot"><a class="header" href="#进入-chroot">进入 Chroot：</a></h3>
+<pre><code class="language-bash">chroot /mnt/gentoo /bin/bash
+source /etc/profile
+mkdir -p /var/db/repos/gentoo
+env-update
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+</code></pre>
+<h2 id="配置-portage-设置"><a class="header" href="#配置-portage-设置">配置 portage 设置</a></h2>
+<h3 id="从网路下载-gentoo-ebuild-仓库"><a class="header" href="#从网路下载-gentoo-ebuild-仓库">从网路下载 gentoo ebuild 仓库</a></h3>
+<p><code>emerge-webrsync</code></p>
+<p>websync 会将数据库同步到 24 小时之内，<code>emerge --sync</code> 会同步到 1 小时之内，</p>
+<p>这样做很慢且没有必要。</p>
+<h3 id="选择-默认-profile"><a class="header" href="#选择-默认-profile">选择 默认 profile</a></h3>
+<pre><code class="language-bash">eselect profile list
+eselect profile set X
+</code></pre>
+<p>如前言中所说，我搭建的环境会是 X + dwm 或是 wayland + sway 所以不需要桌面端，
+选择默认就可以了。</p>
+<h3 id="cpu-flags-x86-设置"><a class="header" href="#cpu-flags-x86-设置">CPU-FLAGS-X86 设置</a></h3>
+<p>针对自己 cpu 优化</p>
+<pre><code class="language-bash">emerge -ask -verbose app-portage/cpuid2cpuflags
+cpuid2cpuflags
+</code></pre>
+<p>make.conf 中启用 CPU-FLAGS-X86</p>
+<h3 id="ccache-设置"><a class="header" href="#ccache-设置">ccache 设置</a></h3>
+<p>将编译放在内存中，提升编译速度，保护硬盘。</p>
+<pre><code class="language-bash">emerge --ask dev-util/ccache
+mkdir -p /var/cache/ccache
+chown root:portage /var/cache/ccache
+chmod 2775 /var/cache/ccache
+</code></pre>
+<p>编辑 ccache 配置文件 <code>/var/cache/ccache/ccache.conf</code> ，内容如下：</p>
+<pre><code class="language-bash">max_size = 100.0G
+umask = 002
+cache_dir_levels = 3
+</code></pre>
+<p>make.conf 中启用 ccache</p>
+<h2 id="更新系统"><a class="header" href="#更新系统">更新系统</a></h2>
+<p><code>emerge --ask --verbose --update --deep --newuse @world</code></p>
+<h2 id="配置时区"><a class="header" href="#配置时区">配置时区</a></h2>
+<pre><code class="language-bash">echo "Asia/Shanghai" &gt; /etc/timezone
+emerge --config sys-libs/timezone-data
+</code></pre>
+<h2 id="配置-locale"><a class="header" href="#配置-locale">配置 locale</a></h2>
+<pre><code class="language-bash">echo "en_US.UTF-8 UTF-8 zh_CN.UTF-8 UTF-8" &gt;&gt; /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" &gt;&gt; /etc/env.d/02locale
+
+eselect locale list
+env-update &amp;&amp; source /etc/profile &amp;&amp; export PS1="(chroot) ${PS1}"
+</code></pre>
+<p>这时，应该能够看到列出的中文，但是目前建议暂时不要用 eselect 选择使用中文</p>
+<h2 id="设置-fstab"><a class="header" href="#设置-fstab">设置 fstab</a></h2>
+<p>提供 btrfs 和 xfs 两种方案</p>
+<p>TODO: 这部分细节待研究</p>
+<p><a href="./fstab.html">fstab</a></p>
+<h3 id="安装必须的文件系统支持否则无法访问硬盘上的分区"><a class="header" href="#安装必须的文件系统支持否则无法访问硬盘上的分区">安装必须的文件系统支持，否则无法访问硬盘上的分区</a></h3>
+<pre><code class="language-bash"># emerge --ask sys-fs/btrfs-progs # btrfs
+emerge --ask sys-fs/e2fsprogs #ext2、ext3、ext4
+emerge --ask sys-fs/xfsprogs #xfs
+emerge --ask sys-fs/dosfstools #fat32
+emerge --ask sys-fs/ntfs3g #ntfs
+emerge --ask sys-fs/fuse-exfat #exfat
+emerge --ask sys-fs/exfat-utils #exfat
+</code></pre>
+<h2 id="下载内核源码"><a class="header" href="#下载内核源码">下载内核源码</a></h2>
+<pre><code class="language-bash">emerge --ask sys-kernel/gentoo-sources
+eselect kernel list
+eselect kernel set 1 # 这一步会将linux版本链接到linux目录
+ls -l /usr/src/linux
+</code></pre>
+<h2 id="配置内核"><a class="header" href="#配置内核">配置内核</a></h2>
+<pre><code class="language-bash">emerge --ask sys-apps/pciutils # lspci
+emerge --ask sys-kernel/genkernel
+cd /usr/src/linux
+emerge --ask sys-kernel/linux-firmware # 一些额外固件，wifi等
+</code></pre>
+<h2 id="使用默认配置"><a class="header" href="#使用默认配置">使用默认配置</a></h2>
+<p>使用官方的配置可以做到开箱即用</p>
+<pre><code class="language-bash">cp /usr/share/genkernel/arch/x86_64/generated-config /usr/src/linux/
+cd /usr/src/linux
+cp generated-config 1.config
+
+make menuconfig
+load 1.config
+# nvidia驱动禁用 nouveau
+save as .config
+make -j4 &amp;&amp; make modules_install
+make install
+</code></pre>
+<p><a href="./core.html">使用 N 卡禁用 Nouveau 驱动</a></p>
+<p>内核配置部分查看官网 handbook</p>
+<p><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation#Kernel_configuration_and_compilation">menuconfig</a></p>
+<h3 id="生成-initramfs"><a class="header" href="#生成-initramfs">生成 initramfs</a></h3>
+<pre><code class="language-bash">emerge --ask sys-kernel/genkernel
+genkernel --install --kernel-config=/path/to/used/kernel.config initramfs
+ls /boot/initramfs*
+</code></pre>
+<h2 id="设置主机名"><a class="header" href="#设置主机名">设置主机名：</a></h2>
+<pre><code class="language-bash">echo hostname=\"matrix\" &gt; /etc/conf.d/hostname
+# Set the dns_domain_lo variable to the selected domain name
+echo dns_domain_lo=\"homenetwork\" &gt;&gt; /etc/conf.d/net
+</code></pre>
+<h2 id="hosts"><a class="header" href="#hosts">hosts</a></h2>
+<p><code>vim /etc/hosts</code></p>
+<pre><code class="language-bash"># This defines the current system and must be set
+127.0.0.1     matrix.homenetwork matrix localhost
+
+# Optional definition of extra systems on the network
+192.168.0.5   jenny.homenetwork jenny
+192.168.0.6   benny.homenetwork benny
+</code></pre>
+<h2 id="修改密码强度"><a class="header" href="#修改密码强度">修改密码强度</a></h2>
+<p>查看两个配置</p>
+<p>/etc/pam.d/passwd</p>
+<p>/etc/pam.d/system-auth</p>
+<p>后者说明相关配置文件在 /etc/security/passwdqc.conf</p>
+<pre><code class="language-bash">min=disabled,24,11,8,7  =&gt; min=3,3,3,3,3
+max=40                  =&gt; max=8
+passphrase=8
+match=4
+similar=deny            =&gt; permit
+random=47
+enforce=everyone
+retry=3
+</code></pre>
+<h2 id="安装系统工具"><a class="header" href="#安装系统工具">安装系统工具</a></h2>
+<p>安装必要的系统日志工具和守护进程工具、文件索引工具、设备管理工具</p>
+<pre><code class="language-bash">emerge sys-apps/ifplugd
+
+emerge --ask app-admin/sysklogd # system logger
+rc-update add sysklogd default
+
+emerge --ask sys-process/cronie # cron daemon
+rc-update add cronie default
+
+emerge --ask sys-apps/mlocate # file indexing
+
+rc-update add sshd default # remote access
+
+emerge virtual/udev
+emerge --oneshot sys-fs/eudev
+rc-update add udev sysinit
+
+rc-update add elogind boot
+</code></pre>
+<h2 id="网络连接"><a class="header" href="#网络连接">网络连接</a></h2>
+<p><code>ip addr</code> 查看网卡信息</p>
+<h3 id="有线-netifrc"><a class="header" href="#有线-netifrc">有线 netifrc</a></h3>
+<pre><code class="language-bash">emerge net-misc/netifrc
+vim /etc/conf.d/net
+
+# 设置动态分配
+config_enp3s0="dhcp"
+
+cd /etc/init.d
+ln -s net.lo net.enp3s0
+rc-update add net.enp3s0 default
+
+# 重新启动
+rc-service net.enp3s0 restart
+</code></pre>
+<h3 id="wifi-iwd"><a class="header" href="#wifi-iwd">wifi iwd</a></h3>
+<pre><code class="language-bash">emerge -av iwd #wifi
+rc-update add iwd default
+</code></pre>
+<h3 id="note-iwd-and-netifrc"><a class="header" href="#note-iwd-and-netifrc">NOTE iwd and netifrc</a></h3>
+<p>gentoo iwd wiki 提到的 netifrc 用不能共存的说法
+配置一个就禁用另一个。</p>
+<p><a href="https://wiki.gentoo.org/wiki/Iwd">iwd</a></p>
+<h2 id="bootloader"><a class="header" href="#bootloader">bootloader</a></h2>
+<p>TODO: 目前使用 grub2，后续修改成 efibootmgr</p>
+<p>保证 make.conf 中设置了 GRUB-PLATFORMS</p>
+<pre><code class="language-bash"># echo 'GRUB_PLATFORMS="efi-64"' &gt;&gt; /etc/portage/make.conf
+emerge --ask sys-boot/grub:2
+grub-install --target=x86_64-efi --efi-directory=/boot # 注意 efi 文件夹位置
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<h2 id="配置用户"><a class="header" href="#配置用户">配置用户</a></h2>
+<p>日常用户组</p>
+<div class="table-wrapper"><table><thead><tr><th>group</th><th>description</th></tr></thead><tbody>
+<tr><td>audio</td><td>Be able to access the audio devices.</td></tr>
+<tr><td>games</td><td>Be able to play games.</td></tr>
+<tr><td>portage</td><td>Be able to access portage restricted resources.</td></tr>
+<tr><td>usb</td><td>Be able to access USB devices.</td></tr>
+<tr><td>video</td><td>Be able to access video capturing hardware and doing hardware acceleration.</td></tr>
+<tr><td>wheel</td><td>Be able to use su.</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-bash">useradd -m -G users,wheel,audio,video,usb -s /bin/bash larry
+passwd larry
+# wheel 用户组能够使用 sudo 的权限
+sed -i 's/\# \%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/g' /etc/sudoers
+</code></pre>
+<h2 id="清理及重启"><a class="header" href="#清理及重启">清理及重启</a></h2>
+<p><code>rm /stage3-*.tar.*</code></p>
+<h2 id="检查"><a class="header" href="#检查">检查</a></h2>
+<ol>
+<li><code>/boot</code> 下是否有内核文件生成</li>
+<li><code>/etc/fstab</code> 文件内容是否有误</li>
+</ol>
+<h2 id="参考链接"><a class="header" href="#参考链接">参考链接</a></h2>
+<p><a href="https://litterhougelangley.life/blog/2021/05/21/gentoo/">Langley Houge</a></p>
+<p><a href="https://www.zhihu.com/column/c_1271625347856310272">医学生折腾 Gentoo Linux 记</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../gentoo/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../gentoo/portage.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../gentoo/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../gentoo/portage.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

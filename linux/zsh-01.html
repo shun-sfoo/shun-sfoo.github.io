@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>zsh_1 variable - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item "><a href="../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item "><a href="../basic/data-struct/RBTree.html">红黑树</a></li><li class="chapter-item "><a href="../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item expanded "><a href="../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item "><a href="../linux/GObject.html">GObject</a></li><li class="chapter-item "><a href="../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item "><a href="../linux/pci_passthrough_via_ovmf.html">显卡直通</a></li><li class="chapter-item "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item "><a href="../linux/dbus.html">dbus</a></li><li class="chapter-item expanded "><a href="../linux/zsh-01.html" class="active">zsh_1 variable</a></li><li class="chapter-item "><a href="../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../neovim/package.html">package</a></li></ol></li><li class="chapter-item "><a href="../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gentoo/gentoo.html">安装</a></li><li class="chapter-item "><a href="../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../gentoo/fstab.html">fstab</a></li><li class="chapter-item "><a href="../gentoo/core.html">内核配置</a></li><li class="chapter-item "><a href="../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../Rust/base.html">base</a></li><li class="chapter-item "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="zsh-学习-1-变量"><a class="header" href="#zsh-学习-1-变量">zsh 学习 1-变量</a></h1>
+<h3 id="变量定义"><a class="header" href="#变量定义">变量定义</a></h3>
+<p>Zsh 的变量多数情况不需要提前声明或者指定类型,</p>
+<p>可以直接赋值和使用 (但哈希表是一个例外).</p>
+<p>双引号里可以使用变量，而单引号不可以 <code>($var)</code>.</p>
+<p>单双引号均可在字符串使用转义字符.</p>
+<p><code>echo</code> 输出变量，也可以使用 <code>print</code>.</p>
+<p>数组的位置从 <code>1</code> 开始.
+<code>-1</code> 是最后一个字符.</p>
+<h3 id="变量比较"><a class="header" href="#变量比较">变量比较</a></h3>
+<p><code>(( ))</code> 用于数值比较等操作, 如果为真返回 0, 否则返回 1.</p>
+<p><code>((</code> 中的变量名可以不用 <code>$</code></p>
+<p>比较字符串要用 <code>[[</code>, 内侧要有空格.</p>
+<p><code>[[</code> 中双等号可以替换成单等号. <strong>规范使用双等号</strong></p>
+<h3 id="语句"><a class="header" href="#语句">语句</a></h3>
+<h4 id="条件语句"><a class="header" href="#条件语句">条件语句</a></h4>
+<p>如果不确定语法是否符合预期, 可以定义一个函数然后使用 <code>which</code> 查看, 内容会被转化成原始 (posix shell 风格) 的样子</p>
+<pre><code class="language-zsh"># 格式
+if [[ ]] {
+} elif {
+} else {
+}
+</code></pre>
+<p><code>[[ ]]</code> 用于比较字符串, 判断文件等. 注意尽量不要用 <code>[[ ]]</code> 比较数值, 因为不留神的话, 数值会被转化成字符串来比较, 没有任何错误提示, 但结果可能不符合预期, 导致不必要的麻烦.</p>
+<pre><code class="language-zsh"># 样例
+if [[ "$str" == "name" || "$str" == "value" ]] {
+    echo "$str"
+}
+</code></pre>
+<p><code>(( ))</code> 用于比较数值, 里边可以调用各种数值相关的函数</p>
+<pre><code class="language-zsh"># 格式
+if (( )) {
+}
+# 样例
+if ((num &gt; 3 &amp;&amp; num + 3 &lt; 10)) {
+    echo $num
+}
+</code></pre>
+<p><code>{ }</code> 用于在当前 shell 运行命令并且判断运行结果.</p>
+<pre><code class="language-zsh"># 格式
+if { } {
+}
+# 样例
+if {grep sd1 /etc/fstab} {
+    echo good
+}
+</code></pre>
+<p><code>( )</code> 用于在子 shell 运行命令并且判断运行结果，用法和 <code>{}</code> 类似.</p>
+<p>这几种括号可以一起使用, 这样可以同时判断字符串, 数值, 文件, 命令结果等等.</p>
+<p>最好不要混合使用 <code>&amp;&amp; ||</code>, 会导致可读性变差和容易出错.</p>
+<pre><code class="language-zsh"># 格式
+if [[ ]] &amp;&amp; (( )) &amp;&amp; { } {
+}
+</code></pre>
+<h4 id="循环语句"><a class="header" href="#循环语句">循环语句</a></h4>
+<pre><code class="language-zsh"># 格式
+while [[ ]] {
+    break/continue
+}
+</code></pre>
+<p>和 <code>if</code> 一样, 这里的 <code>[[ ]]</code> 可以替换成其他几种括号, 功能也是一样的.</p>
+<p>break 用于结束循环, continue 用于直接进入下一次循环.</p>
+<p>所有的循环语句中都可以使用 break 和 continue.</p>
+<pre><code class="language-zsh"># 样例 死循环
+ while (( 1 )) {
+    echo good
+}
+</code></pre>
+<p><code>until</code> 和 <code>while</code> 相反, 不满足条件时运行, 一旦满足则停止, 其他的用法和 while 相同</p>
+<pre><code class="language-zsh"># 格式
+until [[ ]] {
+}
+</code></pre>
+<p><code>for</code> 循环主要用于枚举, 这里的括号是 <code>for</code> 的特有用法, 不是在子 shell 执行.</p>
+<p>括号内是字符串 (可放多个, 空格隔开), 数组 (可放多个) 或者哈希表 (可放多个, 哈希表是枚举值而不是键). <code>i</code> 是用于枚举内容的变量名, 变量名随意.</p>
+<pre><code class="language-zsh"># 格式
+for i ( ) {
+}
+# 样例
+for i (aa bb cc) {
+    echo $i
+}
+
+# 枚举当前目录的 txt 文件
+for i (*.txt) {
+    echo $i
+}
+
+# 枚举数组
+array=(aa bb cc)
+for i ($array) {
+    echo $i
+}
+</code></pre>
+<p>经典的 c 风格 for 循环.</p>
+<pre><code class="language-zsh"># 格式
+for (( ; ; )) {
+}
+# 样例
+for ((i=0; i &lt; 10; i++)) {
+    echo $i
+}
+</code></pre>
+<p>这个样例只是举例,实际上多数情况不需要使用这种 for 循环,可以这样.</p>
+<pre><code class="language-zsh"># 样例，{1..10} 可以生成一个 1 到 10 的数组
+for i ({1..10}) {
+    echo $i
+}
+</code></pre>
+<p><code>repeat</code> 语句用于循环固定次数, n 是一个整数或者内容为整数的变量.</p>
+<pre><code class="language-zsh"># 格式
+repeat n {
+}
+# 样例
+repeat 5 {
+    echo good
+}
+</code></pre>
+<h4 id="分支语句"><a class="header" href="#分支语句">分支语句</a></h4>
+<p>分支逻辑用 <code>if</code> 也可以实现, 但 <code>case</code> 更适合这种场景, 并且功能更强大.</p>
+<pre><code class="language-zsh"># 格式 + 样例
+case $i {
+    (a)
+    echo 1
+    ;;
+
+    (b)
+    echo 2
+    # 继续执行下一个
+    ;&amp;
+
+    (c)
+    echo 3
+    # 继续向下匹配
+    ;|
+
+    (c)
+    echo 33
+    ;;
+
+    (d)
+    echo 4
+    ;;
+
+    (*)
+    echo other
+    ;;
+}
+</code></pre>
+<p><code>;;</code> 代表结束 case 语句, <code>;&amp;</code> 代表继续执行紧接着的下一个匹配的语句（不再进行匹配）, <code>;|</code> 代表继续往下匹配看是否有满足条件的分支.</p>
+<h4 id="用户输入选择语句"><a class="header" href="#用户输入选择语句">用户输入选择语句</a></h4>
+<p><code>select</code> 语句是用于根据用户的选择决定分支的语句, 语法和 <code>for</code> 语句差不多, 如果不 <code>break</code>, 会循环让用户选择.</p>
+<pre><code class="language-zsh"># 格式
+select i ( ) {
+}
+# 样例
+select i (aa bb cc) {
+    echo $i
+}
+# 输出是这样的。
+1) aa  2) bb  3) cc
+?#
+</code></pre>
+<h4 id="异常处理语句"><a class="header" href="#异常处理语句">异常处理语句</a></h4>
+<pre><code class="language-zsh"># 格式
+{
+    语句 1
+} always {
+    语句 2
+}
+</code></pre>
+<p>如果语句 1 执行出错, 则执行语句 2.</p>
+<h4 id="简化的条件语句"><a class="header" href="#简化的条件语句">简化的条件语句</a></h4>
+<p><code>if</code> 语句的简化版, 在只有一个分支的情况下更简洁, 功能和 <code>if</code> 语句类似</p>
+<pre><code class="language-zsh">格式：
+[[ ]] || {
+}
+
+[[ ]] &amp;&amp; {
+}
+</code></pre>
+<p>最好不要连续混合使用 <code>&amp;&amp; ||</code>, 比如:</p>
+<p><code>aa &amp;&amp; bb || cc &amp;&amp; dd</code></p>
+<p>容易导致逻辑错误或者误解，可以用 <code>{ }</code> 把语句包含起来.</p>
+<p><code>aa &amp;&amp; { bb || { cc &amp;&amp; dd } }</code></p>
+<p>比较复杂的判断还是用 <code>if</code> 可读写更好, <code>&amp;&amp; ||</code> 通常只适用于简单的场景.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../linux/dbus.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../linux/openwrt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../linux/dbus.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../linux/openwrt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

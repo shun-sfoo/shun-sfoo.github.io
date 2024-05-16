@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>显卡直通 - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item "><a href="../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item "><a href="../basic/data-struct/RBTree.html">红黑树</a></li><li class="chapter-item "><a href="../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item expanded "><a href="../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item "><a href="../linux/GObject.html">GObject</a></li><li class="chapter-item "><a href="../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item expanded "><a href="../linux/pci_passthrough_via_ovmf.html" class="active">显卡直通</a></li><li class="chapter-item "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item "><a href="../linux/dbus.html">dbus</a></li><li class="chapter-item "><a href="../linux/zsh-01.html">zsh_1 variable</a></li><li class="chapter-item "><a href="../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../neovim/package.html">package</a></li></ol></li><li class="chapter-item "><a href="../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gentoo/gentoo.html">安装</a></li><li class="chapter-item "><a href="../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../gentoo/fstab.html">fstab</a></li><li class="chapter-item "><a href="../gentoo/core.html">内核配置</a></li><li class="chapter-item "><a href="../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../Rust/base.html">base</a></li><li class="chapter-item "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="显卡直通"><a class="header" href="#显卡直通">显卡直通</a></h1>
+<p>此教程绝大多数来源于是archlinux wiki, 只是记录其要点作为速通教程.</p>
+<h2 id="bios-设置"><a class="header" href="#bios-设置">bios 设置</a></h2>
+<ol>
+<li>开启虚拟化， amd 中是设置 svm mode</li>
+<li>开启 IOMMU, 这个选项在 settings 中，另外为了保险起见关闭了安全启动</li>
+<li>打开 SR-IOV 支持这个是用来虚拟网卡的</li>
+</ol>
+<p>通过如下命令确认开启了 IOMMU</p>
+<p><code>dmesg | grep -i -e DMAR -e IOMMU</code></p>
+<p>通过如下脚本查看 IOMMU 分组情况</p>
+<pre><code class="language-bash">#!/bin/bash
+shopt -s nullglob
+for g in $(find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sort -V); do
+    echo "IOMMU Group ${g##*/}:"
+    for d in $g/devices/*; do
+        echo -e "\t$(lspci -nns ${d##*/})"
+    done;
+done;
+</code></pre>
+<p>注意，一个组是直通的最小单位，我显卡组里面的两个设备都要直通出来。</p>
+<pre><code class="language-txt">IOMMU Group 12:
+	01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM206 [GeForce GTX 960] [10de:1401] (rev a1)
+	01:00.1 Audio device [0403]: NVIDIA Corporation GM206 High Definition Audio Controller [10de:0fba] (rev a1)
+</code></pre>
+<p>有些主板上把cpu 和 gpu放在同一分组了，这是因为在该主板上，gpu插在了cpu直通pcie上，会识别成一个组，
+遇到这种情况把gpu换到里cpu较远的插槽。我的主板没有这种情况。</p>
+<h2 id="显卡分离"><a class="header" href="#显卡分离">显卡分离</a></h2>
+<p>把设备 id 绑定到 vfio-pci</p>
+<ol>
+<li>把id添加到内核参数</li>
+</ol>
+<p>我用的是systemd-boot, 因此在 <code>/boot/loader/entries/2023-11-12_13-33-25_linux-zen.conf</code>
+的 options 后面添加</p>
+<p><code>vfio-pci.ids=10de:1401,10de:0fba</code></p>
+<ol start="2">
+<li>在 modprobe.d 中添加</li>
+</ol>
+<pre><code class="language-bash">nvim /etc/modprobe.d/vfio.conf
+options vfio-pci ids=10de:1401,10de:0fba
+</code></pre>
+<ol start="3">
+<li>提前加载 vfio-pci</li>
+</ol>
+<p>wiki中指出需要在显卡驱动绑定到显卡之前把vfio-pci模块注册上。
+有两个方式 修改 modprobe.d 和 initramsfs</p>
+<p>modprobe.d</p>
+<pre><code>nvim /etc/modprobe.d/vfio.conf
+options vfio-pci ids=10de:1401,10de:0fba
+softdep drm pre: vfio-pci
+</code></pre>
+<p>这种方式在我电脑上不生效，wiki中指出这步如果出现问题，要验证initramsfs方式是否可以。
+总结就是直接使用initramsfs方式</p>
+<p>initramsfs</p>
+<p>把 <code>vfio_pci vfio vfio_iommu_type1</code></p>
+<p>放到 mkinitcpio 中</p>
+<pre><code class="language-bash">nvim /etc/mkinitcpio.conf
+MODULES=(... vfio_pci vfio vfio_iommu_type1 ...)
+</code></pre>
+<p>还要确认下 HOOKS 包含在 mkinitcpio.conf 中</p>
+<pre><code class="language-bash">/etc/mkinitcpio.conf
+HOOKS=(... modconf ...)
+</code></pre>
+<p>重新生成 initramsfs</p>
+<p><code>sudo mkinitcpio -p linux-zen</code> 因为我用的是 zen 内核</p>
+<h2 id="软件方案"><a class="header" href="#软件方案">软件方案</a></h2>
+<p><code>sudo pacman -S qemu-desktop libvirt edk2-ovmf virt-manager dnsmasq dmidecode</code></p>
+<p>加入 libvirt 组</p>
+<p><code>sudo usermod -aG libvirt neo</code></p>
+<p><code>id $(whoami)</code> 查看是否加入到组内</p>
+<p>开启 libvirt服务</p>
+<pre><code class="language-bash">sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+</code></pre>
+<p>激活 libvirt 默认网络</p>
+<pre><code class="language-bash">sudo -s
+virsh net-autostart default
+virsh net-start default
+</code></pre>
+<h2 id="安装虚拟机"><a class="header" href="#安装虚拟机">安装虚拟机</a></h2>
+<p>我选择的镜像是 win10 最新版</p>
+<ol>
+<li>bios 选择 uefi 主板</li>
+<li>cpu socket 1 ,core 6, thread 2.</li>
+<li>硬盘选择 virio 方式提升性能</li>
+<li>下载<a href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/">virto-win.iso</a>驱动镜像作为CD-ROM设备</li>
+<li>安装时会找不到硬盘因为是virio方式，加载第四步的驱动就可以接着往下</li>
+<li>检查设备管理器的驱动，用驱动盘去更新没有识别的驱动</li>
+</ol>
+<p>装完系统直接是可以联网的，如果出现断网标志，网络未连接不一定是断网了，可以通过浏览器试试网络。</p>
+<h2 id="looking-glass"><a class="header" href="#looking-glass">Looking-Glass</a></h2>
+<p><a href="https://looking-glass.io/docs/B6/install/">教程参考</a></p>
+<p>设置 shmem 容量</p>
+<pre><code class="language-bash">sudo -s
+EDITOR=nvim virsh edit win10
+# 在 devices 节点中加入 128M 是为了4k
+&lt;shmem name='looking-glass'&gt;
+  &lt;model type='ivshmem-plain'/&gt;
+  &lt;size unit='M'&gt;128&lt;/size&gt;
+&lt;/shmem&gt;
+
+</code></pre>
+<p>开启 tmpfiles</p>
+<pre><code class="language-bash"># Type Path               Mode UID  GID Age Argument
+
+f /dev/shm/looking-glass 0660 user kvm -
+</code></pre>
+<p>其中user 设置为用户名</p>
+<pre><code class="language-bash">sudo systemd-tmpfiles --create /etc/tmpfiles.d/10-looking-glass.conf
+</code></pre>
+<p>建立 tmpfs</p>
+<p>开启虚拟机后在虚拟中下载最新版的 <code>VC_redist.x64.exe</code> 和对应的 looking-glass window host版本，比如都是最新的b6版.
+然后在虚拟机把<strong>内置的显卡驱动关闭</strong>，只用独显。</p>
+<p>键鼠剪切板增强</p>
+<p>确认有 <code>&lt;grapics type=spice&gt;</code> 设备</p>
+<ul>
+<li>
+<p>Find your <code>&lt;video&gt;</code> device, and set <code>&lt;model type='vga'/&gt;</code></p>
+</li>
+<li>
+<p>If you can’t find it, make sure you have a <code>&lt;graphics&gt;</code> device, save and edit again.</p>
+</li>
+<li>
+<p>Remove the <code>&lt;input type='tablet'/&gt;</code> device, if you have one.</p>
+</li>
+<li>
+<p>Create an <code>&lt;input type='mouse' bus='virtio'/&gt;</code> device, if you don’t already have one.</p>
+</li>
+<li>
+<p>Create an <code>&lt;input type='keyboard' bus='virtio'/&gt;</code> device to improve keyboard usage.</p>
+</li>
+</ul>
+<p>重启虚拟机后把未识别的驱动用驱动盘更新一下</p>
+<p>虚拟机与主系统共剪切板可以通过安装 <a href="https://www.spice-space.org/download.html#windows-binaries">spice-guest-tools</a></p>
+<h2 id="问题"><a class="header" href="#问题">问题</a></h2>
+<ol>
+<li>
+<p>使用 looking-glass-client 后发现屏幕分辨率达不到4k，首先把独显也接到显示器上，通过屏幕切换到独显的视频口输出，设置为4k后
+切回主系统就可以设置成4k了，但目前只有30hz，不知道是显卡的原因还是设置的问题。</p>
+</li>
+<li>
+<p>鼠标偏移，可以先多接一个鼠标，后续删除。</p>
+</li>
+<li>
+<p>looking-glass-client 使用出现服务未启动，确认下是不是把内置显示驱动禁用了。</p>
+</li>
+<li>
+<p>可能网络设置的原因，lol创建游戏后进不去。steam下载古墓丽影游戏都是没问题的，但由于4k只有30帧，换成1080p才能正常玩。</p>
+</li>
+</ol>
+<h2 id="优化"><a class="header" href="#优化">优化</a></h2>
+<p>hupage</p>
+<p>cpu 设置</p>
+<h2 id="参考"><a class="header" href="#参考">参考</a></h2>
+<p><a href="https://looking-glass.io/docs/B6/install/">looking-glass</a></p>
+<p><a href="https://ivonblog.com/posts/qemu-kvm-vfio-gaming/#6-%E8%A8%AD%E5%AE%9Alooking-glass%E4%BD%8E%E5%BB%B6%E9%81%B2%E5%AD%98%E5%8F%96windows%E6%A1%8C%E9%9D%A2">别人的文章</a></p>
+<p><a href="https://www.spice-space.org/download.html#windows-binaries">spice</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../linux/hyprland.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../linux/practical-vim.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../linux/hyprland.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../linux/practical-vim.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

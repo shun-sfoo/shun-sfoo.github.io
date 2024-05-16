@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>dbus - shun-sfoo Tech blog</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">简介</a></li><li class="chapter-item affix "><li class="part-title">编程</li><li class="chapter-item "><a href="../basic/data-struct/intro.html">数据结构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../basic/data-struct/array.html">数组</a></li><li class="chapter-item "><a href="../basic/data-struct/stackAndQueue.html">栈和队列</a></li><li class="chapter-item "><a href="../basic/data-struct/linkedList.html">链表</a></li><li class="chapter-item "><a href="../basic/data-struct/heap.html">堆</a></li><li class="chapter-item "><a href="../basic/data-struct/bst.html">二分搜索树</a></li><li class="chapter-item "><a href="../basic/data-struct/RBTree.html">红黑树</a></li><li class="chapter-item "><a href="../basic/data-struct/segmentTree.html">线段树</a></li><li class="chapter-item "><a href="../basic/data-struct/avl.html">avl 树</a></li><li class="chapter-item "><a href="../basic/data-struct/unionFind.html">并查集</a></li></ol></li><li class="chapter-item "><li class="part-title">操作系统</li><li class="chapter-item expanded "><a href="../linux/intro.html">linux</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../linux/arch.html">archlinux 简明安装教程</a></li><li class="chapter-item "><a href="../linux/GObject.html">GObject</a></li><li class="chapter-item "><a href="../linux/hyprland.html">hyprland 安装</a></li><li class="chapter-item "><a href="../linux/pci_passthrough_via_ovmf.html">显卡直通</a></li><li class="chapter-item "><a href="../linux/practical-vim.html">vim</a></li><li class="chapter-item expanded "><a href="../linux/dbus.html" class="active">dbus</a></li><li class="chapter-item "><a href="../linux/zsh-01.html">zsh_1 variable</a></li><li class="chapter-item "><a href="../linux/openwrt.html">openwrt 作为旁路由</a></li><li class="chapter-item "><a href="../linux/gentoo.html">gentoo 安装简化流程</a></li><li class="chapter-item "><a href="../linux/haskell.html">haskell</a></li><li class="chapter-item "><a href="../linux/arch_manual.html">archlinux 手动挡</a></li></ol></li><li class="chapter-item "><a href="../neovim/intro.html">neovim</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../neovim/package.html">package</a></li></ol></li><li class="chapter-item "><a href="../gentoo/intro.html">gentoo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../gentoo/gentoo.html">安装</a></li><li class="chapter-item "><a href="../gentoo/portage.html">portage</a></li><li class="chapter-item "><a href="../gentoo/make-conf.html">make.conf</a></li><li class="chapter-item "><a href="../gentoo/fstab.html">fstab</a></li><li class="chapter-item "><a href="../gentoo/core.html">内核配置</a></li><li class="chapter-item "><a href="../gentoo/driver.html">驱动</a></li><li class="chapter-item "><a href="../gentoo/note.html">笔记</a></li></ol></li><li class="chapter-item "><a href="../Java/intro.html">Java</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Java/jvm01.html">jvm1</a></li><li class="chapter-item "><a href="../Java/jvm02.html">jvm2</a></li><li class="chapter-item "><a href="../Java/jvm03.html">jvm3</a></li></ol></li><li class="chapter-item "><a href="../macOS/intro.html">macOS</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../macOS/development.html">development</a></li></ol></li><li class="chapter-item "><a href="../reading/intro.html">阅读</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../reading/Critical-Thinking.html">「学会提问」</a></li></ol></li><li class="chapter-item "><a href="../Rust/intro.html">Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../Rust/toolchains.html">toolchains</a></li><li class="chapter-item "><a href="../Rust/base.html">base</a></li><li class="chapter-item "><a href="../Rust/concurrency.html">concurrency</a></li><li class="chapter-item "><a href="../Rust/lists.html">list</a></li><li class="chapter-item "><a href="../Rust/little-macro.html">little-macro</a></li><li class="chapter-item "><a href="../Rust/ownership.html">ownership</a></li><li class="chapter-item "><a href="../Rust/rust-web.html">rust-web</a></li><li class="chapter-item "><a href="../Rust/summary.html">summary</a></li></ol></li><li class="chapter-item "><a href="../chromium/intro.html">chromium</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../chromium/update_engine.html">update-engine</a></li></ol></li><li class="chapter-item "><a href="../profile/skill.html">简历</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">shun-sfoo Tech blog</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/shun-sfoo" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="dbus"><a class="header" href="#dbus">dbus</a></h1>
+<p>D-Bus 是针对桌面环境优化的 IPC（interprocess communication ）机制，
+用于进程间的通信或进程与内核的通信。
+最基本的 D-Bus 协议是一对一的通信协议。</p>
+<p>dbus 提供了两个小工具：dbus-send 和 dbus-monitor。</p>
+<p>用法</p>
+<p><code>dbus-send --session --type=method_call --print-reply --dest=org.company.Test /TestObj org.company.Test.CCalc int32:100 int32:999</code></p>
+<h2 id="消息总线"><a class="header" href="#消息总线">消息总线</a></h2>
+<p>在很多情况下，通信的一方是消息总线。消息总线是一个特殊的应用，它同时与多个应用通信，并在应用之间传递消息。 消息总线的角色有点类似与 X 系统中的窗口管理器，窗口管理器既是 X 客户，又负责管理窗口。</p>
+<h3 id="消息总线的流程"><a class="header" href="#消息总线的流程">消息总线的流程</a></h3>
+<p>应用程序 A 和消息总线连接，这个连接获取了一个众所周知的公共名（记作连接 A）。
+应用程序 A 中有对象 A1 提供了接口 I1，接口 I1 有方法 M1。
+应用程序 B 和消息总线连接，要求调用连接 A 上对象 A1 的接口 I1 的方法 M1。
+应用程序 B 调用应用程序 A 的方法，其实就是应用程序 B 向应用程序 A 发送了一个类型为<code>method_call</code> 的消息。
+应用程序 A 通过一个类型为 <code>method_retutn</code> 的消息将返回值发给应用程序 B。</p>
+<h4 id="消息类型"><a class="header" href="#消息类型">消息类型</a></h4>
+<p>D-Bus 有四种类型的消息：</p>
+<ul>
+<li><code>method_call</code> 方法调用</li>
+<li><code>method_return</code> 方法返回</li>
+<li>error 错误</li>
+<li>signal 信号</li>
+</ul>
+<h3 id="消息总线的方法和信号"><a class="header" href="#消息总线的方法和信号">消息总线的方法和信号</a></h3>
+<p>消息总线是一个特殊的应用，它可以在与它连接的应用之间传递消息。 可以把消息总线看作一台路由器。
+正是通过消息总线，D-Bus 才在一对一的通信协议基础上实现了多对一和一对多的通信。
+消息总线虽然有特殊的转发功能，但消息总线也还是一个应用。 其它应用与消息总线的通信也是通过基本消息类型完成的。
+作为一个应用，消息总线也提供了自己的接口，包括方法和信号。</p>
+<p>我们可以通过向连接“org.freedesktop.DBus ”上对象“/”发送消息来调用消息总线提供的方法。
+事实上，应用程序正是通过这些方法连接到消息总线上的其它应用，完成请求公共名等工作的。</p>
+<h2 id="系统总线-会话总线"><a class="header" href="#系统总线-会话总线">系统总线， 会话总线</a></h2>
+<p>支持 dbus 的系统都有两个标准的消息总线：(system bus) 接口系统总线和 (session bus) 会话总线。
+系统总线用于系统与应用的通信。会话总线用于应用之间的通信。 使用 d-feet 的 python 程序，可以用它来观察系统中的 dbus 世界。</p>
+<h2 id="dbus-世界中的名词解释"><a class="header" href="#dbus-世界中的名词解释">dbus 世界中的名词解释</a></h2>
+<h3 id="bus-name"><a class="header" href="#bus-name">Bus name</a></h3>
+<p>可以把 Bus Name 理解为连接的名称，一个 Bus Name 总是代表一个应用和消息总线的连接。
+有两种作用不同的 Bus Name，一个叫公共名（well-known names），还有一个叫唯一名（Unique Connection Name）。</p>
+<h4 id="可能有多个备选连接的公共名"><a class="header" href="#可能有多个备选连接的公共名">可能有多个备选连接的公共名</a></h4>
+<p>公共名提供众所周知的服务。其他应用通过这个名称来使用名称对应的服务。
+可能有多个连接要求提供同个公共名的服务，即多个应用连接到消息总线，要求提供同个公共名的服务。
+消息总线会把这些连接排在链表中，并选择一个连接提供公共名代表的服务。可以说这个提供服务的连接拥有了这个公共名。
+如果这个连接退出了，消息总线会从链表中选择下一个连接提供服务。
+公共名是由一些圆点分隔的多个小写标志符组成的，例如“org.company.Test”、“org.bluez”。</p>
+<h4 id="每个连接都有一个唯一名"><a class="header" href="#每个连接都有一个唯一名">每个连接都有一个唯一名</a></h4>
+<p>当应用连接到消息总线时，消息总线会给每个应用分配一个唯一名。唯一名以“:”开头，“:”后面通常是圆点分隔的两个数字，例如“:1.0”。
+每个连接都有一个唯一名。在一个消息总线的生命期内，不会有两个连接有相同的唯一名。
+拥有公众名的连接同样有唯一名。例如“org.company.Test”的唯一名是“:1.17”。</p>
+<p>有的连接只有唯一名，没有公众名。可以把这些名称称为私有连接，因为它们没有提供可以通过公共名访问的服务。</p>
+<h4 id="object-paths"><a class="header" href="#object-paths">Object Paths</a></h4>
+<p>Bus Name 确定了一个应用到消息总线的连接。在一个应用中可以有多个提供服务的对象。
+这些对象按照树状结构组织起来。 每个对象都有一个唯一的路径（Object Paths）。
+或者说，在一个应用中，一个对象路径标志着一个唯一的对象。</p>
+<h4 id="interface"><a class="header" href="#interface">interface</a></h4>
+<p>通过对象路径，我们找到应用中的一个对象。每个对象可以实现多个接口。</p>
+<ul>
+<li>org.freedesktop.DBus.Introspectable</li>
+<li>org.freedesktop.DBus.Properties</li>
+</ul>
+<p>接口“org.freedesktop.DBus.Introspectable”和“org.freedesktop.DBus.Properties”是消息总线提供的标准接口。不用手动实现。</p>
+<p>类似于 Java 的反射接口，调用 Introspect 方法可以返回接口的 xml 描述。</p>
+<h4 id="methods-和-signals"><a class="header" href="#methods-和-signals">Methods 和 Signals</a></h4>
+<h3 id="dbus-数据类型"><a class="header" href="#dbus-数据类型">DBUS 数据类型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>标记</th><th>含义</th></tr></thead><tbody>
+<tr><td>a</td><td>ARRAY 数组</td></tr>
+<tr><td>b</td><td>BOOLEAN 布尔值</td></tr>
+<tr><td>d</td><td>DOUBLE IEEE 754 双精度浮点数</td></tr>
+<tr><td>g</td><td>SIGNATURE 类型签名</td></tr>
+<tr><td>i</td><td>INT32 32 位有符号整数</td></tr>
+<tr><td>n</td><td>INT16 16 位有符号整数</td></tr>
+<tr><td>o</td><td><code>OBJECT_PATH</code> 对象路径</td></tr>
+<tr><td>q</td><td>UINT16 16 位无符号整数</td></tr>
+<tr><td>s</td><td>STRING 零结尾的 UTF-8 字符串</td></tr>
+<tr><td>t</td><td>UINT64 64 位无符号整数</td></tr>
+<tr><td>u</td><td>UINT32 32 位无符号整数</td></tr>
+<tr><td>v</td><td>VARIANT 可以放任意数据类型的容器，数据中包含类型信息。例如 glib 中的 GValue。</td></tr>
+<tr><td>x</td><td>INT64 64 位有符号整数</td></tr>
+<tr><td>y</td><td>BYTE 8 位无符号整数</td></tr>
+<tr><td>()</td><td>定义结构时使用。例如"(i(ii))"</td></tr>
+<tr><td>{}</td><td>定义键－值对时使用。例如"a{us}"</td></tr>
+</tbody></table>
+</div>
+<p>a 表示数组，数组元素的类型由 a 后面的标记决定。例如：
+"as"是字符串数组。
+数组"a(i(ii))"的元素是一个结构。用括号将成员的类型括起来就表示结构了，结构可以嵌套。
+数组"a{sv}"的元素是一个键－值对。"{sv}"表示键类型是字符串，值类型是 VARIANT。</p>
+<h2 id="developer"><a class="header" href="#developer">developer</a></h2>
+<p>使用 rust 开发
+dbus 开发一般可分为客户端(client)和服务端(server)
+server 端提供可供客户端调用的 api
+rust 中需要用到的两个 crate
+<code>dbus dbus-crossroads</code></p>
+<h3 id="一个计算器-api"><a class="header" href="#一个计算器-api">一个计算器 api</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// dbus server
+use dbus::blocking::Connection;
+use dbus_crossroads::{Crossroads, Context};
+use std::error::Error;
+
+// This is our "Hello" object that we are going to store inside the crossroads instance.
+// 这是我们“加法” 对象 存储从接口crossroadss实例
+// 即返回结果
+struct Counter {
+    result: i32,
+}
+
+fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    // 首先开始连接到会话总线的链接，并设定一个公共名
+    let conn = Connection::new_session()?;
+    conn.request_name("com.dmp.adder", false, true, false)?;
+
+    // Create a new crossroads instance.
+    // The instance is configured so that introspection and properties interfaces
+    // are added by default on object path additions.
+    // 创建一个crossroads实例
+    // 这个实例的introspecable 和properties 接自动被添加了
+    let mut cr = Crossroads::new();
+
+
+
+    // Let's build a new interface, which can be used for "Hello" objects.
+    // 开始创建dbus应用的接口 用于 "adder" 对象
+    let iface_token = cr.register("com.dmp.adder", |b| {
+        // todo signal 信号
+        // Let's add a method to the interface. We have the method name, followed by
+        // names of input and output arguments (used for introspection). The closure then controls
+        // the types of these arguments. The last argument to the closure is a tuple of the input arguments.
+        // 为此接口增加方法，
+        // 定义方法名称，方法参数，和输出参数
+        // 闭包方法用来控制这些参数,
+        // 闭包方法最后的参数是输入参数的元组
+        b.method(
+            "add",
+            ("arg1", "arg2"),
+            ("result",),
+            move |ctx: &amp;mut Context, res: &amp;mut Counter, (arg1, arg2): (i32, i32)| {
+                println!("{} +  {}", arg1, arg2);
+
+                res.res = arg1 + arg2;
+                let result = format!("adder {}", res.res);
+                Ok((result,))
+            },
+        );
+    });
+
+
+
+    // Let's add the "/hello" path, which implements the com.example.dbustest interface,
+    // to the crossroads instance.
+    // 把实现了 com.dmp.adder 接口方法加入到path
+    cr.insert("/adder", &amp;[iface_token], Counter { res: 0 });
+
+   // Serve clients forever.
+    cr.serve(&amp;conn)?;
+
+    unreachable!()
+}
+</code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../linux/practical-vim.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../linux/zsh-01.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../linux/practical-vim.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../linux/zsh-01.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
