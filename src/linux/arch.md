@@ -10,7 +10,7 @@
 注意虚拟机安装archlinux时，bios选项选择 uefi, 使用默认的bios时没有网络连接，原因待查.但不重要
 
 - mirror region: 选择 china 同vim一样`/` 可以用来搜索
-- Disk configuration: 选择 use a best-effort default partition layout ,格式选择btrfs
+- Disk configuration: 选择 use a best-effort default partition layout ,格式选择btrfs 根目录分配200G
 - user account: as superuser
 - profile: 选择 `minimal`
 - Audio: 选择 `no`
@@ -24,6 +24,10 @@
 
 设置时区
 
+```bash
+vim /etc/mkinitcpio.conf
+add r8169
+```
 ```bash
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc
@@ -47,9 +51,9 @@ audio 根据hyprland文档中指出选择pipewire 和  WirePlumber  (archlinux w
 
 `pipwire-jack`  jack支持
 
-使用eww作为status bar 需要下载
-
-`gtk-layer-shell ` 和 `gtk3`
+<!--使用eww作为status bar 需要下载-->
+<!---->
+<!--`gtk-layer-shell ` 和 `gtk3`-->
 
 hyprland 组件
 
@@ -63,7 +67,7 @@ hyprland
 
 总结下载
 
-`sudo pacman -S --need mesa vulkan-radeon  pipewire wireplumber pipewire-alsa  pipewire-audio pipwire-jack gtk-layer-shell gtk3 xdg-desktop-portal-hyprland  qt5-wayland qt6-wayland`
+`sudo pacman -S --need mesa vulkan-radeon  pipewire wireplumber pipewire-alsa  pipewire-audio pipwire-jack xdg-desktop-portal-hyprland  qt5-wayland qt6-wayland`
 
 为了达到这个目的:
 
@@ -179,9 +183,6 @@ and `.config/code-flags.conf`
 --enable-features=WaylandWindowDecorations
 --ozone-platform-hint=auto
 ```
-
-
-
 
 ### Aur Helpr
 
